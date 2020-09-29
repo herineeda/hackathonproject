@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+  장바구니 디테일
+{% endblock %}
+
+{% block content %}
+  <h1>장바구니 상세페이지</h1>
+  {% if cart|length <= 0 %}
+    <div style="margin-top:5%; margin-left:40%;color:red;font-size:20;">
+      <b><h1>Your cart is empty</h1></b>
+      <a href="\" style="margin-left:10%;"><button style="background-color:rgb(166, 166, 233);padding:1%;" >HomePage</button></a>
+    </div>
+  {% else %}
+    <table class="cart">
+      <thead>
+        <tr>
+          <th>Image</th>
+          <th>물건</th>
+          <th>양</th>
+          <th>삭제하기</th>
+          <th>가격</th>
+          <th>합계</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in cart %}
+          {% with product=item.product %}
+            <tr>
+              <td>
+                <a href="{{ product.get_absolute_url }}">
+                  <img src="{% if product.image %}{{ product.image.url }}{% else %} {{ product.name }} {% endif %}">
+                </a>
+              </td>
+              <td>{{ product.name }}</td>
+              <td>
+                  
+                <form action="{% url 'cart:product_add' product.id %}" method="post">
+                  {{ item.quantity_form.quantity }}
+                  {{ item.quantity_form.update }}
+                  <input type="submit" value="Update">
+                  {% csrf_token %}
+                </form>
+              </td>
+              <td><a href="{% url 'cart:product_remove' product.id %}">삭제하기</a></td>
+              <td class="num">${{ item.price }}</td>
+              <td class="num">${{ item.total_price }}</td>
+            </tr>
+          {% endwith %}
+        {% endfor %}
+        <tr class="total">
+          <td>총계</td>
+          <td colspan="4"></td>
+          <td class="num">${{ cart.get_product_total }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="text-right">
+      <a href="{% url 'shop:product_all' %}" class="button light">계속해서 쇼핑하기</a>
+
+    </p>
+{% endif %}
+{% endblock %}

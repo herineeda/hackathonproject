@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'search_app',
     'cart.apps.CartConfig',
     'shop.apps.ShopConfig',
     'accounts.apps.AccountsConfig',
@@ -62,7 +63,11 @@ ROOT_URLCONF = 'ddingproject.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR,'templates')],
+        'DIRS': [os.path.join(BASE_DIR,'templates'), os.path.join(BASE_DIR,'search_app','templates/'),
+        os.path.join(BASE_DIR,'cart','templates/'),os.path.join(BASE_DIR,'shop','templates/'),
+
+        ],
+        
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -70,6 +75,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'cart.context_processors.cart',
             ],
         },
     },
@@ -145,3 +151,4 @@ SITE_ID = 1
 
 LOGIN_REDIRECT_URL = '/'
 
+CART_ID = 'cart item'

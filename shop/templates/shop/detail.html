@@ -12,12 +12,15 @@
             <p><span class ="badge
             badge-secondary"> Price </span>{{product.price}}</p>
             
-            <form action="" method="post">
+            <form action="{% url 'cart:product_add' product.id %}" method="post">
+                {{add_to_cart}}
                 {% csrf_token %}
-                <input type="submit" class="btn btn-primary btn-sm" value ="ADD TO Cart">
+                <input type="submit" class="btn btn-primary btn-sm" href="#" value ="ADD TO CART">
             </form>
 
             <h5> <span class ="badge badge-secondary"> Description </span>{{product.description|linebreaks}}</h5>
+
         </div>
     </div>
+
 {% endblock %}

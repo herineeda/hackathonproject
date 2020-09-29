@@ -1,7 +1,9 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name = "description" content = {% block metadescription %}{% endblock %}>
     <title>{% block title %} {% endblock %}</title>
 
 <!-- CSS only -->
@@ -20,6 +22,7 @@
 
 {% load socialaccount %}
 {% providers_media_js %}
+
 </head>
 
 <body>
@@ -32,14 +35,14 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Product</a>
+        <a class="nav-link" href="{% url 'shop:product_all'%}">Product</a>
       </li>
 
         <li class="nav-item">
-        <a class="nav-link" href="#">Cart  
+        <a class="nav-link" href="{% url 'cart:detail' %}">Cart  
         {% if cart|length > 0 %} 
             ${{cart.get_product_total}} with {{cart|length}} items
         {% else %}
@@ -59,15 +62,16 @@
           <a class="dropdown-item" href="{% provider_login_url 'naver' %}"> Naver Login</a>
       {% endif %}
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Something else here</a>
+          {% comment %} <a class="dropdown-item" href="#">Something else here</a> {% endcomment %}
         </div>
       </li>
-      <li class="nav-item">
+      {% comment %} <li class="nav-item">
         <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-      </li>
+      </li> {% endcomment %}
     </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+    <form class="form-inline my-2 my-lg-0" action="{% url 'search_app:searchResult' %}" method="get">
+      {% csrf_token %}
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
   </div>
