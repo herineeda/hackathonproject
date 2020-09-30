@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>제목: {{post_detail.title}}</h1>
+    <p>작성 날짜: {{post_detail.date}}</p>
+    <p>작성자: {{post_detail.author}}</p>
+
+    {% if post_detail.image %}
+        <img src="{{ post_detail.image.url }}" alt="사진" width="500">
+    {% endif %}
+
+    <p>내용:{{post_detail.content}}</p>
+    <button><a href="{% url 'group_purchase' %}">목록으로 돌아가기</a></button>
+{% endblock %}

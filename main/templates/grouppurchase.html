@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <form action="">
+        <input type="text" name='text'>
+        <input type="submit" value="검색">
+
+        <button><a href="{% url 'new' %}">글쓰기</a></button>
+    </form>
+
+    {% for post in posts %}
+        <p>
+            Title: <a href="{% url 'post_detail' post.id %}">{{post.title}}</a> 
+            Date: {{post.date}}
+            Author: {{post.author}}
+        </p>
+    {% endfor %}
+
+{% endblock %}

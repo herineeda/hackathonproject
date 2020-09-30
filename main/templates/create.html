@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <form method="POST" action="{% url 'create' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h3>Title</h3>
+        <input type="text" name="title" autofocus required>
+        <br>
+        <h3>Content</h3>
+        <textarea name="content" cols=40 row=10></textarea>
+        <br>
+        <input type="file" name="images">
+        <input type="submit" value="save">
+    </form>
+{% endblock %}
+
+{% comment %} {% extends 'base.html' %}
+{% block content %}
+
+    <form method="POST" action="{% url 'create' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table>
+            {{form.as_table}}
+        </table>
+        <br>
+        <input type="submit" value="Save">
+    </form>
+{% endblock %} {% endcomment %}
