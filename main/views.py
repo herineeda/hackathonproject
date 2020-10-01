@@ -24,9 +24,12 @@ def new(request):
 # 게시글 작성
 def create(request):
     post = Post()
-    post.title = request.POST.get('title')
-    post.content = request.POST.get('content')
+    post.title = request.POST['title']
+    post.content = request.POST['content']
     post.image = request.FILES['images']
+    post.category = request.POST['category']
+    post.deadline = request.POST['deadline']
+    post.url = request.POST['url']
     post.date = timezone.datetime.now()
     post.author = User.objects.get(username = request.user.get_username())
     post.save()
