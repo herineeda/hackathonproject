@@ -9,4 +9,5 @@ urlpatterns = [
     path('post_detail/<int:post_id>', views.post_detail, name="post_detail"), # 게시글 자세히 보기
     path('new/', views.new, name="new"), # 폼 띄우기
     path('create/', views.create, name="create"), # 글 작성하기
+    path('search/', views.search, name="search"), # 글 검색하기
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
