@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from django.contrib.auth.models import User
 from .models import Post
-# from form import PostForm # 장고폼을 사용할 경우
+from .form import PostForm
 from django.db.models import Q
 
 # 서비스 소개 페이지
@@ -26,29 +26,74 @@ def new(request):
 
 # 게시글 작성
 def create(request):
-    post = Post()
-    post.title = request.POST['title']
-    post.content = request.POST['content']
-    post.image = request.FILES['images']
-    post.category = request.POST['category']
-    post.deadline = request.POST['deadline']
-    post.url = request.POST['url']
-    post.date = timezone.datetime.now()
-    post.author = User.objects.get(username = request.user.get_username())
-    post.save()
-    return redirect('/main/post_detail/' + str(post.id))
+    if request.method == 'POST':
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.date = timezone.datetime.now()
+            post.author = User.objects.get(username = request.user.get_username())
+            post.save()
+            return redirect('group_purchase')
+    else:
+        form = PostForm()
+        return render(request, 'create.html', {'form':form})
+
+    # post = Post()
+    # post.title = request.POST['title']
+    # post.name = request.POST['name']
+    # post.content = request.POST['content']
+    # post.image = request.FILES['images']
+    # post.category = request.POST['category']
+    # post.deadline = request.POST['deadline']
+    # post.url = request.POST['url']
+    # post.date = timezone.datetime.now()
+    # post.author = User.objects.get(username = request.user.get_username())
+    # post.save()
+    # return redirect('/main/post/' + str(post.id))
+
+# 게시글 수정, 장고 폼 이용 시 코드 수정하기
+def edit(request, post_detail_id):
+    post = get_object_or_404(Post, pk=post_detail_id)
+
+    if request.method == "POST":
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            post.title = request.POST['title']
+            post.name = request.POST['name']
+            post.content = request.POST['content']
+            post.image = request.FILES['images']
+            post.category = request.POST['category']
+            post.deadline = request.POST['deadline']
+            post.url = request.POST['url']
+            post.date = timezone.datetime.now()
+            post.author = User.objects.get(username = request.user.get_username())
+            post.save()
+            return redirect('/main/post/' + str(post.id))
+    else:
+        form = PostForm(instance=post)
+        return render(request, 'create.html', {'form':form})
+
+    # post = get_object_or_404(Post, pk=post_detail_id)
 
     # if request.method == "POST":
-    #     form = PostForm(request.POST)
-    #     if form.is_valid():
-    #         post = form.save(commit=False)
-    #         post.date = timezone.datetime.now()
-    #         post.author = User.objects.get(username = request.user.get_username())
-    #         post.save()
-    #         return redirect('group_purchase')
-    # else:
-    #     form = PostForm()
-    #     return render(request, 'create.html', {'form':form}
+    #     post.title = request.POST['title']
+    #     post.name = request.POST['name']
+    #     post.content = request.POST['content']
+    #     post.image = request.FILES['images']
+    #     post.category = request.POST['category']
+    #     post.deadline = request.POST['deadline']
+    #     post.url = request.POST['url']
+    #     post.author = User.objects.get(username = request.user.get_username())
+    #     post.save()
+    #     return redirect('/main/post/' + str(post.id))
+
+    # return render(request, 'edit.html', {'post':post})
+
+# 게시글 삭제, 임시로 삭제 후 글 전체 목록 띄우기
+def delete(request, post_detail_id):
+    post = get_object_or_404(Post, pk=post_detail_id)
+    post.delete()
+    return redirect('group_purchase')
 
 # 공동구매 글 검색하기
 def search(request):

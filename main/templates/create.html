@@ -3,8 +3,24 @@
 
     <form method="POST" action="{% url 'create' %}" enctype="multipart/form-data">
         {% csrf_token %}
+        <table>
+            {{form.as_table}}
+        </table>
+        <br>
+        <input type="submit" value="Save">
+    </form>
+{% endblock %}
+
+{% comment %} {% extends 'base.html' %}
+{% block content %}
+
+    <form method="POST" action="{% url 'create' %}" enctype="multipart/form-data">
+        {% csrf_token %}
         <h3>Title</h3>
         <input type="text" name="title" autofocus required><br>
+
+        <h3>Product</h3>
+        <input type="text" name="name">
 
         <p>Category:
             <select name="category">
@@ -24,18 +40,5 @@
             출처: <input type="url" name="url">
         <p>
         <input type="submit" value="save">
-    </form>
-{% endblock %}
-
-{% comment %} {% extends 'base.html' %}
-{% block content %}
-
-    <form method="POST" action="{% url 'create' %}" enctype="multipart/form-data">
-        {% csrf_token %}
-        <table>
-            {{form.as_table}}
-        </table>
-        <br>
-        <input type="submit" value="Save">
     </form>
 {% endblock %} {% endcomment %}
