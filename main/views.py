@@ -53,14 +53,14 @@ def create(request):
     # return redirect('/main/post/' + str(post.id))
 
 # 게시글 수정, 장고 폼 이용 시 코드 수정하기
-def edit(request, post_detail_id):
-    post = get_object_or_404(Post, pk=post_detail_id)
+def edit(request, post_id):
+    post = get_object_or_404(Post, pk=post_id)
 
     if request.method == "POST":
         form = PostForm(request.POST, request.FILES, instance=post)
         if form.is_valid():
             form.save()
-            return redirect('group_purchase')
+            return redirect('mypage')
     else:
         form = PostForm(instance=post)
         return render(request, 'create.html', {'form':form})
@@ -82,10 +82,10 @@ def edit(request, post_detail_id):
     # return render(request, 'edit.html', {'post':post})
 
 # 게시글 삭제, 임시로 삭제 후 글 전체 목록 띄우기
-def delete(request, post_detail_id):
-    post = get_object_or_404(Post, pk=post_detail_id)
+def delete(request, post_id):
+    post = get_object_or_404(Post, pk=post_id)
     post.delete()
-    return redirect('group_purchase')
+    return redirect('mypage')
 
 # 공동구매 글 검색하기
 def search(request):
@@ -100,3 +100,14 @@ def search(request):
         result = Post.objects.filter(content__contains=keyword)
     return render(request, 'grouppurchase.html', {'posts':result})
 
+# 마이페이지
+def mypage(request):
+    user = User.objects.get(username = request.user.get_username())
+    myposts = Post.objects.filter(author=user)
+    return render(request, 'mypage.html', {'myposts':myposts})
+
+def closed(request, post_id):
+    closed_post = get_object_or_404(Post, pk=post_id)
+    closed_post.success = True
+    closed_post.save()
+    return redirect('mypage')
