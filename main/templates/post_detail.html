@@ -8,7 +8,13 @@
     {% endif %}
 
     <p>카테고리: {{post_detail.category}}</p>
-    <p>공구 마감일: {{post_detail.deadline}}</p>
+
+    {% if post_detail.success %}
+        <p>공구 종료</p>
+    {% else %}
+        <p>공구 진행 중</p>
+    {% endif %}
+
     <p>내용:{{post_detail.content}}</p>
     {% if post_detail.url%}
         <p>출처: <a href="{{post_detail.url}}" target="_blank">{{post_detail.url}}</a></p>

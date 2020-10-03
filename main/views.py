@@ -32,6 +32,7 @@ def create(request):
             post = form.save(commit=False)
             post.date = timezone.datetime.now()
             post.author = User.objects.get(username = request.user.get_username())
+            post.success = False
             post.save()
             return redirect('group_purchase')
     else:
@@ -63,7 +64,6 @@ def edit(request, post_detail_id):
             post.content = request.POST['content']
             post.image = request.FILES['images']
             post.category = request.POST['category']
-            post.deadline = request.POST['deadline']
             post.url = request.POST['url']
             post.date = timezone.datetime.now()
             post.author = User.objects.get(username = request.user.get_username())

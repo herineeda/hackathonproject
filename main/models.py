@@ -18,11 +18,9 @@ class Post(models.Model):
     name = models.CharField(max_length=200, default="제품명을 입력하세요.")
     image = models.ImageField(upload_to='images/', null=True, blank=True)
     category = models.CharField(max_length=50, choices=category_choices, default='기타')
-    deadline = models.DateTimeField('date published', default='2020-10-01 10:10')
-    url = models.URLField("group purchase product url", default='https://www.google.co.kr/')
-
-    #조회수
-    #count = models.IntegerField(default=0)
+    success = models.BooleanField(default=False) # 공구가 성공했는지...
+    url = models.URLField("출처", default='https://www.google.co.kr/')
+    count = models.IntegerField(default=0) # 조회수
 
     def __str__(self):
         return self.title

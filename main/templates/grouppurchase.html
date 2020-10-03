@@ -17,6 +17,7 @@
     </form>
 
     <table>
+        <th> </th>
         <th>공구물품</th>
         <th>제목</th>
         <th>작성일자</th>
@@ -24,6 +25,11 @@
         
         {% for post in posts %}
             <tr>
+                {% if post_detail.success %}
+                <td>공구 종료</td>
+                {% else %}
+                <td>공구 진행 중</td>
+                {% endif %}
                 <td>{{post.name}}</td>
                 <td><a href="{% url 'post_detail' post.id %}">{{post.title}}</a></td>
                 <td>{{post.date}}</td>
@@ -32,9 +38,4 @@
             </tr>
         {% endfor %}
     </table>
-
-    
-            
-    
-
 {% endblock %}
