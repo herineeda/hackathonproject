@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>제목: {{post_detail.title}}</h1>
+    <p>작성 날짜: {{post_detail.date}} 작성자: {{post_detail.author}}</p>
+
+    {% if post_detail.image %}
+        <img src="{{ post_detail.image.url }}" alt="사진" width="500">
+    {% endif %}
+
+    <p>카테고리: {{post_detail.category}}</p>
+    <p>공구 마감일: {{post_detail.deadline}}</p>
+    <p>내용:{{post_detail.content}}</p>
+    {% if post_detail.url%}
+        <p>출처: <a href="{{post_detail.url}}" target="_blank">{{post_detail.url}}</a></p>
+    {% endif %}
+
+    <button><a href="{% url 'edit' post_detail.id %}">수정</a></button>
+    <button><a href="{% url 'delete' post_detail.id %}">삭제</a></button>
+
+    <button><a href="{% url 'group_purchase' %}">목록으로 돌아가기</a></button>
+{% endblock %}

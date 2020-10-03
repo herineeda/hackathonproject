@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <form action="{% url 'search' %}">
+        <select name="select_text">
+            <option value="전체">전체</option>
+            <option value="제품명">제품명</option>
+            <option value="내용">내용</option>
+        </select>
+
+        <input type="text" name='text'>
+        <input type="submit" value="검색">
+
+        {% if user.is_authenticated %}
+            <button><a href="{% url 'create' %}">글쓰기</a></button>
+        {% endif %}
+    </form>
+
+    <table>
+        <th>공구물품</th>
+        <th>제목</th>
+        <th>작성일자</th>
+        <th>작성자</th>
+        
+        {% for post in posts %}
+            <tr>
+                <td>{{post.name}}</td>
+                <td><a href="{% url 'post_detail' post.id %}">{{post.title}}</a></td>
+                <td>{{post.date}}</td>
+                <td>{{post.author}}</td>
+                {% comment %} <td>{{post.count}}</td> {% endcomment %}
+            </tr>
+        {% endfor %}
+    </table>
+
+    
+            
+    
+
+{% endblock %}
