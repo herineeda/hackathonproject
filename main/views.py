@@ -57,18 +57,10 @@ def edit(request, post_detail_id):
     post = get_object_or_404(Post, pk=post_detail_id)
 
     if request.method == "POST":
-        form = PostForm(request.POST, request.FILES)
+        form = PostForm(request.POST, request.FILES, instance=post)
         if form.is_valid():
-            post.title = request.POST['title']
-            post.name = request.POST['name']
-            post.content = request.POST['content']
-            post.image = request.FILES['images']
-            post.category = request.POST['category']
-            post.url = request.POST['url']
-            post.date = timezone.datetime.now()
-            post.author = User.objects.get(username = request.user.get_username())
-            post.save()
-            return redirect('/main/post/' + str(post.id))
+            form.save()
+            return redirect('group_purchase')
     else:
         form = PostForm(instance=post)
         return render(request, 'create.html', {'form':form})
@@ -107,3 +99,4 @@ def search(request):
     else:
         result = Post.objects.filter(content__contains=keyword)
     return render(request, 'grouppurchase.html', {'posts':result})
+

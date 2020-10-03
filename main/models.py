@@ -15,12 +15,15 @@ class Post(models.Model):
     content = models.TextField(null=False)
 
     # 공구할 제품  정보
-    name = models.CharField(max_length=200, default="제품명을 입력하세요.")
+    name = models.CharField(max_length=200)
     image = models.ImageField(upload_to='images/', null=True, blank=True)
     category = models.CharField(max_length=50, choices=category_choices, default='기타')
     success = models.BooleanField(default=False) # 공구가 성공했는지...
-    url = models.URLField("출처", default='https://www.google.co.kr/')
+    url = models.URLField("출처")
     count = models.IntegerField(default=0) # 조회수
 
     def __str__(self):
         return self.title
+
+    def summary(self):
+        return self.content[:100]
