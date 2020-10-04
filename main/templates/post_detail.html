@@ -24,4 +24,38 @@
     <button><a href="{% url 'delete' post_detail.id %}">삭제</a></button> {% endcomment %}
 
     <button><a href="{% url 'group_purchase' %}">목록으로 돌아가기</a></button>
+
+    <form action="{% url 'comment' post_detail.id %}" method="POST">
+        {% csrf_token %}
+        {{comment_form.as_table}}
+        <input type="submit" value="Send">
+    </form>
+
+    {% for comment in post_detail.comment_set.all %}
+    {% if comment.writer == user or post_detail.author == user %}
+        <p>
+            <strong>
+                {{comment.writer}} | {{comment.date}}
+                {% if user == comment.writer %}
+                    <a href="{% url 'comment_delete' post_detail.id comment.id %}"><button>삭제</button></a>
+                {% endif %}
+            </strong>
+        </p>
+
+        <p>{{comment.content}}</p>
+    {% else %}
+        {% if not comment.secret %}
+            <p>
+            <strong>
+                {{comment.writer}} | {{comment.date}}
+                {% if user == comment.writer %}
+                    <a href="{% url 'comment_delete' post_detail.id comment.id %}"><button>삭제</button></a>
+                {% endif %}
+            </strong>
+        </p>
+
+        <p>{{comment.content}}</p>
+        {% endif %}
+    {% endif %}
+    {% endfor %}
 {% endblock %}

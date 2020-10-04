@@ -27,3 +27,14 @@ class Post(models.Model):
 
     def summary(self):
         return self.content[:100]
+
+# 게시글에 댓글
+class Comment(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    writer = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    content = models.CharField(max_length=300)
+    date = models.DateTimeField()
+    secret = models.BooleanField(default=False) # 비밀 댓글 여부
+
+    def __str__(self):
+        return self.content

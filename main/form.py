@@ -1,5 +1,5 @@
 from django import forms
-from .models import Post
+from .models import Post, Comment
 
 class PostForm(forms.ModelForm):
     class Meta:
@@ -37,3 +37,21 @@ class PostForm(forms.ModelForm):
             'class':'post_url',
             'placeholder': '제품을 판매하는 사이트 주소를 입력해주세요.',
         })
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['secret', 'content']
+
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)
+            self.fields['secret'].label = "비밀댓글"
+            self.fields['content'].label = " "
+
+            self.fields['secret'].widget.attrs.update({
+                'class':'comment_secret',
+            })
+
+            self.fields['content'].widget.attrs.update({
+                'class': 'comment_content',
+            })

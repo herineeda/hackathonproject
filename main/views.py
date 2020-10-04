@@ -1,8 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
+from django.core.exceptions import PermissionDenied
 from django.contrib.auth.models import User
-from .models import Post
-from .form import PostForm
+from .models import Post, Comment
+from .form import PostForm, CommentForm
 from django.db.models import Q
 
 # 서비스 소개 페이지
@@ -17,12 +18,10 @@ def group_purchase(request):
 # 게시글 자세히 보기
 def post_detail(request, post_id):
     post_detail = get_object_or_404(Post, pk=post_id)
-    # post_detail.count += 1 
-    return render(request, 'post_detail.html', {'post_detail':post_detail})
-
-# 게시글 작성 페이지
-def new(request):
-    return render(request, 'create.html')
+    post_detail.count += 1
+    post_detail.save()
+    comment_form = CommentForm()
+    return render(request, 'post_detail.html', {'post_detail':post_detail, 'comment_form':comment_form})
 
 # 게시글 작성
 def create(request):
@@ -106,8 +105,32 @@ def mypage(request):
     myposts = Post.objects.filter(author=user)
     return render(request, 'mypage.html', {'myposts':myposts})
 
+# 공구 종료시키는 버튼
 def closed(request, post_id):
     closed_post = get_object_or_404(Post, pk=post_id)
     closed_post.success = True
     closed_post.save()
     return redirect('mypage')
+
+# 게시글에 댓글 달기
+def comment(request, post_id):
+    comment_form = CommentForm(request.POST)
+    
+    if comment_form.is_valid():
+        temp = comment_form.save(commit=False)
+        temp.post = Post.objects.get(pk=post_id)
+        temp.writer = request.user
+        temp.date = timezone.datetime.now()
+        temp.save()
+        return redirect('post_detail', post_id)
+
+# 댓글 삭제
+def comment_delete(request, post_id, comment_id):
+    my_comment = get_object_or_404(Comment, pk=comment_id)
+
+    if request.user == my_comment.writer:
+        my_comment.delete()
+        return redirect('detail', post_id)
+
+    else:
+        raise PermissionDenied

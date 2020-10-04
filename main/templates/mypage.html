@@ -32,21 +32,10 @@
             margin-top:15px;
             height:80%;
         }
-        #title{
-            font-size:40px;
-            text-align: center;
-            color: #cca8e9;          
-        }
+
         .content{
             background-color:#fef0ff;
             height: 80%;
-        }
-        .tabcontent{
-            
-        }
-        #profile{
-            border-style: solid;
-            border-radius: 10px;       
         }
 
         .word_o{
@@ -89,11 +78,9 @@
         }
         .post_link{
             color: black;
-            style: none;
         }
         .post_link:hover{
             color: black;
-            style: none;
             text-decoration:none;
         }
     </style>
@@ -129,7 +116,7 @@
                                     <p class="card-text word_o">공구 진행 중</p>
                                 {% endif %}
                                 <a href="{% url 'post_detail' mypost.id %}" class="post_link">
-                                    <h5 class="card-title">{{mypost.name}}  <{{mypost.category}}></h5>
+                                    <h5 class="card-title">{{mypost.name}}  &#60;{{mypost.category}}&#62;</h5>
                                     <p class="card-text">
                                         {{mypost.title}}<br>
                                         {{mypost.summary}}...
