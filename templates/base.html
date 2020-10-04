@@ -73,6 +73,7 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a>
           <a class="dropdown-item" href="{% url 'mypage' %}">Mypage</a>
+          <a class="dropdown-item" href="{% url 'box' %}">Note Box</a>
           {%else%}
           <a class="dropdown-item" href="{% url 'account_login' %}">Login</a>
           <a class="dropdown-item" href="{% provider_login_url 'naver' %}"> Naver Login</a>

@@ -24,6 +24,7 @@
     <button><a href="{% url 'delete' post_detail.id %}">삭제</a></button> {% endcomment %}
 
     <button><a href="{% url 'group_purchase' %}">목록으로 돌아가기</a></button>
+    <button><a href="{% url 'create_note' post_detail.id post_detail.author %}">쪽지 보내기</a></button>
 
     <form action="{% url 'comment' post_detail.id %}" method="POST">
         {% csrf_token %}
