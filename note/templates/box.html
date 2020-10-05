@@ -84,25 +84,37 @@
 
         <div class="content">
             <div id="tab1" class="tabcontent" style="display: block;">
-                {% for note in receive_notes %}
-                <!--받은 쪽지-->
-                    <a href="{% url 'note_detail' note.id %}" class="note_link">
-                        <p>
-                            {{note.is_read}} <strong>From.{{note.sender}}</strong>{{note.title}}...{{note.date|date:"Y-m-d"}}
-                        </p>
-                    </a>
+                {% for receive in receive_list %}
+                    <p><strong>{{receive}}</strong></p>
+                    {% for note in receive_notes %}
+                        <!--받은 쪽지-->
+                        {%if note.sender == receive %}
+                            <a href="{% url 'note_detail' note.id %}" class="note_link">
+                                <p>
+                                    {{note.is_read}} {{note.summary}}...{{note.date|date:"Y-m-d"}}
+                                </p>
+                            </a>
+                        {% endif %}
+                    {% endfor %}
                 {% endfor %}
             </div>
 
             <div id="tab2" class="tabcontent" style="display: none;">
-                {% for note in send_notes %}
-                <!--보낸 쪽지-->
-                    <a href="{% url 'note_detail' note.id %}" class="note_link">
-                        <p>
-                            {{note.is_read}} <strong>To.{{note.receiver}}</strong>{{note.title}}...{{note.date|date:"Y-m-d"}}
-                        </p>
-                    </a>
-                {% endfor %}
+                <div>
+                {% for send in send_list %}
+                    <p><strong>{{send}}</strong></p>
+                    {% for note in send_notes %}
+                        <!--보낸 쪽지-->
+                        {% if note.receiver == send %}
+                            <a href="{% url 'note_detail' note.id %}" class="note_link">
+                                <p>
+                                    {{note.is_read}} {{note.summary}}...{{note.date|date:"Y-m-d"}}
+                                </p>
+                            </a>
+                        {% endif %}
+                    {% endfor %}
+                {%endfor%}
+                
             </div>
         </div>
     </div>

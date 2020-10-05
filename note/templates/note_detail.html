@@ -8,6 +8,7 @@
     </p>
     <p>{{note_detail.content}}</p>
 
-    <a href="{% url 'box' %}"><button>쪽지함</button></a>
+    <button><a href="{% url 'box' %}">쪽지함</a></button>
+    <button><a href="{% url 'note_delete' note_detail.id %}">삭제</a></button>
 
 {% endblock %}
