@@ -80,7 +80,7 @@ def edit(request, post_id):
 
     # return render(request, 'edit.html', {'post':post})
 
-# 게시글 삭제, 임시로 삭제 후 글 전체 목록 띄우기
+# 게시글 삭제
 def delete(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
     post.delete()
@@ -101,9 +101,25 @@ def search(request):
 
 # 마이페이지
 def mypage(request):
+    # 내가 작성한 글만 가져오기
     user = User.objects.get(username = request.user.get_username())
     myposts = Post.objects.filter(author=user)
-    return render(request, 'mypage.html', {'myposts':myposts})
+
+    # 댓글을 단 글만 가져오기
+    mycomments = Comment.objects.filter(writer=user) # 작성한 댓글 가져오기
+
+    comment_post_id = list() # Comment 객체에서 Post 객체를 가져와 리스트에 담기(Comment 모델이 Post 모델을 외래키로 참조!!)
+    for mycomment in mycomments:
+        comment_post_id.append(mycomment.post)
+
+    comment_post_set = set(comment_post_id) # 중복 제거(한 글에 여러 댓글을 작성했을 수도 있으니까!)
+    comment_post_id = list(comment_post_set)
+
+    comment_posts = list() # 댓글을 작성한 글을 찾아서 리스트에 담기 
+    for cp in comment_post_id:
+        comment_posts.append(Post.objects.get(pk=cp.id))
+
+    return render(request, 'mypage.html', {'myposts':myposts, 'comment_posts':comment_posts})
 
 # 공구 종료시키는 버튼
 def closed(request, post_id):
@@ -130,7 +146,7 @@ def comment_delete(request, post_id, comment_id):
 
     if request.user == my_comment.writer:
         my_comment.delete()
-        return redirect('detail', post_id)
+        return redirect('post_detail', post_id)
 
     else:
         raise PermissionDenied

@@ -91,7 +91,7 @@
     <div class="box">
         <div class="menu">
             <button class="tablinks active" onclick="openTab(event, 'tab1')">내가 쓴 글</button>
-            <button class="tablinks" onclick="openTab(event, 'tab2')">#</button>
+            <button class="tablinks" onclick="openTab(event, 'tab2')">댓글 작성한 글</button>
             <button class="tablinks" onclick="openTab(event, 'tab3')">#</button>    
         </div>
 
@@ -133,11 +133,42 @@
                     </div>
                 </div>
                 {% endfor%}
-            </div>
+                </div>
             </div>
             
             <div id="tab2" class="tabcontent" style="display: none;">
-                *
+                <div class="row">
+                    {% for cp in comment_posts %}
+                    <div class="col-sm-6" style="max-width: 540px;">
+                        <div class="row no-gutters">
+                            <div class="col-md-4">
+                            {% if cp.image %}
+                                <img src="{{cp.image.url}}" class="card-img" alt="사진">
+                            {% else %}
+                                <img src="{% static 'suryong.png' %}" class="card-img" alt="사진">
+                            {% endif %}
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    {% if cp.success %}
+                                        <p class="card-text word_c">공구 종료</p>
+                                    {% else %}
+                                        <p class="card-text word_o">공구 진행 중</p>
+                                    {% endif %}
+                                    <a href="{% url 'post_detail' cp.id %}" class="post_link">
+                                        <h5 class="card-title">{{cp.name}}  &#60;{{cp.category}}&#62;</h5>
+                                        <p class="card-text">
+                                            {{cp.title}}<br>
+                                            {{cp.summary}}...
+                                        </p>
+                                    </a>
+                                    <p class="card-text"><small class="text-muted">{{cp.date}}</small></p>
+                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor%}
+                </div>
             </div>
 
             <div id="tab3" class="tabcontent" style="display: none;">
