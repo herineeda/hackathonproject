@@ -15,6 +15,7 @@ urlpatterns = [
     path('', include('search_app.urls')),
     path('cart/', include('cart.urls')),
     path('main/', include('main.urls')),
+    path('mypage/note/', include('note.urls')),
 ]
 
 if settings.DEBUG:

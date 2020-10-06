@@ -17,24 +17,28 @@
     </form>
 
     <table>
+        <th> </th>
         <th>공구물품</th>
         <th>제목</th>
         <th>작성일자</th>
         <th>작성자</th>
+        <th>조회수</th>
         
         {% for post in posts %}
             <tr>
+                {% if post.success %}
+                <td>공구 종료</td>
+                {% else %}
+                <td>공구 진행 중</td>
+                {% endif %}
                 <td>{{post.name}}</td>
                 <td><a href="{% url 'post_detail' post.id %}">{{post.title}}</a></td>
                 <td>{{post.date}}</td>
                 <td>{{post.author}}</td>
-                {% comment %} <td>{{post.count}}</td> {% endcomment %}
+                <td>{{post.count}}</td>
             </tr>
+            {% empty %}
+            <tr><td>검색 결과가 없습니다.</td></tr>
         {% endfor %}
     </table>
-
-    
-            
-    
-
 {% endblock %}

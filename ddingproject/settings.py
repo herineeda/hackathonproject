@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.naver',
     'main.apps.MainConfig',
+    'note.apps.NoteConfig',
 ]
 
 MIDDLEWARE = [

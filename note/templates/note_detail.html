@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <p>
+        {{note_detail.sender}}
+        {{note_detail.send_at|date:"Y-m-d"}}
+    </p>
+    <p>{{note_detail.content}}</p>
+
+    <button><a href="{% url 'box' %}">쪽지함</a></button>
+    <button><a href="{% url 'note_delete' note_detail.id %}">삭제</a></button>
+
+{% endblock %}
