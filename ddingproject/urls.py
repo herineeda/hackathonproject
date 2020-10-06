@@ -3,17 +3,21 @@ from django.urls import include, path
 import accounts.views
 import shop.views
 import cart.views
-import search_app.views
+import order.views
+import main.views
 #Add libraries 
 from django.conf import settings
 from django.conf.urls.static import static
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/',include('allauth.urls')),
     path('', include('shop.urls')),
-    path('', include('search_app.urls')),
     path('cart/', include('cart.urls')),
+    path('main/', include('main.urls')),
+    path('order/', include('order.urls')),
+    path('mypage/note/', include('note.urls')),
 ]
 
 if settings.DEBUG:

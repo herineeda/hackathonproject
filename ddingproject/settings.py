@@ -31,7 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'search_app',
+    
+    'order.apps.OrderConfig',
     'cart.apps.CartConfig',
     'shop.apps.ShopConfig',
     'accounts.apps.AccountsConfig',
@@ -46,6 +47,8 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.naver',
+    'main.apps.MainConfig',
+    'note.apps.NoteConfig',
 ]
 
 MIDDLEWARE = [
@@ -63,7 +66,7 @@ ROOT_URLCONF = 'ddingproject.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR,'templates'), os.path.join(BASE_DIR,'search_app','templates/'),
+        'DIRS': [os.path.join(BASE_DIR,'templates'),
         os.path.join(BASE_DIR,'cart','templates/'),os.path.join(BASE_DIR,'shop','templates/'),
 
         ],
@@ -119,7 +122,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Seoul'
 
 USE_I18N = True
 
@@ -152,3 +155,10 @@ SITE_ID = 1
 LOGIN_REDIRECT_URL = '/'
 
 CART_ID = 'cart item'
+
+# 결제모듈 세팅
+
+IAMPORT_KEY = '7077620454404611'
+
+IAMPORT_SECRET = 'LeUYlIE4LrPpHSPfmhlRTtYKAk8taNqW1lUm3yrPZgfG84WvlimfMlZmG7QQUgNVCHhFgIvgZKX8OUDa'
+

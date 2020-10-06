@@ -16,7 +16,7 @@
     <table class="cart">
       <thead>
         <tr>
-          <th>Image</th>
+          <th>사진</th>
           <th>물건</th>
           <th>양</th>
           <th>삭제하기</th>
@@ -52,12 +52,14 @@
         <tr class="total">
           <td>총계</td>
           <td colspan="4"></td>
-          <td class="num">${{ cart.get_product_total }}</td>
+          <td class="num">${{ cart.get_total_price }}</td>
         </tr>
       </tbody>
     </table>
     <p class="text-right">
-      <a href="{% url 'shop:product_all' %}" class="button light">계속해서 쇼핑하기</a>
+      <a href="{% url 'shop:product_all' %}" class="btn btn-secondary">계속해서 쇼핑하기</a>
+      <!-- 결제페이지로 이동 -->
+      <a href="{% url 'orders:order_create' %}" class="btn btn-primary">주문하기</a>
 
     </p>
 {% endif %}

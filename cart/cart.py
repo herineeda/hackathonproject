@@ -65,5 +65,5 @@ class Cart(object):
         self.session.modified = True
 
     # 전체 제품 가격
-    def get_product_total(self):
+    def get_total_price(self):
         return sum(Decimal(item['price'])*item['quantity'] for item in self.cart.values())
