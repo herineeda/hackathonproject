@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 from django.contrib.auth.models import User
 from main.models import Post
-from .models import Note
-from .form import NoteForm
+from .models import Note, ReNote
+from .form import NoteForm, ReNoteForm
 
 # 쪽지함
 def box(request):
@@ -48,12 +48,17 @@ def create_note(request, post_id, receiver):
 # 쪽지 자세히 보기
 def note_detail(request, note_id):
     note_detail = get_object_or_404(Note, pk=note_id)
+    renote_form = ReNoteForm()
 
     if request.user != note_detail.sender: # 요청한 유저와 쪽지를 보낸 사람이 다르면...   
         note_detail.is_read = "읽음" # 해당 함수가 실행되면 is_read를 '읽음'으로 변경
+        note_detail.renotes_r = 0
+        note_detail.save()
+    else:
+        note_detail.renotes_s = 0
         note_detail.save()
 
-    return render(request, 'note_detail.html', {'note_detail':note_detail})
+    return render(request, 'note_detail.html', {'note_detail':note_detail, 'renote_form':renote_form})
 
 # 쪽지 삭제하기
 # 쪽지를 받은 사람과 보낸 사람이 모두 삭제한 경우에만 DB에서 삭제
@@ -78,3 +83,19 @@ def note_delete(request, note_id):
             return redirect('box')
         note.delete()
         return redirect('box') 
+
+# 받은 쪽지에 답장 보내기
+def renote(request, note_detail_id):
+    if request.method == "POST":
+        renote_form = ReNoteForm(request.POST)
+        ms = get_object_or_404(Note, pk=note_detail_id)
+        ms.renotes_s += 1
+        ms.renotes_r += 1
+        ms.save()
+
+        if renote_form.is_valid():
+            temp = renote_form.save(commit=False)
+            temp.author = request.user
+            temp.note = Note.objects.get(pk=note_detail_id)
+            temp.save()
+            return redirect('box')

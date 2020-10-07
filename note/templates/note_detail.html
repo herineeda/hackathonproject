@@ -10,5 +10,20 @@
 
     <button><a href="{% url 'box' %}">쪽지함</a></button>
     <button><a href="{% url 'note_delete' note_detail.id %}">삭제</a></button>
+    <hr>
+     <!--해당 쪽지에 대한 답장 목록
+        ReNote가 Note를 외래키로 참조하기 때문에 아래와 같이 작성이 가능-->
+    {% for renote in note_detail.renote_set.all %}
+        <p><strong style="font-size: 20px;">{{renote.author}}</strong>_{{renote.time|date:"Y-m-d"}}</p>
+        <p>{{renote.content}} </p>
+    {% endfor %}
+        
+    <!--답장 작성하는 폼-->
+    <form method="POST" action="{% url 'renote' note_detail.id %}">
+        {% csrf_token %}
+        {{renote_form}}
+        <br>
+        <input type="submit" value="답장">
+    </form>
 
 {% endblock %} 

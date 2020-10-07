@@ -8,7 +8,7 @@
     {% endif %}
 
     <p>카테고리: {{post_detail.category}}</p>
-    {% comment %} <p>공구 마감일: {{post_detail.deadline}}</p> {% endcomment %}
+
     {% if post_detail.success %}
         <p>공구 종료</p>
     {% else %}
@@ -19,9 +19,6 @@
     {% if post_detail.url%}
         <p>출처: <a href="{{post_detail.url}}" target="_blank">{{post_detail.url}}</a></p>
     {% endif %}
-
-    <button><a href="{% url 'edit' post_detail.id %}">수정</a></button>
-    <button><a href="{% url 'delete' post_detail.id %}">삭제</a></button>
 
     <button><a href="{% url 'group_purchase' %}">목록으로 돌아가기</a></button>
     

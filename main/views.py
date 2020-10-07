@@ -22,10 +22,6 @@ def post_detail(request, post_id):
     comment_form = CommentForm()
     return render(request, 'post_detail.html', {'post_detail':post_detail, 'comment_form':comment_form})
 
-# 게시글 작성 페이지
-# def new(request):
-#     return render(request, 'create.html')
-
 # 게시글 작성
 def create(request):
     if request.method == 'POST':
@@ -34,71 +30,26 @@ def create(request):
             post = form.save(commit=False)
             post.date = timezone.datetime.now()
             post.author = User.objects.get(username = request.user.get_username())
+            post.success = False
             post.save()
             return redirect('group_purchase')
     else:
         form = PostForm()
         return render(request, 'create.html', {'form':form})
 
-    # post = Post()
-    # post.title = request.POST['title']
-    # post.name = request.POST['name']
-    # post.content = request.POST['content']
-    # post.image = request.FILES['images']
-    # post.category = request.POST['category']
-    # post.deadline = request.POST['deadline']
-    # post.url = request.POST['url']
-    # post.date = timezone.datetime.now()
-    # post.author = User.objects.get(username = request.user.get_username())
-    # post.save()
-    # return redirect('/main/post/' + str(post.id))
-
-# 게시글 수정, 장고 폼 이용 시 코드 수정하기
-# def edit(request, post_detail_id):
-#     post = get_object_or_404(Post, pk=post_detail_id)
+# 게시글 수정
 def edit(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
+
     if request.method == "POST":
-        
         form = PostForm(request.POST, request.FILES, instance=post)
         if form.is_valid():
-            # post.title = request.POST['title']
-            # post.name = request.POST['name']
-            # post.content = request.POST['content']
-            # post.image = request.FILES['images']
-            # post.category = request.POST['category']
-            # post.deadline = request.POST['deadline']
-            # post.url = request.POST['url']
-            # post.date = timezone.datetime.now()
-            # post.author = User.objects.get(username = request.user.get_username())
             form.save()
             return redirect('mypage')
-            # return redirect('/main/post/' + str(post.id))
+
     else:
         form = PostForm(instance=post)
         return render(request, 'create.html', {'form':form})
-
-    # post = get_object_or_404(Post, pk=post_detail_id)
-
-    # if request.method == "POST":
-    #     post.title = request.POST['title']
-    #     post.name = request.POST['name']
-    #     post.content = request.POST['content']
-    #     post.image = request.FILES['images']
-    #     post.category = request.POST['category']
-    #     post.deadline = request.POST['deadline']
-    #     post.url = request.POST['url']
-    #     post.author = User.objects.get(username = request.user.get_username())
-    #     post.save()
-    #     return redirect('/main/post/' + str(post.id))
-
-    # return render(request, 'edit.html', {'post':post})
-
-# 게시글 삭제, 임시로 삭제 후 글 전체 목록 띄우기
-# def delete(request, post_detail_id):
-#     post = get_object_or_404(Post, pk=post_detail_id)
-#     post.delete()
-#     return redirect('group_purchase')
 
 # 게시글 삭제
 def delete(request, post_id):
@@ -119,7 +70,7 @@ def search(request):
         result = Post.objects.filter(content__contains=keyword)
     return render(request, 'grouppurchase.html', {'posts':result})
 
-    # 마이페이지
+# 마이페이지
 def mypage(request):
     # 내가 작성한 글만 가져오기
     user = User.objects.get(username = request.user.get_username())
@@ -128,16 +79,12 @@ def mypage(request):
     # 댓글을 단 글만 가져오기
     mycomments = Comment.objects.filter(writer=user) # 작성한 댓글 가져오기
 
-    comment_post_id = list() # Comment 객체에서 Post 객체를 가져와 리스트에 담기(Comment 모델이 Post 모델을 외래키로 참조!!)
+    comment_posts = list() # Comment 객체에서 Post 객체를 가져와 리스트에 담기(Comment 모델이 Post 모델을 외래키로 참조!!)
     for mycomment in mycomments:
-        comment_post_id.append(mycomment.post)
+        comment_posts.append(mycomment.post)
 
-    comment_post_set = set(comment_post_id) # 중복 제거(한 글에 여러 댓글을 작성했을 수도 있으니까!)
-    comment_post_id = list(comment_post_set)
-
-    comment_posts = list() # 댓글을 작성한 글을 찾아서 리스트에 담기 
-    for cp in comment_post_id:
-        comment_posts.append(Post.objects.get(pk=cp.id))
+    comment_post_set = set(comment_posts) # 중복 제거(한 글에 여러 댓글을 작성했을 수도 있으니까!)
+    comment_posts = list(comment_post_set)
 
     return render(request, 'mypage.html', {'myposts':myposts, 'comment_posts':comment_posts})
 

@@ -91,7 +91,10 @@
                         {%if note.sender == receive %}
                             <a href="{% url 'note_detail' note.id %}" class="note_link">
                                 <p>
-                                    {{note.is_read}} {{note.summary}}...{{note.date|date:"Y-m-d"}}
+                                    {{note.is_read}} &#124; {{note.summary}}...{{note.date|date:"Y-m-d"}}
+                                    {% if note.renotes_r != 0 %}
+                                    + {{note.renotes_r}}
+                                    {% endif %}
                                 </p>
                             </a>
                         {% endif %}
@@ -108,7 +111,10 @@
                         {% if note.receiver == send %}
                             <a href="{% url 'note_detail' note.id %}" class="note_link">
                                 <p>
-                                    {{note.is_read}} {{note.summary}}...{{note.date|date:"Y-m-d"}}
+                                    {{note.is_read}} &#124; {{note.summary}}...{{note.date|date:"Y-m-d"}}
+                                    {% if note.renotes_s != 0%}
+                                    + {{note.renotes_s}}
+                                    {% endif %}
                                 </p>
                             </a>
                         {% endif %}

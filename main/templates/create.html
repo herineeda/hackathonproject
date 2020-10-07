@@ -10,35 +10,3 @@
         <input type="submit" value="Save">
     </form>
 {% endblock %}
-
-{% comment %} {% extends 'base.html' %}
-{% block content %}
-
-    <form method="POST" action="{% url 'create' %}" enctype="multipart/form-data">
-        {% csrf_token %}
-        <h3>Title</h3>
-        <input type="text" name="title" autofocus required><br>
-
-        <h3>Product</h3>
-        <input type="text" name="name">
-
-        <p>Category:
-            <select name="category">
-                <option value="음료">음료</option>
-                <option value="음식">음식</option>
-                <option value="생활용품">생활용품</option>
-                <option value="기타">기타</option>
-            </select>
-            Deadline: <input type="datetime-local" name="deadline">
-        </p>
-
-        <h3>Content</h3>
-        <textarea name="content" cols=40 rows=10></textarea><br>
-
-        <p>
-            이미지: <input type="file" name="images">
-            출처: <input type="url" name="url">
-        <p>
-        <input type="submit" value="save">
-    </form>
-{% endblock %} {% endcomment %}

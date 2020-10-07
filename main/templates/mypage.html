@@ -105,7 +105,7 @@
                         {% if mypost.image %}
                             <img src="{{mypost.image.url}}" class="card-img" alt="사진">
                         {% else %}
-                            <img src="{% static 'suryong.png' %}" class="card-img" alt="사진">
+                            <img src="" class="card-img" alt="디폴트 사진">
                         {% endif %}
                         </div>
                         <div class="col-md-8">
@@ -145,7 +145,7 @@
                             {% if cp.image %}
                                 <img src="{{cp.image.url}}" class="card-img" alt="사진">
                             {% else %}
-                                <img src="{% static 'suryong.png' %}" class="card-img" alt="사진">
+                                <img src="" class="card-img" alt="사진">
                             {% endif %}
                             </div>
                             <div class="col-md-8">

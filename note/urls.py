@@ -6,4 +6,5 @@ urlpatterns = [
     path('notebox/note/<int:note_id>', views.note_detail, name='note_detail'), # 쪽지 자세히 보기
     path('post/<int:post_id>/send_note/<str:receiver>', views.create_note, name="create_note"), # 쪽지 보내기
     path('notebox/note/<int:note_id>/delete', views.note_delete, name="note_delete"), # 쪽지 삭제하기
+    path('renote/<int:note_detail_id>/', views.renote, name="renote"), # 쪽지 답장 보내기
 ] 
