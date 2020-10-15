@@ -22,7 +22,9 @@
 
     <button><a href="{% url 'group_purchase' %}">목록으로 돌아가기</a></button>
     
-    <button><a href="{% url 'create_note' post_detail.id post_detail.author %}">쪽지 보내기</a></button>
+    {% if request.user != post_detail.author %}
+        <button><a href="{% url 'create_note' post_detail.id post_detail.author %}">쪽지 보내기</a></button>
+    {% endif %}
 
     <form action="{% url 'comment' post_detail.id %}" method="POST">
         {% csrf_token %}

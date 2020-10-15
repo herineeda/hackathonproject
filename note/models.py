@@ -18,7 +18,7 @@ class Note(models.Model):
         return self.content[:10]
 
     def summary(self):
-        return self.content[:20]
+        return self.content[:40]
 
 class ReNote(models.Model):
     author = models.ForeignKey(User, default="알 수 없음", on_delete=models.SET_DEFAULT)
