@@ -30,7 +30,7 @@
 
         /*메뉴와 쪽지 관련 요소를 감싸는 div*/
         .box{
-            height: 650px;
+            height: 700px;
             margin-top: 30px;
             display: flex;
         }
@@ -189,7 +189,7 @@
 
             <div id="tab1" class="tabcontent" style="display: block;">
                 {% for receive in receive_list %}
-                    <p><strong>From. &#32; {{receive}}</strong></p>
+                    <p><strong>보낸 사람. &#32; {{receive}}</strong></p>
                     {% for note in receive_notes %}
                         <!--받은 쪽지-->
                         {%if note.sender == receive %}
@@ -222,7 +222,7 @@
             <div id="tab2" class="tabcontent" style="display: none;">
                 <div>
                 {% for send in send_list %}
-                    <p><strong>To. 	&#32; {{send}}</strong></p>
+                    <p><strong>받는 사람. 	&#32; {{send}}</strong></p>
                     {% for note in send_notes %}
                         <!--보낸 쪽지-->
                         {% if note.receiver == send %}
