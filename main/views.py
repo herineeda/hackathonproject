@@ -3,15 +3,20 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django.db.models import Q
 from django.core.exceptions import PermissionDenied
+from django.core.paginator import Paginator
 from .models import Post, Comment
 from .form import PostForm, CommentForm
+
 # 서비스 소개 페이지
 def introduce(request):
     return render(request, 'introduce.html')
 
 # 공구 게시판: 게시글 목록 띄우기
 def group_purchase(request):
-    posts = Post.objects.all()
+    post_list = Post.objects.all()
+    paginator = Paginator(post_list, 13)
+    page = request.GET.get('page')
+    posts = paginator.get_page(page)
     return render(request, 'grouppurchase.html',{'posts':posts})
 
 # 게시글 자세히 보기
