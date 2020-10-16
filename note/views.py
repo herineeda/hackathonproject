@@ -101,4 +101,4 @@ def renote(request, note_detail_id):
             temp.author = request.user
             temp.note = Note.objects.get(pk=note_detail_id)
             temp.save()
-            return redirect('box')
+            return redirect('note_detail',note_detail_id)

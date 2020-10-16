@@ -1,62 +1,144 @@
 {% extends 'base.html' %}
+
+{% block style %}
+    <style>
+        @font-face {
+            font-family: 'CookieRun-Regular';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/CookieRun-Regular.woff') format('woff');
+        }
+        body{
+            font-family: 'CookieRun-Regular';
+        }
+
+        /*내용 전체를 감싸는 <div>*/
+        .box{
+            height: 700px;
+            margin-top: 30px;
+            padding: 5px 30px 0px 30px;
+            overflow: auto;
+            background: #ffe0dd;
+        }
+
+        /*제목 밑에 밑줄*/
+        .title{
+            padding-bottom: 5px;
+            position: relative;
+        }
+        .title::after{
+            content:"";
+            width: 100%;
+            height: 2px;
+            background: pink;
+            position: absolute;
+            bottom: -15%;
+            left: 0;
+        }
+
+        /*목록으로 돌아가기, 쪽지 보내기 버튼 스타일*/
+        .right{
+            text-align: right;
+            margin-bottom: 5px;
+            margin-top: 5px;
+        }
+        .right > a{
+            text-decoration: none;
+            margin-left: 30px;
+            color: #f27f3d;
+        }
+        .right > a:hover{
+            color: #ffc002;
+        }
+
+        hr{
+            border-color: pink;
+        }
+
+        /*댓글 작성 폼 관련 스타일*/
+        .comment_form{
+
+        }
+        #id_content{
+            width: 90%; /*댓글 입력창 크기*/
+            height: 40px;
+        }
+        .send_btn{
+            background: transparent;
+            border: none;
+            outline: none;
+            margin-left: 10px;
+            color: #f27f3d;
+        }
+        /*댓글 관련 스타일*/
+        .delete_btn{
+            color: #d8090a;
+        }
+        .delete_btn:hover{
+            text-decoration: none;
+            color: red;
+        }
+    </style>
+{% endblock %}
+
 {% block content %}
-    <h1>제목: {{post_detail.title}}</h1>
-    <p>작성 날짜: {{post_detail.date}} 작성자: {{post_detail.author}}</p>
-
-    {% if post_detail.image %}
-        <img src="{{ post_detail.image.url }}" alt="사진" width="500">
-    {% endif %}
-
-    <p>카테고리: {{post_detail.category}}</p>
-
-    {% if post_detail.success %}
-        <p>공구 종료</p>
-    {% else %}
-        <p>공구 진행 중</p>
-    {% endif %}
-
-    <p>내용:{{post_detail.content}}</p>
-    {% if post_detail.url%}
-        <p>출처: <a href="{{post_detail.url}}" target="_blank">{{post_detail.url}}</a></p>
-    {% endif %}
-
-    <button><a href="{% url 'group_purchase' %}">목록으로 돌아가기</a></button>
-    
-    {% if request.user != post_detail.author %}
-        <button><a href="{% url 'create_note' post_detail.id post_detail.author %}">쪽지 보내기</a></button>
-    {% endif %}
-
-    <form action="{% url 'comment' post_detail.id %}" method="POST">
-        {% csrf_token %}
-        {{comment_form.as_table}}
-        <input type="submit" value="Send">
-    </form>
-
-    {% for comment in post_detail.comment_set.all %}
-    {% if comment.writer == user or post_detail.author == user %}
-        <p>
-            <strong>
-                {{comment.writer}} | {{comment.date}}
-                {% if user == comment.writer %}
-                    <a href="{% url 'comment_delete' post_detail.id comment.id %}"><button>삭제</button></a>
-                {% endif %}
-            </strong>
+<div class="box">
+    <div>
+        <p class="right">
+            <a href="{% url 'group_purchase' %}">목록으로 돌아가기</a>
+            
+            {% if request.user != post_detail.author and not post_detail.success %}
+                <a href="{% url 'create_note' post_detail.id post_detail.author %}">쪽지 보내기</a>
+            {% endif %}
         </p>
 
-        <p>{{comment.content}}</p>
-    {% else %}
-        {% if not comment.secret %}
-            <p>
-            <strong>
-                {{comment.writer}} | {{comment.date}}
-                {% if user == comment.writer %}
-                    <a href="{% url 'comment_delete' post_detail.id comment.id %}"><button>삭제</button></a>
-                {% endif %}
-            </strong>
-        </p>
+        <h4 class="title">{{post_detail.title}}</h4>
+        <p class="right">글쓴이: {{post_detail.author}} &nbsp; | &nbsp; {{post_detail.date|date:"Y/m/d H:i"}}</p>
 
-        <p>{{comment.content}}</p>
+        {% if post_detail.image %}
+            <img src="{{ post_detail.image.url }}" alt="사진" width="500">
         {% endif %}
-    {% endif %}
-    {% endfor %}
+
+        <p><strong>{{post_detail.category}} &nbsp; &#62; &nbsp; {{post_detail.name}}</strong></p>
+
+        <p>{{post_detail.content}}</p>
+        
+        {% if post_detail.url%}
+            <p>구매 장소: <a href="{{post_detail.url}}" target="_blank">{{post_detail.url}}</a></p>
+        {% endif %}
+    </div>
+    <hr>
+
+    <div class="comment_form">
+        <form action="{% url 'comment' post_detail.id %}" method="POST">
+            {% csrf_token %}
+            {{comment_form}}
+            <input type="submit" value="Send" class="send_btn">
+        </form>
+    </div>
+    <br>
+
+    <div>
+        {% for comment in post_detail.comment_set.all %}
+        {% if comment.writer == user or post_detail.author == user %}
+            <p>
+                {{comment.writer}} | {{comment.date|date:"Y/m/d H:i"}}
+                {% if user == comment.writer %}
+                     &nbsp; | &nbsp; <a href="{% url 'comment_delete' post_detail.id comment.id %}" class="delete_btn">삭제</a>
+                {% endif %}
+            </p>
+
+            <p>{{comment.content}}</p>
+        {% else %}
+            {% if not comment.secret %}
+                <p>
+                    {{comment.writer}} | {{comment.date|date:"Y/m/d H:i"}} 
+                    {% if user == comment.writer %}
+                        &nbsp; | &nbsp;<a href="{% url 'comment_delete' post_detail.id comment.id %}" class="delete_btn">삭제</a>
+                    {% endif %}
+                </p>
+            <p>{{comment.content}}</p>
+            {% endif %}
+        {% endif %}
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}

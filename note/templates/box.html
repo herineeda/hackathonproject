@@ -30,15 +30,14 @@
 
         /*메뉴와 쪽지 관련 요소를 감싸는 div*/
         .box{
-            height: 650px;
+            height: 700px;
             margin-top: 30px;
             display: flex;
         }
 
         /*쪽지 관련 요소(보낸이, 내용 등등)을 감싸는 div*/
         .content{
-            border-style: dashed;
-            border-color: #ffea7f;
+            padding-top: 10px;
             position: relative;
         }
 
@@ -59,7 +58,7 @@
             width: 100px;
             height: 100px;
             transform: skew(20deg);
-            background: #f27f3d;
+            background: #ffc002;
             position: absolute;
             top: 70%;
             left: 70%;
@@ -123,14 +122,22 @@
             font-size: 16px;
             font-family: 'CookieRun-Regular';
             background-color: transparent;
+            position: relative;
         }
         .tablinks.active {
             border: none;
             outline: none;
-            text-decoration: underline #ffc002;
-            text-underline-position: under;
         }
-        button:hover{
+        .tablinks.active::after{
+            content: "";
+            width: 70px;
+            height: 3px;
+            background: #ffc002;
+            position: absolute;
+            top: 40px;
+            left: 15px;
+        }
+        button:focus{
             border: none;
             outline: none;
         }
@@ -181,7 +188,7 @@
             <div class="button_background_2"></div>
             <button class="tablinks" onclick="openTab(event, 'tab2')">보낸 쪽지</button>
         </div>
-
+        
         <div class="content col-10">
             <!--쪽지 배경-->
             <div class="note_background_1"></div>
@@ -189,7 +196,7 @@
 
             <div id="tab1" class="tabcontent" style="display: block;">
                 {% for receive in receive_list %}
-                    <p><strong>From. &#32; {{receive}}</strong></p>
+                    <p><strong>보낸 사람. &#32; {{receive}}</strong></p>
                     {% for note in receive_notes %}
                         <!--받은 쪽지-->
                         {%if note.sender == receive %}
@@ -222,7 +229,7 @@
             <div id="tab2" class="tabcontent" style="display: none;">
                 <div>
                 {% for send in send_list %}
-                    <p><strong>To. 	&#32; {{send}}</strong></p>
+                    <p><strong>받는 사람. 	&#32; {{send}}</strong></p>
                     {% for note in send_notes %}
                         <!--보낸 쪽지-->
                         {% if note.receiver == send %}

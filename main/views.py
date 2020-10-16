@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
+from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
@@ -14,7 +15,10 @@ def introduce(request):
 
 # 공구 게시판: 게시글 목록 띄우기
 def group_purchase(request):
-    posts = Post.objects.all()
+    post_list = Post.objects.all()
+    paginator = Paginator(post_list, 13)
+    page = request.GET.get('page')
+    posts = paginator.get_page(page)
     return render(request, 'grouppurchase.html',{'posts':posts})
 
 # 게시글 자세히 보기
