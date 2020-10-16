@@ -1,5 +1,6 @@
-from django.db import models
 from django.contrib.auth.models import User
+from django.db import models
+
 
 class Post(models.Model):
     # 상품을 분류할 카테고리들, 필요하면 추가하기

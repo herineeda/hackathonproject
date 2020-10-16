@@ -1,6 +1,8 @@
-from django.db import models
 from django.contrib.auth.models import User
+from django.db import models
+
 from main.models import Post
+
 
 class Note(models.Model):
     sender = models.ForeignKey(User, default="알 수 없음", on_delete=models.SET_DEFAULT)

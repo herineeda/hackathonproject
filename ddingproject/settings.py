@@ -10,8 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
-from pathlib import Path
 import os
+from pathlib import Path
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # BASE_DIR = Path(__file__).resolve().parent.parent
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -31,11 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    
-    'order.apps.OrderConfig',
-    'cart.apps.CartConfig',
-    'shop.apps.ShopConfig',
-    'accounts.apps.AccountsConfig',
+    # Django default apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -43,12 +40,20 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+
+    # Installed apps
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.naver',
-    'main.apps.MainConfig',
+    
+    # Custom apps
+    'accounts.apps.AccountsConfig',
+    'cart.apps.CartConfig',
     'note.apps.NoteConfig',
+    'main.apps.MainConfig',
+    'order.apps.OrderConfig',
+    'shop.apps.ShopConfig',
 ]
 
 MIDDLEWARE = [
@@ -66,9 +71,8 @@ ROOT_URLCONF = 'ddingproject.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR,'templates'),
-        os.path.join(BASE_DIR,'cart','templates/'),os.path.join(BASE_DIR,'shop','templates/'),
-
+        'DIRS': [
+            os.path.join(BASE_DIR,'templates'),
         ],
         
         'APP_DIRS': True,
@@ -135,19 +139,18 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, '.staticfiles')
 STATICFILES_DIRS= [
     os.path.join(BASE_DIR, 'static'),
 ]
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'static','media')
+MEDIA_ROOT = os.path.join(BASE_DIR, '.mediafiles')
 
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
-
 ]
 
 SITE_ID = 1 
@@ -157,8 +160,5 @@ LOGIN_REDIRECT_URL = '/'
 CART_ID = 'cart item'
 
 # 결제모듈 세팅
-
 IAMPORT_KEY = '7077620454404611'
-
 IAMPORT_SECRET = 'LeUYlIE4LrPpHSPfmhlRTtYKAk8taNqW1lUm3yrPZgfG84WvlimfMlZmG7QQUgNVCHhFgIvgZKX8OUDa'
-

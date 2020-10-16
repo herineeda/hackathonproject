@@ -1,5 +1,7 @@
 from django import forms
+
 from .models import Note, ReNote
+
 
 class NoteForm(forms.ModelForm):
 

@@ -1,6 +1,8 @@
 from django.db import models
+
 # from django.core.validators import MinValueValidator, MaxLengthValidator
 from shop.models import Product
+
 #주문정보 저장 
 
 class Order(models.Model):
@@ -46,7 +48,9 @@ class OrderItem(models.Model):
 
 #주문 결제정보, 주문 관리
 import hashlib
-from .iamport import payments_prepare, find_transaction
+
+from .iamport import find_transaction, payments_prepare
+
 
 class OrderTransactionManager(models.Manager):
     def create_new(self, order, amount, success=None, transaction_status=None):
@@ -129,4 +133,5 @@ transaction_id=imp_id, amount=amount).exists()
 
 
 from django.db.models.signals import post_save
+
 post_save.connect(order_payment_validation, sender=OrderTransaction)
