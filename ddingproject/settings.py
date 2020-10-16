@@ -139,19 +139,18 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, '.staticfiles')
 STATICFILES_DIRS= [
     os.path.join(BASE_DIR, 'static'),
 ]
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'static','media')
+MEDIA_ROOT = os.path.join(BASE_DIR, '.mediafiles')
 
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
-
 ]
 
 SITE_ID = 1 
@@ -161,8 +160,5 @@ LOGIN_REDIRECT_URL = '/'
 CART_ID = 'cart item'
 
 # 결제모듈 세팅
-
 IAMPORT_KEY = '7077620454404611'
-
 IAMPORT_SECRET = 'LeUYlIE4LrPpHSPfmhlRTtYKAk8taNqW1lUm3yrPZgfG84WvlimfMlZmG7QQUgNVCHhFgIvgZKX8OUDa'
-
