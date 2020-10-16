@@ -19,14 +19,10 @@ class Post(models.Model):
     image = models.ImageField(upload_to='images/', null=True, blank=True)
     category = models.CharField(max_length=50, choices=category_choices, default='기타')
     # deadline = models.DateTimeField('date published', default='2020-10-01 10:10')
-    # url = models.URLField("group purchase product url", default='https://www.google.co.kr/')
 
     success = models.BooleanField(default=False) # 공구가 성공했는지...
-    url = models.URLField("출처")
+    url = models.URLField("출처", null=True)
     count = models.IntegerField(default=0) # 조회수
-
-    #조회수
-    #count = models.IntegerField(default=0)
 
     def __str__(self):
         return self.title
@@ -38,10 +34,9 @@ class Post(models.Model):
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     writer = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    content = models.CharField(max_length=300)
+    content = models.CharField('', max_length=300)
     date = models.DateTimeField()
-    secret = models.BooleanField(default=False) # 비밀 댓글 여부
+    secret = models.BooleanField('', default=False) # 비밀 댓글 여부
 
     def __str__(self):
-        
         return self.content 
