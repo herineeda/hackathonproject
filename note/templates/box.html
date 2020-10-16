@@ -122,12 +122,20 @@
             font-size: 16px;
             font-family: 'CookieRun-Regular';
             background-color: transparent;
+            position: relative;
         }
         .tablinks.active {
             border: none;
             outline: none;
-            text-decoration: underline #ffc002;
-            text-underline-position: under;
+        }
+        .tablinks.active::after{
+            content: "";
+            width: 70px;
+            height: 3px;
+            background: #ffc002;
+            position: absolute;
+            top: 40px;
+            left: 15px;
         }
         button:hover{
             border: none;
@@ -180,7 +188,7 @@
             <div class="button_background_2"></div>
             <button class="tablinks" onclick="openTab(event, 'tab2')">보낸 쪽지</button>
         </div>
-
+        
         <div class="content col-10">
             <!--쪽지 배경-->
             <div class="note_background_1"></div>

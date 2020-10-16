@@ -4,26 +4,29 @@ from .models import *
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        # fields = ['name', 'title', 'content', 'image', 'category', 'deadline', 'url']
-        fields = ['name', 'title', 'content', 'image', 'category', 'url']
+        fields = ['title', 'name', 'category', 'content', 'image', 'url']
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['name'].label = "제품명"
-        self.fields['title'].label = "제목"
-        self.fields['content'].label= "내용"
-        self.fields['category'].label ="분류"
+        self.fields['name'].label = ""
+        self.fields['title'].label = ""
+        self.fields['content'].label= ""
+        self.fields['image'].label =""
+        self.fields['category'].label =""
+        self.fields['url'].label =""
 
         self.fields['name'].widget.attrs.update({
             'class':'post_name',
-            'placeholder': '공동구매할 제품명을 입력하세요.',
+            'placeholder': '공동구매할 제품',
         })
 
         self.fields['title'].widget.attrs.update({
             'class':'post_title',
+            'placeholder': '게시글 제목',
         })
 
         self.fields['content'].widget.attrs.update({
             'class':'post_content',
+            'placeholder': '내용',
         })
 
         self.fields['category'].widget.attrs.update({
