@@ -10,8 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
-from pathlib import Path
 import os
+from pathlib import Path
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # BASE_DIR = Path(__file__).resolve().parent.parent
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -31,11 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    
-    'order.apps.OrderConfig',
-    'cart.apps.CartConfig',
-    'shop.apps.ShopConfig',
-    'accounts.apps.AccountsConfig',
+    # Django default apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -43,12 +40,20 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+
+    # Installed apps
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.naver',
-    'main.apps.MainConfig',
+    
+    # Custom apps
+    'accounts.apps.AccountsConfig',
+    'cart.apps.CartConfig',
     'note.apps.NoteConfig',
+    'main.apps.MainConfig',
+    'order.apps.OrderConfig',
+    'shop.apps.ShopConfig',
 ]
 
 MIDDLEWARE = [
@@ -66,9 +71,8 @@ ROOT_URLCONF = 'ddingproject.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR,'templates'),
-        os.path.join(BASE_DIR,'cart','templates/'),os.path.join(BASE_DIR,'shop','templates/'),
-
+        'DIRS': [
+            os.path.join(BASE_DIR,'templates'),
         ],
         
         'APP_DIRS': True,

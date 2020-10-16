@@ -1,10 +1,13 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from django.utils import timezone
 from django.contrib.auth.models import User
-from django.db.models import Q
 from django.core.exceptions import PermissionDenied
-from .models import Post, Comment
-from .form import PostForm, CommentForm
+from django.db.models import Q
+from django.shortcuts import get_object_or_404, redirect, render
+from django.utils import timezone
+
+from .form import CommentForm, PostForm
+from .models import Comment, Post
+
+
 # 서비스 소개 페이지
 def introduce(request):
     return render(request, 'introduce.html')
