@@ -1,25 +1,26 @@
 {% extends "base.html" %}
 
-
 {% block title %}
   장바구니 디테일
 {% endblock %}
 
 {% block content %}
-  <h1>장바구니 상세페이지</h1>
+<div class="cart_box">
   {% if cart|length <= 0 %}
-    <div style="margin-top:5%; margin-left:40%;color:red;font-size:20;">
-      <b><h1>Your cart is empty</h1></b>
-      <a href="\" style="margin-left:10%;"><button style="background-color:rgb(166, 166, 233);padding:1%;" >HomePage</button></a>
+    <div class="empty">
+      <b><h1>장바구니가 비어있습니다.</h1></b>
+      <p><a href="\">쇼핑하러 가기</a></p>
     </div>
   {% else %}
+    <h3>장바구니</h3>
+    <hr>
     <table class="cart">
       <thead>
         <tr>
           <th>사진</th>
-          <th>물건</th>
-          <th>양</th>
-          <th>삭제하기</th>
+          <th>제품</th>
+          <th>수량</th>
+          <th></th>
           <th>가격</th>
           <th>합계</th>
         </tr>
@@ -30,37 +31,38 @@
             <tr>
               <td>
                 <a href="{{ product.get_absolute_url }}">
-                  <img src="{% if product.image %}{{ product.image.url }}{% else %} {{ product.name }} {% endif %}">
+                  <img src="{% if product.image %}{{ product.image.url }}{% else %} {{ product.name }} {% endif %}" width=50>
                 </a>
               </td>
               <td>{{ product.name }}</td>
               <td>
-                  
                 <form action="{% url 'cart:product_add' product.id %}" method="post">
                   {{ item.quantity_form.quantity }}
                   {{ item.quantity_form.update }}
-                  <input type="submit" value="Update">
+                  <input type="submit" value="변경" class="update_btn">
                   {% csrf_token %}
                 </form>
               </td>
               <td><a href="{% url 'cart:product_remove' product.id %}">삭제하기</a></td>
-              <td class="num">${{ item.price }}</td>
-              <td class="num">${{ item.total_price }}</td>
+              <td class="num">\{{ item.price }}</td>
+              {% load humanize %}
+              <td class="num">\{{ item.total_price|floatformat|intcomma }}</td>
             </tr>
           {% endwith %}
         {% endfor %}
         <tr class="total">
           <td>총계</td>
           <td colspan="4"></td>
-          <td class="num">${{ cart.get_total_price }}</td>
+          {% load humanize %}
+          <td class="num">\{{ cart.get_total_price|floatformat|intcomma }}</td>
         </tr>
       </tbody>
     </table>
     <p class="text-right">
-      <a href="{% url 'shop:product_all' %}" class="btn btn-secondary">계속해서 쇼핑하기</a>
+      <a href="{% url 'shop:product_all' %}" class="btn btn-outline-secondary">계속해서 쇼핑하기</a>
       <!-- 결제페이지로 이동 -->
-      <a href="{% url 'orders:order_create' %}" class="btn btn-primary">주문하기</a>
-
+      <a href="{% url 'orders:order_create' %}" class="btn btn-outline-primary">주문하기</a>
     </p>
 {% endif %}
+</div>
 {% endblock %}

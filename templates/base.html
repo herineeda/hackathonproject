@@ -7,10 +7,14 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/mypage.css'%}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/grouppurchase.css'%}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/post_detail.css'%}">
+
     <link rel="stylesheet" type="text/css" href="{% static 'css/create.css'%}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/box.css'%}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/note.css'%}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/note_detail.css'%}">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/detail.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/order_create.css'%}">
 
 <!-- CSS only -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
@@ -213,9 +217,10 @@
       <li><a  href="{% url 'introduce' %}">ABOUT US</a></li>
       <li><a  href="{% url 'shop:product_all' %}"> Product </a></li>
       <li><a href="{% url 'group_purchase' %}">Group Purchase</a></li>
-      <li><a href="{% url 'cart:detail' %}">Cart  
+      <li><a href="{% url 'cart:detail' %}">Cart
+        {% load humanize %}  
         {% if cart|length > 0 %} 
-          ${{cart.get_total_price}} | {{cart|length}} items
+          \{{cart.get_total_price|floatformat|intcomma}} | {{cart|length}} items
         {% else %}
         :Empty
         {% endif %}
