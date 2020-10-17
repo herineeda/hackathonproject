@@ -7,13 +7,21 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/mypage.css'%}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/grouppurchase.css'%}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/post_detail.css'%}">
+
     <link rel="stylesheet" type="text/css" href="{% static 'css/create.css'%}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/box.css'%}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/note.css'%}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/note_detail.css'%}">
+
  
  <!--icon fontawesome cdn -->
  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/detail.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/order_create.css'%}">
+
+
 <!-- CSS only -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
@@ -254,13 +262,16 @@ https://templatemo.com/tm-507-victory
         <a class="nav-link" href="{% url 'cart:detail' %}">Cart   {% endcomment %}
 <h3 style="text-align: center; padding-top: 20px;"><a href="{% url 'shop:product_all' %}">아이 띵동</a></h3>
 <div class = nav>
+
       
       <li><a  href="{% url 'introduce' %}">소개</a></li>
       <li><a  href="{% url 'shop:product_all' %}"> 쇼핑하기 </a></li>
       <li><a href="{% url 'group_purchase' %}">공구 게시판</a></li>
+          {% load humanize %} 
       <li><a href="{% url 'cart:detail' %}"><i class="fa fa-shopping-cart"></i>  
         {% if cart|length > 0 %} 
-          ${{cart.get_total_price}} | {{cart|length}} 개
+          \{{cart.get_total_price|floatformat|intcomma}} | {{cart|length}} 개
+
         {% else %}
         | 0
         {% endif %}
