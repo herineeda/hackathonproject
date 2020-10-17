@@ -133,7 +133,7 @@ p {
 	 border-radius:5px; 
 }
 /* detail button  */
-.primary-white-button{
+.btn-add{
 	background:transparent;
     border: 2px solid transparent;
     box-sizing: border-box;
