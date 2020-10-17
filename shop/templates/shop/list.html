@@ -1,38 +1,143 @@
 {% extends 'base.html' %}
-
-{% block title %} Category Page
+{% load static %}
+{% block title %} Category Page? Main Page?
 {% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-2">
-    
-        <div class="list-group">
-            <a href="/" class="list-group-item {% if not current_category %}active{% endif %}"> All </a>
-            {% for c in categories %}
-            <a href="{{c.get_absolute_url}}" class="list-group-item {% if current_category.slug == c.slug %}active{% endif %}">{{c.name}}</a>
-            {% endfor %}
-        </div>
-    </div>     
-    <div class="col">
-        <div class="alert alert-info">
-        {% if current_category %}{{current_category.name}}{% else %} All Products {% endif %}
-        </div>
-        <div class = row>
-            {% for product in products %}
-        <div class="col-4">
-            <div class="card">
-            
-                <img class="card-img-top" src="{{product.image.url}}" alt="Product Image">
-                <div class="card-body">
-                    <h5 class="card-title">{{product.name}}</h5>
-                    <p class="card-text"> {{product.description}} <span
-        class = "badge badge-secondary">{{product.price}} </span></p><a href="{{product.get_absolute_url}}" class="btn btn-primary" alt="{{product.name}}"> View Detail </a>
-                    
+
+<!--banner -->
+
+    <section class="banner">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <h4>Here you can find delecious foods</h4>
+                    <h2>Asian Restaurant</h2>
+                    <p>Quisque nec nibh id lacus fringilla eleifend sed sit amet sem. Donec lectus odio, mollis a nisl non, tempor interdum nisl.</p>
+                    <div class="primary-button">
+                        <a href="#" class="scroll-link" data-id="book-table">Order Right Now</a>
+                    </div>
                 </div>
             </div>
         </div>
-        {% endfor %}
-    </div>   
-</div>
+    </section>
+
+
+
+    <section class="cook-delecious">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-md-offset-1">
+                    <div class="first-image">
+                        <img src="{% static 'img/cook_01.jpg' %}" alt="">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="cook-content">
+                        <h4>We cook delecious</h4>
+                        <div class="contact-content">
+                            <span>You can call us on:</span>
+                            <h6>+ 1234 567 8910</h6>
+                        </div>
+                        <span>or</span>
+                        <div class="primary-white-button">
+                            <a href="#" class="scroll-link" data-id="book-table">Order Now</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="second-image">
+                        <img src="{% static 'img/cook_01.jpg' %}" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!--category -->
+
+    <section class="services">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="service-item">
+                        <h4><a href="/" class="service-group-item {% if not current_category %}active{% endif %}"> All </a></h4>
+                        {% for c in categories %}
+                        <img src="{% static 'img/cook_lunch.png' %}" alt="Food">
+                        <h4><a href="{{c.get_absolute_url}}" class="service-group-item {% if current_category.slug == c.slug %}active{% endif %}">{{c.name}}</a></h4>
+            {% endfor %}
+                        </a>
+                    </div>
+                </div>
+                        <h2>{% if current_category %}{{current_category.name}}{% else %} All Products {% endif %}</h2>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="get-app">
+        <div class="container">
+            <div class="row">
+                <div class="heading">
+                    <h2>다른 사람들과 함께 구매해보세요!</h2>
+                </div>
+                <div class="primary-white-button">
+                    <a href="{% url 'group_purchase' %}">공구게시판 가기</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!--product list -->
+
+
+    <section class="featured-food">
+        <div class="container">
+            <div class="row">
+                <div class="heading">
+                    <h2>Product List</h2>
+                </div>
+            </div>
+            <div class="row">
+            {% for product in products %}
+                <div class="col-md-4">
+                    <div class="food-item">
+                        <h2>{{product.name}}</h2>
+                        <img src="{{product.image.url}}" alt="Product Image">
+                        <div class="price">{{product.price}}</div>
+                        <div class="text-content">
+                            <h4>무엇을 넣을까요 </h4>
+                            <p>{{product.description}}</p><a href="{{product.get_absolute_url}}" class="btn btn-primary" alt="{{product.name}}"> View Detail </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+            </div>
+        </div>
+    </section>
+
+
+<!-- footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <p>Copyright &copy; 2020 Victory Template</p>
+                </div>
+                <div class="col-md-4">
+                    <ul class="social-icons">
+                        <li><a rel="nofollow" href="https://fb.com/templatemo"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                        <li><a href="#"><i class="fa fa-rss"></i></a></li>
+                        <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <p>Team name: I, DDingDong</p>
+                </div>
+            </div>
+        </div>
+    </footer>
 {% endblock %}
