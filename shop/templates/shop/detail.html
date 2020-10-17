@@ -1,28 +1,83 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block title %}Product Detail {% endblock %}
 
 {% block content %}
+    <section class="breakfast-menu">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <div class="breakfast-menu-content">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="left-image">
+                                    <img src="{% static 'img/cook_lunch.png' %}" width ="100%" alt="Food">
+                                </div>
+                            </div>
+                            <div class="col-md-7">
+                                <h2>{{product.name}}</h2>
+                                <div id="owl-breakfast" class="owl-carousel owl-theme">
+                                    <div class="item col-md-12">
+                                        <div class="food-item">
+                                            <img src="{{product.image.url}}" width ="100%">
+                                            <div class="price">{{product.price}}</div>
+                                            <div class="text-content">
+                                            <h5> {{product.metadescription|linebreaks}}</h5>
+                                                <h4>Description</h4>
+                                                <p>{{product.description|linebreaks}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
 
-    <div class="row">
-        <div class="col-4">
-        <img src="{{product.image.url}}" width ="100%">
-        </div>
-        <div class="col">
-            <h1 class="display-6">{{product.name}}</h1>
-            <p><span class ="badge
-            badge-secondary"> Price </span>{{product.price}}</p>
-            
-            <form action="{% url 'cart:product_add' product.id %}" method="post">
+                                        <div class="item col-md-12">
+                                        <div class="food-item">
+                                            
+                                            <h3>장바구니 추가하기</h3>
+                                            <br><br><br>
+                                            <div class="text-content">
+                                                        <form action="{% url 'cart:product_add' product.id %}" method="post">
                 {{add_to_cart}}
                 {% csrf_token %}
+                
                 <input type="submit" class="btn btn-primary btn-sm" href="#" value ="ADD TO CART">
             </form>
 
-            <h5> <span class ="badge badge-secondary"> Description </span>{{product.description|linebreaks}}</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% comment %} <div class="item col-md-12">
+                                        <div class="food-item">
+                                            <img src="img/lunch_item.jpg" alt="">
+                                            <div class="price">$7.25</div>
+                                            <div class="text-content">
+                                                <h4>Drink Vinegar Prism</h4>
+                                                <p>Dreamcatcher squid ennui cliche chicharros nes echo  small batch jean ditcher meal...</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="item col-md-12">
+                                        <div class="food-item">
+                                            <img src="img/dinner_item.jpg" alt="">
+                                            <div class="price">$11.50</div>
+                                            <div class="text-content">
+                                                <h4>Taiyaki Gastro Tousled</h4>
+                                                <p>Dreamcatcher squid ennui cliche chicharros nes echo  small batch jean ditcher meal...</p>
+                                            </div>
+                                        </div>
+                                    </div> {% endcomment %}
 
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
+    </section>
+
+
+<br> <br> <br>
 
     
 <!-- footer -->

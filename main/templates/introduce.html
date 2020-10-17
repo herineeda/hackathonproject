@@ -1,9 +1,18 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
 
-<h1>서비스 소개</h1>
-   <h3>자취생을 위한 공동구매 서비스</h3>
-   <p>
+    <section class="blog-page">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="blog-item">
+                        <img src="{% static 'img/cook_01.jpg' %}" alt="">
+                        <div class="date">Since. 26 Oct 2020</div>
+                        <div class="down-content">
+                            <h4>서비스 소개</h4>
+                            <span>자취생을 위한 공동구매 서비스</span>
+                               <p>
        대량으로 구매하면 저렴하지만,<br>
        '물건을 둘 공간이 부족해서...', '혼자 먹고 쓰기에는 양이 많아서...'<br>
        이런저런 이유로 용량 대비 저렴한 대량판매 제품 대신 비교적 가격이 비싼 소량판매 제품을 구매하는 자취생들이 많습니다.<br>
@@ -15,4 +24,12 @@
        본 서비스는 기본적으로 서비스 운영자가 선별한 제품을 공동구매를 진행합니다.<br>
        하지만 자취생의 편의를 위해 공동구매를 진행하는 제품이 아니어도 '<a href="{% url 'group_purchase' %}">공동구매</a>' 게시판을 통해 인원을 충족시키면 해당 제품 또한 공동구매를 진행하겠습니다. 
    </p>
+                            <div class="text-button">
+                                <a href="#">Continue Reading</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
 {% endblock %}
