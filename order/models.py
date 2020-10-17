@@ -1,14 +1,26 @@
+<<<<<<< HEAD
 import hashlib
 
+=======
+import hashlib
+
+from django.db.models.signals import post_save
+
+from .iamport import find_transaction, payments_prepare
+
+>>>>>>> c1c07f881c41e4c2be280804821d53fb051fa638
 from django.db import models
 from django.db.models.signals import post_save
 
 # from django.core.validators import MinValueValidator, MaxLengthValidator
 from shop.models import Product
 
+<<<<<<< HEAD
 from .iamport import find_transaction, payments_prepare
 
+=======
 
+>>>>>>> c1c07f881c41e4c2be280804821d53fb051fa638
 # 주문정보 저장
 class Order(models.Model):
     first_name = models.CharField(max_length=50)
