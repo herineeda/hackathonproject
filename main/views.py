@@ -75,6 +75,11 @@ def search(request):
         result = Post.objects.filter(name__contains=keyword)
     else:
         result = Post.objects.filter(content__contains=keyword)
+
+    paginator = Paginator(result, 13)
+    page = request.GET.get('page')
+    result = paginator.get_page(page)
+
     return render(request, 'grouppurchase.html', {'posts':result})
 
 # 마이페이지

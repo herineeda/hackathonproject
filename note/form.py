@@ -14,7 +14,7 @@ class NoteForm(forms.ModelForm):
         self.fields['content'].label = ""
 
         self.fields['content'].widget.attrs.update({
-            'class':'note_content',
+            'class':'create_note',
             'placeholder':'쪽지 내용을 적어주세요',
         })
 
