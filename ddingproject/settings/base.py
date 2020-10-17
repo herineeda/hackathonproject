@@ -1,7 +1,8 @@
 import os
 from pathlib import Path
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.dirname(
+    os.path.dirname(os.path.abspath(__file__))))
 ROOT_DIR = os.path.dirname(BASE_DIR)
 
 SECRET_KEY = os.getenv(
@@ -50,7 +51,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(ROOT_DIR, 'templates'),
+            os.path.join(BASE_DIR, 'templates'),
         ],
 
         'APP_DIRS': True,
