@@ -81,17 +81,27 @@ def search(request):
 def mypage(request):
     # 내가 작성한 글만 가져오기
     user = User.objects.get(username = request.user.get_username())
-    myposts = Post.objects.filter(author=user)
+    mypost_list = Post.objects.filter(author=user)
+
+    # 내가 작성한 글 pagination
+    mypost_paginator = Paginator(mypost_list, 6)
+    post_page = request.GET.get('page')
+    myposts = mypost_paginator.get_page(post_page)
 
     # 댓글을 단 글만 가져오기
     mycomments = Comment.objects.filter(writer=user) # 작성한 댓글 가져오기
 
-    comment_posts = list() # Comment 객체에서 Post 객체를 가져와 리스트에 담기(Comment 모델이 Post 모델을 외래키로 참조!!)
+    comment_posts_list = list() # Comment 객체에서 Post 객체를 가져와 리스트에 담기(Comment 모델이 Post 모델을 외래키로 참조!!)
     for mycomment in mycomments:
-        comment_posts.append(mycomment.post)
+        comment_posts_list.append(mycomment.post)
 
-    comment_post_set = set(comment_posts) # 중복 제거(한 글에 여러 댓글을 작성했을 수도 있으니까!)
-    comment_posts = list(comment_post_set)
+    comment_post_set = set(comment_posts_list) # 중복 제거(한 글에 여러 댓글을 작성했을 수도 있으니까!)
+    comment_posts_list = list(comment_post_set)
+
+    # 댓글 단 글 pagination
+    comment_paginator = Paginator(comment_posts_list, 6)
+    comment_page = request.GET.get('page')
+    comment_posts = comment_paginator.get_page(comment_page)
 
     return render(request, 'mypage.html', {'myposts':myposts, 'comment_posts':comment_posts})
 

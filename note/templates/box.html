@@ -176,6 +176,9 @@
             color: black;
             text-decoration: none;
         }
+        .page_num{
+            text-align: center;
+        }
     </style>
 {% endblock %}
 
@@ -224,10 +227,27 @@
                         {% endif %}
                     {% endfor %}
                 {% endfor %}
+
+                <div class="page_num">
+                    {% if receive_notes.has_previous %}
+                        <a href="?page=1">First</a>
+                        <a href="?page={{receive_notes.previous_page_number}}">Previous</a>
+                    {% endif %}
+                    
+                    {% if receive_notes %}
+                        <span>{{receive_notes.number}}</span>
+                        <span>of</span>
+                        <span>{{receive_notes.paginator.num_pages}}</span>
+                    {% endif %}
+            
+                    {% if receive_notes.has_next %}
+                        <a href="?page={{receive_notes.next_page_number}}">Next</a>
+                        <a href="?page={{receive_notes.paginator.num_pages}}">Last</a>
+                    {% endif %}
+                </div>
             </div>
 
             <div id="tab2" class="tabcontent" style="display: none;">
-                <div>
                 {% for send in send_list %}
                     <p><strong>받는 사람. 	&#32; {{send}}</strong></p>
                     {% for note in send_notes %}
@@ -258,6 +278,23 @@
                     {% endfor %}
                 {% endfor %}
 
+                <div class="page_num">
+                    {% if send_notes.has_previous %}
+                        <a href="?page=1">First</a>
+                        <a href="?page={{send_notes.previous_page_number}}">Previous</a>
+                    {% endif %}
+                    
+                    {% if send_notes %}
+                        <span>{{send_notes.number}}</span>
+                        <span>of</span>
+                        <span>{{send_notes.paginator.num_pages}}</span>
+                    {% endif %}
+            
+                    {% if send_notes.has_next %}
+                        <a href="?page={{send_notes.next_page_number}}">Next</a>
+                        <a href="?page={{send_notes.paginator.num_pages}}">Last</a>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>

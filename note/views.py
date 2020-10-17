@@ -1,16 +1,20 @@
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
-
+from django.core.paginator import Paginator
 from main.models import Post
-
 from .form import NoteForm, ReNoteForm
 from .models import Note, ReNote
 
-
 # 쪽지함
 def box(request):
-    send_notes = Note.objects.filter(sender=request.user).exclude(scount=1).order_by('date') # 보낸 쪽지만
+    send_notes_list = Note.objects.filter(sender=request.user).exclude(scount=1).order_by('date') # 보낸 쪽지만
+    # 보낸 쪽지 pagination
+    send_paginator = Paginator(send_notes_list, 13)
+    send_page = request.GET.get('page')
+    send_notes = send_paginator.get_page(send_page)
+    # 받은 쪽지 pagination
+
     receive_notes = Note.objects.filter(receiver=request.user).exclude(rcount=1).order_by('date') # 받은 쪽지만
 
     send_list = list() # 사용자가 쪽지를 보낸 사람들을 담을 리스트

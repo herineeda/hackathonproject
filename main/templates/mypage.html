@@ -171,6 +171,9 @@
             top: 5px;
             left: -12px;
         }
+        .page_num{
+            text-align: center;
+        }
     </style>
 {% endblock %}
 
@@ -225,11 +228,27 @@
                                 {% if mypost.success == False %}
                                     <a href="{% url 'closed' mypost.id %}" class="btn btn-outline-success">공구 종료</a>
                                 {% endif %}
-                             </div>
+                            </div>
                         </div>
                     </div>
                 </div>
                 {% endfor%}
+                </div>
+
+                <div class="page_num">
+                    {% if myposts.has_previous %}
+                        <a href="?page=1">First</a>
+                        <a href="?page={{myposts.previous_page_number}}">Previous</a>
+                    {% endif %}
+            
+                    <span>{{myposts.number}}</span>
+                    <span>of</span>
+                    <span>{{myposts.paginator.num_pages}}</span>
+            
+                    {% if myposts.has_next %}
+                        <a href="?page={{myposts.next_page_number}}">Next</a>
+                        <a href="?page={{myposts.paginator.num_pages}}">Last</a>
+                    {% endif %}
                 </div>
             </div>
 
@@ -265,6 +284,22 @@
                         </div>
                     </div>
                     {% endfor%}
+                </div>
+
+                <div class="page_num">
+                    {% if comment_posts.has_previous %}
+                        <a href="?page=1">First</a>
+                        <a href="?page={{comment_posts.previous_page_number}}">Previous</a>
+                    {% endif %}
+            
+                    <span>{{comment_posts.number}}</span>
+                    <span>of</span>
+                    <span>{{comment_posts.paginator.num_pages}}</span>
+            
+                    {% if myposts.has_next %}
+                        <a href="?page={{comment_posts.next_page_number}}">Next</a>
+                        <a href="?page={{comment_posts.paginator.num_pages}}">Last</a>
+                    {% endif %}
                 </div>
             </div>
 
