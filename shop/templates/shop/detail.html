@@ -23,7 +23,7 @@
                                             <div class="price">{{product.price}}</div>
                                             <div class="text-content">
                                             <h5> {{product.metadescription|linebreaks}}</h5>
-                                                <h4>Description</h4>
+                                                <h4>설명</h4>
                                                 <p>{{product.description|linebreaks}}</p>
                                             </div>
                                         </div>
@@ -32,17 +32,17 @@
                                         <div class="item col-md-12">
                                         <div class="food-item">
                                             
-                                            <h3>장바구니 추가하기</h3>
+                                            <h3>장바구니에 담기</h3>
                                             <br><br><br>
                                             <div class="text-content">
                                                         <form action="{% url 'cart:product_add' product.id %}" method="post">
                 {{add_to_cart}}
                 {% csrf_token %}
-                
-                <input type="submit" class="btn btn-primary btn-sm" href="#" value ="ADD TO CART">
+                <br>
+                <input type="submit" class="primary-white-button" href="#" value ="추가하기">
             </form>
 
-                                            </div>
+                                            </div> 
                                         </div>
                                     </div>
                                     {% comment %} <div class="item col-md-12">

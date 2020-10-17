@@ -17,184 +17,27 @@
     </script>
 {% endblock %}
 
-{% block style %}
-    <style>
-        @font-face {
-            font-family: 'CookieRun-Regular';
-            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/CookieRun-Regular.woff') format('woff');
-        }
-        body{
-            font-family: 'CookieRun-Regular';
-        }
-        .box{
-            margin-top:15px;
-        }
-
-        /*작성한 글, 댓글 단 글들을 감싸는 <div>*/
-        .content{
-            height: 700px;
-        }
-
-        /*작성한 글, 댓글 단 글 관련 스타일*/
-        .row{
-            margin-left:0;
-            margin-right:0;
-        }
-        .card-img{
-            padding: 20px;
-        }
-        .post_link{
-            color: black;
-        }
-        .post_link:hover{
-            color: black;
-            text-decoration:none;
-        }
-        .card-body{
-            padding: 12px;
-        }
-        /*공구성공 여부를 표시하는 색*/
-        .word_o{ 
-            color: #45B649;
-        }
-        .word_c{
-            color: #c31432;
-        }
-
-        /*배경 이미지를 위한 <div>*/
-        .back_1{
-            width: 300px;
-            height: 0;
-            border-bottom: 300px solid #ffea7f;
-            border-left: 150px solid transparent;
-            border-right: 150px solid #ffea7f; /*사다리꼴 만들기*/
-            position: absolute;
-            top: 30%;
-            left: 30%; /*위치 조정*/
-            z-index: -2; /*뒤로 보내기*/
-            transform: rotate(30deg); /*회전*/
-        }
-        .back_2{
-            width: 100px;
-            height: 100px;
-            transform: skew(20deg);
-            background: #ffc002;
-            position: absolute;
-            bottom: 20%;
-            right: 30%;
-            z-index: -2;
-        }
-        .back_3{
-            width: 0;
-            height: 0;
-            border-bottom: 100px solid #f27f3d;
-            border-left: 100px solid transparent; /*직각삼각형 만들기*/
-            position: absolute;
-            right: 35%;
-            top: 45%;
-            z-index: -2;
-            transform: rotate(240deg); 
-        }
-
-        hr{
-            margin-top: 5px;
-            margin-bottom: 0;
-        }
-
-        /*상단 메뉴*/
-        .menu {
-            width: 100%;
-            height: 30px;
-            position: relative;
-        }
-        .tablinks {
-            float: left;
-            width: 15%;
-            height: 100%;
-            border: none;
-            outline: none;
-            font-size: 16px;
-            background-color: transparent;
-        }
-        .tablinks.active {
-            background-color:transparent;
-            border: none;
-            outline: none;
-        }
-        button:hover{
-            border: none;
-            outline: none;
-        }
-
-        /*메뉴 버튼 배경 이미지*/
-        .btn_background_1{
-            width: 30px;
-            height: 0;
-            border-bottom: 30px solid #ffea7f;
-            border-left: 10px solid transparent;
-            border-right: 10px solid transparent; /*사다리꼴 만들기*/
-            position: absolute;
-            left: 7%;         
-            z-index: -2; /*뒤로 보내기*/
-            transform: rotate(10deg); /*회전*/
-        }
-        .btn_background_2{
-            width: 0;
-            height: 0;
-            border-bottom: 30px solid #f27f3d;
-            border-right: 30px solid transparent; /*직각삼각형 만들기*/
-            position: absolute;
-            left: 21%;
-            top: 25%;
-            z-index: -2;
-            transform: rotate(110deg);
-        }
-        .btn_background_3{
-            width: 0;
-            height: 0;
-            border-left: 12px solid transparent;
-            border-right: 12px solid transparent;
-            border-bottom: 24px solid #ffe0dd;
-            position: absolute;
-            z-index: -2;
-            left: 36%;
-            top: 3%;
-        }
-        .btn_background_3::after{
-            content: "";
-            width: 0;
-            height: 0;
-            border-left: 12px solid transparent;
-            border-right: 12px solid transparent;
-            border-top: 24px solid #ffe0dd;
-            position: absolute;
-            top: 5px;
-            left: -12px;
-        }
-    </style>
-{% endblock %}
-
 {% block content %}
 {% load static %}
-    <div class="box">
+    <div class="mypage_box">
         <div class="menu">
-            <div class="btn_background_1"></div>
-            <div class="btn_background_2"></div>
-            <div class="btn_background_3"></div>
+            <div class="btn_back1"></div>
+            <div class="btn_back2"></div>
+            <div class="btn_back3"></div>
 
-            <button class="tablinks active" onclick="openTab(event, 'tab1')">내가 쓴 글</button>
-            <button class="tablinks" onclick="openTab(event, 'tab2')">댓글 작성한 글</button>
-            <button class="tablinks" onclick="openTab(event, 'tab3')">구매 내역</button>     
+            <button class="mypage_tablinks active" onclick="openTab(event, 'tab1')">내가 쓴 글</button>
+            <button class="mypage_tablinks" onclick="openTab(event, 'tab2')">댓글 작성한 글</button>
+            <button class="mypage_tablinks" onclick="openTab(event, 'tab3')">구매 내역</button>     
         </div>
         <hr>
 
-        <div class="content">
+        <div class="mypage_content">
             <div class="back_1"></div>
             <div class="back_2"></div>
             <div class="back_3"></div>
 
             <div id="tab1" class="tabcontent" style="display: block;">
-                <div class="row">
+                <div class="row mypage_row">
                 {% for mypost in myposts %}
                 <div class="col-sm-6" style="max-width: 540px;">
                     <div class="row no-gutters">
@@ -220,16 +63,34 @@
                                     </p>
                                 </a>
                                 <p class="card-text"><small class="text-muted">{{mypost.date}}</small></p>
-                                <a href="{% url 'edit' mypost.id %}" class="btn btn-outline-info">수정</a>
-                                <a href="{% url 'delete' mypost.id %}" class="btn btn-outline-danger">삭제</a>
+                                <a href="{% url 'edit' mypost.id %}" class="btn-revise">수정</a>
+                                <a href="{% url 'delete' mypost.id %}" class="btn-delete">삭제</a>
                                 {% if mypost.success == False %}
-                                    <a href="{% url 'closed' mypost.id %}" class="btn btn-outline-success">공구 종료</a>
+                                    <a href="{% url 'closed' mypost.id %}" class="btn-finish">공구종료</a>
                                 {% endif %}
-                             </div>
+                            </div>
                         </div>
                     </div>
                 </div>
                 {% endfor%}
+                </div>
+
+                <div class="page_num">
+                    {% if myposts.has_previous %}
+                        <a href="?page=1">First</a>
+                        <a href="?page={{myposts.previous_page_number}}">Previous</a>
+                    {% endif %}
+                    
+                    {% if myposts %}
+                        <span>{{myposts.number}}</span>
+                        <span>/</span>
+                        <span>{{myposts.paginator.num_pages}}</span>
+                    {% endif %}
+            
+                    {% if myposts.has_next %}
+                        <a href="?page={{myposts.next_page_number}}">Next</a>
+                        <a href="?page={{myposts.paginator.num_pages}}">Last</a>
+                    {% endif %}
                 </div>
             </div>
 
@@ -265,6 +126,24 @@
                         </div>
                     </div>
                     {% endfor%}
+                </div>
+
+                <div class="page_num">
+                    {% if comment_posts.has_previous %}
+                        <a href="?page=1">First</a>
+                        <a href="?page={{comment_posts.previous_page_number}}">Previous</a>
+                    {% endif %}
+                    
+                    {% if comment_posts %}
+                        <span>{{comment_posts.number}}</span>
+                        <span>/</span>
+                        <span>{{comment_posts.paginator.num_pages}}</span>
+                    {% endif %}
+            
+                    {% if myposts.has_next %}
+                        <a href="?page={{comment_posts.next_page_number}}">Next</a>
+                        <a href="?page={{comment_posts.paginator.num_pages}}">Last</a>
+                    {% endif %}
                 </div>
             </div>
 

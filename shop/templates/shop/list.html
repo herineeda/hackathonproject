@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %} Category Page? Main Page?
+{% block title %} Main Page
 {% endblock %}
 
 {% block content %}
@@ -11,11 +11,11 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
-                    <h4>Here you can find delecious foods</h4>
-                    <h2>Asian Restaurant</h2>
-                    <p>Quisque nec nibh id lacus fringilla eleifend sed sit amet sem. Donec lectus odio, mollis a nisl non, tempor interdum nisl.</p>
+                    <h4>띵동, 배달왔습니다 </h4>
+                    <h2>아이 띵동</h2>
+                    <p>많이 사면 상하고, 적게 사면 비싸 눈물을 머금으며 결국에는 배달만 시켜먹게 되는 자취생들을 위한 대용량 식품 소분 배달 서비스!</p>
                     <div class="primary-button">
-                        <a href="#" class="scroll-link" data-id="book-table">Order Right Now</a>
+                        <a href="#" class="scroll-link" data-id="book-table">쇼핑하러가기</a>
                     </div>
                 </div>
             </div>
@@ -33,14 +33,14 @@
                 </div>
                 <div class="col-md-4">
                     <div class="cook-content">
-                        <h4>We cook delecious</h4>
+                        <h4>띵동을 원하신다면?</h4>
                         <div class="contact-content">
-                            <span>You can call us on:</span>
+                            <span>전화번호:</span>
                             <h6>+ 1234 567 8910</h6>
                         </div>
-                        <span>or</span>
+                        <span>혹은</span>
                         <div class="primary-white-button">
-                            <a href="#" class="scroll-link" data-id="book-table">Order Now</a>
+                            <a href="{% url 'orders:order_create' %}" class="scroll-link" data-id="book-table">지금 주문하기</a>
                         </div>
                     </div>
                 </div>
@@ -76,7 +76,7 @@
 
 
 <!--group purchase -->
-    <section class="get-app">
+    {% comment %} <section class="get-app">
         <div class="container">
             <div class="row">
                 <div class="heading">
@@ -87,80 +87,12 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> {% endcomment %}
 
-    <section class="our-blog">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="heading">
-                        <h2>Our blog post</h2>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="blog-post">
-                        <img src="img/blog_post_01.jpg" alt="">
-                        <div class="date">26 Oct 2020</div>
-                        <div class="right-content">
-                            <h4>Stumptown Tofu Schlitz</h4>
-                            <span>Branding / Admin</span>
-                            <p>Skateboard iceland twee tofu shaman crucifix vice before they sold out corn hole occupy drinking vinegar chambra meggings kale chips hexagon...</p>
-                            <div class="text-button">
-                                <a href="#">Continue Reading</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="blog-post">
-                        <img src="img/blog_post_02.jpg" alt="">
-                        <div class="date">21 Oct 2020</div>
-                        <div class="right-content">
-                            <h4>Succulents Hashtag Folk</h4>
-                            <span>Branding / Admin</span>
-                            <p>Skateboard iceland twee tofu shaman crucifix vice before they sold out corn hole occupy drinking vinegar chambra meggings kale chips hexagon...</p>
-                            <div class="text-button">
-                                <a href="#">Continue Reading</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="blog-post">
-                        <img src="img/blog_post_03.jpg" alt="">
-                        <div class="date">11 Oct 2020</div>
-                        <div class="right-content">
-                            <h4>Knaus Sriracha Pinterest</h4>
-                            <span>Dessert / Chef</span>
-                            <p>Skateboard iceland twee tofu shaman crucifix vice before they sold out corn hole occupy drinking vinegar chambra meggings kale chips hexagon...</p>
-                            <div class="text-button">
-                                <a href="#">Continue Reading</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="blog-post">
-                        <img src="img/blog_post_04.jpg" alt="">
-                        <div class="date">03 Oct 2020</div>
-                        <div class="right-content">
-                            <h4>Crucifix Selvage Coat</h4>
-                            <span>Plate / Chef</span>
-                            <p>Skateboard iceland twee tofu shaman crucifix vice before they sold out corn hole occupy drinking vinegar chambra meggings kale chips hexagon...</p>
-                            <div class="text-button">
-                                <a href="#">Continue Reading</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+
 <!--product list -->
 
-    <section class="featured-food">
+    <section class="featured-food" a name="ping"></a>
         <div class="container">
             <div class="row">
                 <div class="heading">
@@ -175,8 +107,9 @@
                         <img src="{{product.image.url}}" alt="Product Image">
                         <div class="price">{{product.price}}</div>
                         <div class="text-content">
-                            <h4>무엇을 넣을까요 </h4>
-                            <p>{{product.description}}</p><a href="{{product.get_absolute_url}}" class="btn btn-primary" alt="{{product.name}}"> View Detail </a>
+                            <h4>띵동<i class="fa fa-bell-o"></i> 주문하세요! </h4>
+                            <p>{{product.description}}</p>
+                            <a href="{{product.get_absolute_url}}" class="text-button" alt="{{product.name}}"> 상세보기 </a>
                         </div>
                     </div>
                 </div>
