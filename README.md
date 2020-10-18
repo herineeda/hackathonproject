@@ -34,5 +34,5 @@ pip install -r requirements.txt
 
 ## Deployment
 ```shell
-
+fap deploy
 ```
