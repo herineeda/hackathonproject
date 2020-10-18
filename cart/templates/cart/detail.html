@@ -11,6 +11,7 @@
       <b><h1>장바구니가 비어있습니다.</h1></b>
       <p><a href="\">쇼핑하러 가기</a></p>
     </div>
+    <br><br><br><br>
   {% else %}
     <h3>장바구니</h3>
     <hr>
@@ -64,5 +65,28 @@
       <a href="{% url 'orders:order_create' %}" class="btn btn-outline-primary">주문하기</a>
     </p>
 {% endif %}
+
+<!-- footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <p>Copyright &copy; 2020 LikeLion Hackathon</p>
+                </div>
+                <div class="col-md-4">
+                    <ul class="social-icons">
+                        <li><a rel="nofollow" href="https://fb.com/templatemo"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                        <li><a href="#"><i class="fa fa-rss"></i></a></li>
+                        <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <p>Team name: I, DDingDong</p>
+                </div>
+            </div>
+        </div>
+    </footer>
 </div>
 {% endblock %}
