@@ -32,6 +32,9 @@ INSTALLED_APPS = [
     'main.apps.MainConfig',
     'order.apps.OrderConfig',
     'shop.apps.ShopConfig',
+
+    # 템플릿에서 세 자리 수마다 콤마 찍기
+    'django.contrib.humanize',
 ]
 
 MIDDLEWARE = [

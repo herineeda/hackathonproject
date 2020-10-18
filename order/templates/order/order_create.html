@@ -14,25 +14,50 @@
 {% endblock %}
 
 {% block content %}
-<div class="alert alert-info" role="alert">Your order </div>
-<ul class="list-group">
-    {% for item in cart %}
-    <li class="list-group-item">
-        <p>수량: <span id="product_quantity">{{item.quantity}}</span></p>
-        <p>제품명: <span id="product_name">{{item.product.name}}</span></p>
-        <p>총: <span id="product_total_cost">{{item.total_price}}</span></p>
-    </li>
-    {% endfor %}
+<div class="order">
+<div class="paper">
+    <div class="lines">
+      <div class="text" contenteditable spellcheck="false">
+        <h3>{{request.user}}님의 주문 내역</h3>
+        <table>
+            <th>제품</th>
+            <th>수량</th>
+            <th>가격</th>
 
-    <div class="alert alert-success" role="alert">Total: {{cart.get_total_price|floatformat:"2"}}</div>
-    <form action="" method="post" class="order-form">
-        {% csrf_token %}
-        {{form.as_p}}
-        <input type="hidden" name="pre_order_id" value="0">
-        <input type="hidden" name="amount" value="{{cart.get_total_price}}">
-        <input type="submit" value="주문하기" class="btn btn-lg btn-success">
-    </form>
-</ul>
+            {% for item in cart %}
+                <tr class="order_list">
+                    <td>{{item.product.name}}</td>
+                    <td>{{item.quantity}}</td>
+                    {% load humanize %}
+                    <td>{{item.total_price|floatformat|intcomma}}</td>
+                </tr>
+            {% endfor %}
+                <tr class="total">
+                    <td colspan=2>Total</td>
+                    <td>{{cart.get_total_price|floatformat|intcomma}}원</td>
+                </tr>
+        </table>
+    </div>
+    </div>
+      <div class="holes hole-top"></div>
+      <div class="holes hole-middle"></div>
+</div>
+</div>
+
+<br>
+    <div class="order_info">
+        <h3>구매자 정보 입력</h3>
+        <hr>
+        <div class="order_info_form">
+            <form action="" method="post">
+                {% csrf_token %}
+                {{form.as_p}}
+                <input type="hidden" name="pre_order_id" value="0">
+                <input type="hidden" name="amount" value="{{cart.get_total_price}}">
+                <input type="submit" value="주문하기" class="btn btn-lg btn-success">
+            </form>
+        </div>
+    </div>
 {% endblock %}
 
 {% block extra_script %}

@@ -63,10 +63,10 @@
                                     </p>
                                 </a>
                                 <p class="card-text"><small class="text-muted">{{mypost.date}}</small></p>
-                                <a href="{% url 'edit' mypost.id %}" class="btn btn-outline-info">수정</a>
-                                <a href="{% url 'delete' mypost.id %}" class="btn btn-outline-danger">삭제</a>
+                                <a href="{% url 'edit' mypost.id %}" class="btn-revise">수정</a>
+                                <a href="{% url 'delete' mypost.id %}" class="btn-delete">삭제</a>
                                 {% if mypost.success == False %}
-                                    <a href="{% url 'closed' mypost.id %}" class="btn btn-outline-success">공구 종료</a>
+                                    <a href="{% url 'closed' mypost.id %}" class="btn-finish">공구종료</a>
                                 {% endif %}
                             </div>
                         </div>
