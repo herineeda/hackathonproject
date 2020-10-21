@@ -31,13 +31,18 @@ ul {
 	list-style: none;
 	margin: 0px;
 }
-
+.createblock{
+	text-align: center;
+}
 p {
 	color: #9a9a9a;
 	font-size: 13px;
 	line-height: 24px;
 }
+.primary-button{
+text-align: center;
 
+}
 .primary-button a {
 	display: inline-block;
 	background-color: #f2745f;

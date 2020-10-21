@@ -25,6 +25,8 @@ Primary style
   }
   
   img {
+    display: block;
+     margin: 0px auto;
     max-width: 100%;
   }
   
