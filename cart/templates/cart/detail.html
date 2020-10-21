@@ -8,8 +8,7 @@
 <div class="cart_box">
   {% if cart|length <= 0 %}
     <div class="empty">
-      <img src="{% static 'img/cook_01.jpg' %}" alt="">
-      <b><h1>장바구니가 비어있습니다.</h1></b>
+      <img src="{% static 'img/emptycart.png' %}" alt=""> <!--가운데 정렬하기-->
       <p><a href="\">쇼핑하러 가기</a></p>
     </div>
     <br><br><br><br>
@@ -90,7 +89,7 @@
         </div>
     </footer>
 </div>
-
+<br><br><br><br>
 <!-- footer -->
     <footer>
         <div class="container">

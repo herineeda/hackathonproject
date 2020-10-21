@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
 
-
 {% block script %}
 <script type="text/javascript">
     csrf_token = '{{csrf_token}}';
@@ -55,10 +54,11 @@
                 {{form.as_p}}
                 <input type="hidden" name="pre_order_id" value="0">
                 <input type="hidden" name="amount" value="{{cart.get_total_price}}">
-                <input type="submit" value="주문하기" class="btn btn-lg btn-success">
+                <input type="submit" value="주문하기" class="btn-order">
             </form>
         </div>
     </div>
+    <br>
 
     
 <!-- footer -->

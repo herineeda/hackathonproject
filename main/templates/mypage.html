@@ -45,7 +45,8 @@
                         {% if mypost.image %}
                             <img src="{{mypost.image.url}}" class="card-img" alt="사진">
                         {% else %}
-                            <img src="" class="card-img" alt="디폴트 사진">
+                        <img src="{% static 'img/grouppurchaseposter.png' %}" class="card-img" alt="">
+                            
                         {% endif %}
                         </div>
                         <div class="col-md-8">
