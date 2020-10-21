@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block title %}
   장바구니 디테일
 {% endblock %}
@@ -8,6 +8,7 @@
 <div class="cart_box">
   {% if cart|length <= 0 %}
     <div class="empty">
+      <img src="{% static 'img/cook_01.jpg' %}" alt="">
       <b><h1>장바구니가 비어있습니다.</h1></b>
       <p><a href="\">쇼핑하러 가기</a></p>
     </div>
@@ -65,4 +66,27 @@
     </p>
 {% endif %}
 </div>
+
+<!-- footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <p>Copyright &copy; 2020 Likelion Hackathon</p>
+                </div>
+                <div class="col-md-4">
+                    <ul class="social-icons">
+                        <li><a rel="nofollow" href="https://fb.com/templatemo"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                        <li><a href="#"><i class="fa fa-rss"></i></a></li>
+                        <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <p>Team name: I, DDingDong</p>
+                </div>
+            </div>
+        </div>
+    </footer>
 {% endblock %}
