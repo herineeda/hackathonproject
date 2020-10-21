@@ -1,10 +1,13 @@
 from django.contrib.auth.models import User
+from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
-from django.core.paginator import Paginator
+
 from main.models import Post
+
 from .form import NoteForm, ReNoteForm
 from .models import Note, ReNote
+
 
 # 쪽지함
 def box(request):
