@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset = "utf-8">
+  <title>로그인</title>
+
+    <style>
+      @font-face {
+            font-family: "yg-jalnan";
+            src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff") format("woff");
+            font-weight: normal;
+            font-style: normal;
+            }
+
+        * {
+        font-family: "yg-jalnan";
+        }
+      .login_paper {
+        position: absolute;
+        height: 650px;
+        width: 500px;
+        margin: -325px -225px;
+        left: 50%;
+        top: 50%;
+        box-shadow: 0px 0px 5px 0px #888;
+        text-align: center;
+      }
+      .accountform{ /*아이디와 비밀번호 입력창*/
+        border: none;
+        border-bottom: solid; /*밑줄만 만들기*/
+        outline:none;
+        padding: 5px;
+        margin: 7px;
+        width: 250px;
+        line-height: 30px;
+        font-size: 17px;
+      }
+      .accountform:focus{ /*input 클릭 시*/
+        outline: none;
+        border-bottom: solid;
+      }
+      .login_btn{
+        width: 170px;
+        margin: 10px 0px 20px 0px;
+        width: 260px;
+        line-height: 35px;
+        background: transparent;
+        border-radius: 5px;
+      }
+      .nav_btn{
+        font-size: 15px
+      }
+      .nav_btn > a{
+        text-decoration: none;
+      }
+      /*체크박스 관련 스타일*/
+      .checkbox input{
+        display:none;
+      }
+      .checkbox span{
+        display:inline-block;
+        vertical-align: middle;
+        cursor:pointer;
+      }
+      .checkbox .icon{
+        position:relative;
+        width:17px;
+        height:17px;
+        border:1px solid #c8ccd4;
+        border-radius:3px;
+        transition: 0.1s ease;
+      }
+      .checkbox .icon::after{
+        content:'';
+        position:absolute;
+        top:1px;
+        left:5px;
+        width:5px;
+        height:11px;
+        border-right:2px solid #fff;
+        border-bottom:2px solid #fff;
+        transform:rotate(45deg) scale(0);
+        transition:all 0.3s ease;
+        transition-delay:0.15s;
+        opacity:0;
+      }
+      .checkbox .text{
+        margin-left:5px;
+        font-size: 12px;
+      }
+
+      .checkbox input:checked ~ .icon{
+        border-color:transparent;
+        background:#ff1616;
+        animation:jelly 0.6s ease;
+      }
+      .checkbox input:checked ~ .icon::after{
+        opacity:1;
+        transform:rotate(45deg) scale(1);
+      }
+
+      @keyframes jelly {
+        from {transform: scale(1, 1);}
+        30% {transform: scale(1.25, 0.75);}
+        40% {transform: scale(0.75, 1.25);}
+        50% {transform: scale(1.15, 0.85);}
+        65% {transform: scale(0.95, 1.05);}
+        75% {transform: scale(1.05, 0.95);}
+        to {transform: scale(1, 1);}
+      }
+  </style>
+</head>
+
+<body>
+  <div class="login_paper">
+    <h2>로그인</h2>
+    <hr>
+    <div>
+        {% load static %}
+      <img src="{% static 'img/logo_account.png'%}" alt="logo" width=300>
+    </div>
+
+    <form method="POST" action="{% url 'login' %}">
+      {% csrf_token %}
+      <input name="username" class="accountform" type="text" placeholder="아이디"><br>
+      <input name="password" class="accountform" type="password" placeholder="비밀번호"><br>
+
+      <label class="checkbox">
+        <input type="checkbox">
+        <span class="icon"></span>
+        <span class="text">Remember me</span>
+      </label>
+      <br>
+      <input type="submit" class="login_btn" value="로그인!">
+    </form>
+
+    <p class="nav_btn">
+      <a href="{% url 'signup' %}">회원가입</a> &nbsp;·&nbsp;
+      <a href="{% url 'shop:product_all' %}">홈</a> &nbsp;·&nbsp;
+      <a href="{% url 'introduce' %}">페이지 소개</a>
+    </p>
+  </div>
+</body>
+</html>
