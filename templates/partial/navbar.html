@@ -21,8 +21,10 @@
                             {% else %}| 0 {% endif %}
                         </a>
                         {% if not user.is_authenticated %}
-                        <a class="navbar-item {{ account_login_active }}" href="{% url 'account_login' %}"> 로그인 </a>
-                        <a class="navbar-item {{ group_purchage_active }}" href="{% url 'group_purchase' %}">
+                        <a class="navbar-item {{ account_login_active }}" href="{% url 'account_login' %}">
+                            로그인
+                        </a>
+                        <a class="navbar-item {{ account_login_active }}" href="{% url 'group_purchase' %}">
                             회원가입
                         </a>
                         {% else %}
