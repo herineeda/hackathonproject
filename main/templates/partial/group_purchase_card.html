@@ -1,0 +1,45 @@
+{% load static %}
+<div class="column is-one-third-desktop is-half-tablet">
+    <div class="card is-rounded">
+        <div class="card-image">
+            <figure class="image is-16by9">
+                {% if post.image %}
+                <img src="{{ post.image.url }}" alt="">
+                {% else %}
+                <img src="{% static 'img/grouppurchaseposter.png' %}">
+                {% endif %}
+            </figure>
+            <!-- <div class="card-content is-overlay is-clipped">
+                <span class="tag is-info">
+                    Photo Title That is really long to show the clipping
+                </span>
+            </div> -->
+        </div>
+        <div class="card-content">
+            <div class="content">
+                {% if post.success %}
+                <span class="tag is-danger is-medium">
+                    종료
+                </span>
+                {% else %}
+                <span class="tag is-info is-medium">
+                    진행중
+                </span>
+                {% endif %}
+                <br><br>
+                <p class="subtitle">{{ post.name | truncatechars:15 }}</p>
+                <a href="{% url 'post_detail' post.id %}">
+                    {{ post.title | truncatechars:20 }}
+                </a><br>
+                대장: {{post.author}}<br>
+                수량: {{post.count}}<br>
+                공구할 날: {{post.date|date:"Y.m.d"}}<br>
+            </div>
+        </div>
+        <footer class="card-footer">
+            <a class="card-footer-item">
+                BUY
+            </a>
+        </footer>
+    </div>
+</div>
