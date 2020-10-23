@@ -1,0 +1,27 @@
+{% comment %}
+사용법
+{% include "partial/paginator.html" with paginator=posts paginator_range=paginator_range %}
+{% endcomment %}
+
+<nav class="pagination is-centered" role="navigation" aria-label="pagination">
+    {% if paginator.has_previous %}
+    <a class="pagination-previous" href="?page={{ posts.previous_page_number }}"><</a>
+    {% else %}
+    <a class="pagination-previous" disabled><</a>
+    {% endif %}
+
+    {% if paginator.has_next %}
+    <a class="pagination-next" href="?page={{ posts.next_page_number }}">></a>
+    {% else %}
+    <a class="pagination-next" disabled>></a>
+    {% endif %}
+
+    <ul class="pagination-list">
+        {% for page in paginator_range %}
+        <li>
+            <a class="pagination-link{% ifequal page paginator.number %} is-current{% endifequal %}"
+                href="?page={{ page }}">{{ page }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</nav>

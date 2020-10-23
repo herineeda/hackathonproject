@@ -18,10 +18,29 @@ def introduce(request):
 # 공구 게시판: 게시글 목록 띄우기
 def group_purchase(request):
     post_list = Post.objects.all()
-    paginator = Paginator(post_list, 13)
+    paginator = Paginator(post_list, 6)
     page = request.GET.get('page')
     posts = paginator.get_page(page)
-    return render(request, 'grouppurchase.html', {"group_purchage_active": "is-active", 'posts': posts})
+
+    page_numbers_range = 10
+
+    max_index = len(paginator.page_range)
+    current_page = int(page) if page else 1
+    start_index = int((current_page - 1) /
+                      page_numbers_range) * page_numbers_range
+    end_index = start_index + page_numbers_range
+
+    if end_index >= max_index:
+        end_index = max_index
+    paginator_range = paginator.page_range[start_index:end_index]
+
+    context = {
+        "group_purchage_active": "is-active",
+        'posts': posts,
+        "paginator_range": paginator_range
+    }
+
+    return render(request, 'grouppurchase.html', context)
 
 
 # 게시글 자세히 보기
