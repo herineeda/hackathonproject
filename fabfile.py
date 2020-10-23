@@ -8,3 +8,6 @@ def deploy():
     local('git push heroku master')
     # 사용후 다시 중지
     local('heroku maintenance:off')
+
+def runserver():
+    local("python manage.py runserver --settings=ddingproject.settings.dev")

@@ -1,108 +1,40 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block script %}
-<script>
-    function showHide(){
-        if(document.getElementById("search_form").style.display =='none'){
-            document.getElementById("search_form").style.display ='block';
-        }
-        else{
-            document.getElementById("search_form").style.display ='none';
-        }
-    }
-</script>
 {% endblock %}
 
 {% block content %}
-<div class="grouppurchase">
-    <a href="{% url 'group_purchase' %}" class='left_btn'>전체 글</a>
-    <button onclick=showHide(); class='left_btn'>검색하기</button>
-    {% if user.is_authenticated %}
-        <a href="{% url 'create' %}" class="right_btn">글쓰기</a>
-    {% endif %}
-
-
-    <div id="search_form">
-        <form action="{% url 'search' %}">
-            <select name="select_text">
-                <option value="전체">전체</option>
-                <option value="제품명">제품명</option>
-                <option value="내용">내용</option>
-            </select>
-            <input type="text" name='text' size=40>
-        </form>
-        
-    </div>
-    
-    <div class="post_list">
-        {% if posts %}
-        <table>
-            <th style="width:10%;"></th>
-            <th style="width:18%;">공구물품</th>
-            <th>제목</th>
-            <th style="width:10%;">작성일자</th>
-            <th style="width:10%;">작성자</th>
-            <th style="width:8%;">조회수</th>
-            
-            {% for post in posts %}
-            <tr>
-                {% if post.success %}
-                <td>종료</td>
-                {% else %}
-                <td>진행 중</td>
-                {% endif %}
-                <td>{{post.name | slice:":15"}}</td>
-                <td><a href="{% url 'post_detail' post.id %}">{{post.title | slice:":40"}}</a></td>
-                <td>{{post.date|date:"Y.m.d"}}</td>
-                <td>{{post.author}}</td>
-                <td>{{post.count}}</td>
-            </tr>  
-            {% endfor %}
-        </table>
-        {% else %}
-            <p style="text-align: center;">게시글이 없습니다.</p>
-        {% endif %}          
-    </div>
-    <br>
-    
-    <div class="page_num">
-        {% if posts.has_previous %}
-            <a href="?page=1">First</a>
-            <a href="?page={{posts.previous_page_number}}">Previous</a>
-        {% endif %}
-
-        {% if posts %}
-            <span>{{posts.number}}</span>
-            <span>/</span>
-            <span>{{posts.paginator.num_pages}}</span>
-        {% endif %}
-
-        {% if posts.has_next %}
-            <a href="?page={{posts.next_page_number}}">Next</a>
-            <a href="?page={{posts.paginator.num_pages}}">Last</a>
-        {% endif %}
-    </div>
-</div>
-<!-- footer -->
-    <footer>
+<section class="hero">
+    <div class="hero-head is-centered has-text-centered">
         <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <p>Copyright &copy; 2020 Likelion Hackathon</p>
+            <div class="columns is-centered is-vcentered">
+
+
+            </div>
+        </div>
+    </div>
+
+    <div class="hero-body">
+        <div class="container has-text-centered is-centered">
+            <div class="columns is-multiline is-centered">
+                <div class="column is-6">
+                    {% include "partial/group_purchase_searchbar.html" %}
                 </div>
-                <div class="col-md-4">
-                    <ul class="social-icons">
-                        <li><a rel="nofollow" href="https://fb.com/templatemo"><i class="fa fa-facebook"></i></a></li>
-                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                        <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                        <li><a href="#"><i class="fa fa-rss"></i></a></li>
-                        <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <p>Team name: I, DDingDong</p>
+                <div class="column is-10">
+                    {% if posts %}
+                    <div class="columns is-multiline">
+                        {% for post in posts %}
+                        {% include "partial/group_purchase_card.html" with post=post only %}
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <p class="subtitle">게시글이 없습니다.</p>
+                    {% endif %}
+                    {% include "partial/paginator.html" with paginator=posts%}
                 </div>
             </div>
         </div>
-    </footer>
+    </div>
+</section>
 {% endblock %}

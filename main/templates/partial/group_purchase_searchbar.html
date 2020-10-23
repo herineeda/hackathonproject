@@ -1,0 +1,21 @@
+<form action="{% url 'search' %}">
+    <div class="field has-addons has-addons-centered">
+        <div class="control">
+            <div class="select">
+                <select class="select is-normal" name="select_text">
+                    <option value="전체">전체</option>
+                    <option value="제품명">제품명</option>
+                    <option value="내용">내용</option>
+                </select>
+            </div>
+        </div>
+        <div class="control is-expanded">
+            <input type="text" name='text' class="input is-normal" placeholder="검색어를 입력해주세요!">
+        </div>
+        <div class="control">
+            <button class="button is-link is-normal">
+                검색
+            </button>
+        </div>
+    </div>
+</form>

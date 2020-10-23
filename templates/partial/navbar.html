@@ -1,0 +1,64 @@
+{% load static %} {% load humanize %}
+
+<section class="hero is-light">
+    <div class="hero-head">
+        <nav class="navbar">
+            <div class="container">
+                <div class="navbar-brand">
+                    <a class="navbar-item"> 아이딩동! 대충 로고 </a>
+                    <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu"
+                        aria-expanded="false">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a>
+                </div>
+                <div id="navMenu" class="navbar-menu">
+                    <div class="navbar-end">
+                        <a class="navbar-item" href="{% url 'cart:detail' %}">
+                            <i class="fa fa-shopping-cart"></i>
+                            {% if cart|length > 0 %} \{{cart.get_total_price|floatformat|intcomma}} | {{cart|length}} 개
+                            {% else %}| 0 {% endif %}
+                        </a>
+                        {% if not user.is_authenticated %}
+                        <a class="navbar-item {{ account_login_active }}" href="{% url 'account_login' %}">
+                            로그인
+                        </a>
+                        <a class="navbar-item {{ account_login_active }}" href="{% url 'group_purchase' %}">
+                            회원가입
+                        </a>
+                        {% else %}
+                        <a class="navbar-item {{ mypage_active }" href="{% url 'mypage' %}"> 마이페이지 </a>
+                        <a class="navbar-item" href="{% url 'account_logout' %}"> 로그아웃 </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <div class="hero-body">
+        <div class="container has-text-centered">
+            <p class="title brand-title">아이딩동!</p>
+            <p class="subtitle brand-subtitle">이제는 내가 먼저! 나눌 수록 배가 되는 딩동하자!!</p>
+        </div>
+    </div>
+
+    <div class="hero-foot">
+        <nav class="tabs is-boxed is-centered is-fullwidth">
+            <div class="container">
+                <ul>
+                    <li class="{{ introduce_active }}">
+                            <a href="{% url 'introduce' %}">소개받자!</a>
+                            </li>
+                            <li class="{{ group_purchage_active }}">
+                                <a href="{% url 'group_purchase' %}">공구하자!</a>
+                            </li>
+                            <li class="{{ shop_active }}">
+                                <a href="{% url 'shop:product_all' %}">쇼핑하자!</a>
+                            </li>
+                            </ul>
+                    </div>
+        </nav>
+    </div>
+</section>
