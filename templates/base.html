@@ -6,11 +6,11 @@
 <html lang="ko">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="description" content="" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>{% block title %} navbar {% endblock %}</title>
+  <title>{% block title %}{% endblock %}</title>
 
   <!-- iamport.payment.js -->
   <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js"></script>
@@ -18,15 +18,70 @@
   <!-- Google font api -->
   <link
     href="https://fonts.googleapis.com/css?family=Spectral:200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i"
-    rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet" />
 
-  {% block script %}
+  <!-- Fontawesome -->
+  <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script>
+
+  <!-- Bulma CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css" />
+
+  <style>
+    @font-face {
+      font-family: "yg-jalnan";
+      src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff") format("woff");
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    * {
+      font-family: "yg-jalnan";
+    }
+
+    .brand-title {
+      font-size: 3rem;
+      padding: 1rem;
+    }
+
+    .brand-subtitle {
+      font-size: 1rem;
+    }
+  </style>
+  {% block style %}
   {% endblock %}
 </head>
 
 <body>
+  {% include "partial/navbar.html" %}
+
   {% block content %}
+  {% endblock %}
+
+  <script>
+    // 네브바 버튼 글로벌 스크립트
+    document.addEventListener("DOMContentLoaded", () => {
+      // Get all "navbar-burger" elements
+      const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll(".navbar-burger"), 0);
+
+      // Check if there are any navbar burgers
+      if ($navbarBurgers.length > 0) {
+        // Add a click event on each of them
+        $navbarBurgers.forEach((el) => {
+          el.addEventListener("click", () => {
+            // Get the target from the "data-target" attribute
+            const target = el.dataset.target;
+            const $target = document.getElementById(target);
+
+            // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+            el.classList.toggle("is-active");
+            $target.classList.toggle("is-active");
+          });
+        });
+      }
+    });
+  </script>
+  {% block script %}
   {% endblock %}
 </body>
 

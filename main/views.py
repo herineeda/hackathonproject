@@ -12,7 +12,7 @@ from .models import Comment, Post
 
 # 서비스 소개 페이지
 def introduce(request):
-    return render(request, 'introduce.html')
+    return render(request, 'introduce.html', {"introduce_active": "is-active"})
 
 
 # 공구 게시판: 게시글 목록 띄우기
@@ -21,7 +21,7 @@ def group_purchase(request):
     paginator = Paginator(post_list, 13)
     page = request.GET.get('page')
     posts = paginator.get_page(page)
-    return render(request, 'grouppurchase.html', {'posts': posts})
+    return render(request, 'grouppurchase.html', {"group_purchage_active": "is-active", 'posts': posts})
 
 
 # 게시글 자세히 보기
@@ -30,7 +30,7 @@ def post_detail(request, post_id):
     post_detail.count += 1
     post_detail.save()
     comment_form = CommentForm()
-    return render(request, 'post_detail.html', {'post_detail': post_detail, 'comment_form': comment_form})
+    return render(request, 'post_detail.html', {"group_purchage_active": "is-active", 'post_detail': post_detail, 'comment_form': comment_form})
 
 
 # 게시글 작성
@@ -47,7 +47,7 @@ def create(request):
             return redirect('group_purchase')
     else:
         form = PostForm()
-        return render(request, 'create.html', {'form': form})
+        return render(request, 'create.html', {"group_purchage_active": "is-active", 'form': form})
 
 
 # 게시글 수정
@@ -62,7 +62,7 @@ def edit(request, post_id):
 
     else:
         form = PostForm(instance=post)
-        return render(request, 'create.html', {'form': form})
+        return render(request, 'create.html', {"group_purchage_active": "is-active", 'form': form})
 
 
 # 게시글 삭제
@@ -89,7 +89,7 @@ def search(request):
     page = request.GET.get('page')
     result = paginator.get_page(page)
 
-    return render(request, 'grouppurchase.html', {'posts': result})
+    return render(request, 'grouppurchase.html', {"group_purchage_active": "is-active", 'posts': result})
 
 
 # 마이페이지
