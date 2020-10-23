@@ -4,8 +4,6 @@ from django.conf.urls import url
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
-
-import accounts.views
 import cart.views
 import main.views
 import order.views

@@ -54,10 +54,36 @@
                 {{form.as_p}}
                 <input type="hidden" name="pre_order_id" value="0">
                 <input type="hidden" name="amount" value="{{cart.get_total_price}}">
-                <input type="submit" value="주문하기" class="btn btn-lg btn-success">
+                <input type="submit" value="주문하기" class="btn-order">
             </form>
         </div>
     </div>
+    <br>
+
+    
+<!-- footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <p>Copyright &copy; 2020 Likelion Hackathon</p>
+                </div>
+                <div class="col-md-4">
+                    <ul class="social-icons">
+                        <li><a rel="nofollow" href="https://fb.com/templatemo"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                        <li><a href="#"><i class="fa fa-rss"></i></a></li>
+                        <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <p>Team name: I, DDingDong</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
 {% endblock %}
 
 {% block extra_script %}

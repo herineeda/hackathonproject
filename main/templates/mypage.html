@@ -45,7 +45,8 @@
                         {% if mypost.image %}
                             <img src="{{mypost.image.url}}" class="card-img" alt="사진">
                         {% else %}
-                            <img src="" class="card-img" alt="디폴트 사진">
+                        <img src="{% static 'img/grouppurchaseposter.png' %}" class="card-img" alt="">
+                            
                         {% endif %}
                         </div>
                         <div class="col-md-8">
@@ -153,4 +154,27 @@
 
         </div>
     </div>
+
+<!-- footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <p>Copyright &copy; 2020 Likelion Hackathon</p>
+                </div>
+                <div class="col-md-4">
+                    <ul class="social-icons">
+                        <li><a rel="nofollow" href="https://fb.com/templatemo"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                        <li><a href="#"><i class="fa fa-rss"></i></a></li>
+                        <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <p>Team name: I, DDingDong</p>
+                </div>
+            </div>
+        </div>
+    </footer>
 {% endblock %} 
