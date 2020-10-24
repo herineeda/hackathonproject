@@ -4,27 +4,35 @@
 {% endblock %}
 {% block style %}
 <style>
+
+.navbar-menu.navbar-item{
+    background-color:red;
+    text-decoration:none;
+}
 .a{
     padding: 100px 0px;
 }
 a.text-button{
 float: right;
 text-align:center;
-  display: inline-block;
-  height: 40px;
-  width: 140px;
-  margin: 15px 2px 40px ;
-  box-sizing: border-box;
-  border: transparent;
-  border-radius: 13px;
-  font-size: 14px;
-  font-weight: 300;
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-  color: #ffffff;
-  background-color: #D90B1C;
-  cursor: pointer;
-  outline: none;
+	border-radius: 4px;
+    background: #212529;
+    color: #fff;
+    padding: 7px 45px;
+    display: inline-block;
+    margin-top: 20px;
+    border: solid 2px #212529; 
+    transition: all 0.5s ease-in-out 0s;
+}
+.round-black-btn:hover,
+.round-black-btn:focus {
+	background: transparent;
+	color: #212529;
+	text-decoration: none;
+}
+}
+navbar-item{
+    text-decoration: none;
 }
 </style>
 {% endblock %}
@@ -45,7 +53,7 @@ text-align:center;
 
   <div class="navbar-menu">
     <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
-      <a class="navbar-item" {% if not current_category %}active{% endif %}>All</a>
+      <a class="navbar-item" {% if not current_category %}active{% endif %} >All</a>
       {% for c in categories %}
       <a class="navbar-item" href="{{c.get_absolute_url}}" {% if current_category.slug == c.slug %}active{% endif %}>{{c.name}}</a>{% endfor %}
     </div>
@@ -59,6 +67,7 @@ text-align:center;
     </div>
   </div>
 </nav>
+
 
 <!--product list -->
 
