@@ -2,7 +2,138 @@
 {% load static %}
 {% block style %}
 <style>
+/*주문서*/
+.order{
+    margin-top: 15px;
+    height: 400px;
+    margin-top: 15px;
+    height: 400px;
+    position: relative;
+    left: 10%;
+    text-align:center;
+}
+.paper {
+    position: absolute;
+    height: 100%;
+    width: 80%;
+    background: white;
+    top: 0;
+    box-shadow: 0px 0px 5px 0px #888;
+    text-align:center;
+  }
+.paper::before {
+    content: '';
+    position: absolute;
+    left: 45px;
+    height: 100%;
+    width: 2px;
+    background: rgba(255,0,0,0.4);
+    text-align:center;
+  }
+.lines {
+    margin-top: 40px;
+    height: calc(100% - 40px);
+    width: 100%;
+    background-image: repeating-linear-gradient(white 0px, white 24px, steelblue 25px);
+  }
+.text {
+    position: absolute;
+    top: 20px;
+    left: 55px;
+    bottom: 10px;
+    right: 10px;
+    line-height: 25px;
+    overflow: auto;
+    outline: none;
+    text-align:center;
+    
+  }
+.text table th{
+    text-align: center;
+    border-bottom: solid 1px grey;
+}
+.text table tr{
+    text-align: center;
+}
+.text table .total{
+    border-top: solid 3px grey;
+}
+.text table .total td{
+    padding: 10px 0px;
+}
+.holes {
+    position: absolute;
+    left: 10px;
+    height: 25px;
+    width: 25px;
+    background: lightgoldenrodyellow;
+    border-radius: 50%;
+    box-shadow: inset 0px 0px 2px 0px #888;
+}
+.hole-top {
+    top: 10%;
+}
+.hole-middle {
+    top: 50%;
+}
+.hole-bottom {
+    bottom: 10%;
+}
 
+/*주문자 정보*/
+.order_info{
+    margin-top: 15px;
+    height: 400px;
+    position: relative;
+    text-align:center;
+    
+}
+
+table{
+  text-align:center;
+  margin:auto;
+  font-size:25px;
+  line-height:200%;
+}
+
+.order_info_form{
+    padding: 10px;
+}
+.order_info_form input{
+    border: 0;
+    border-bottom: solid 2px grey;
+    outline: none;
+    background: transparent;
+}
+/* .last_name{
+    
+}
+.first_name{
+    
+}
+.email{
+    
+}
+.address{
+    
+}
+.city{
+    
+}
+.postal_code{
+   
+} */
+
+input.btn-order{
+		background: #212529;
+		color: #fff;
+		padding: 7px 45px;
+		display: inline-block;
+		margin-top: 20px;
+		border: solid 2px #212529;
+		transition: all 0.5s ease-in-out 0s;
+      
+}
 </style>
 {% endblock %}
 {% block script %}
@@ -18,11 +149,12 @@
 {% endblock %}
 
 {% block content %}
+<br>
 <div class="order">
   <div class="paper">
     <div class="lines">
       <div class="text" contenteditable spellcheck="false">
-        <h3>{{request.user}}님의 주문 내역</h3>
+        <h3><i class="fas fa-check"></i> {{request.user}}님의 주문 내역</h3><br>
         <table>
           <th>제품</th>
           <th>수량</th>
@@ -50,7 +182,7 @@
 
 <br>
 <div class="order_info">
-  <h3>구매자 정보 입력</h3>
+  <h3><i class="fas fa-user-circle"></i> 구매자 정보 입력</h3>
   <hr>
   <div class="order_info_form">
     <form action="" method="post">

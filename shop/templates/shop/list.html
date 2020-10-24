@@ -66,9 +66,11 @@ Main Page
             <a class="navbar-item">
                 <form class="form-inline my-2 my-lg-0" action="{% url 'search' %}" method="post">
                     {% csrf_token %}
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q"
-                        value="{{q}}">
-                    <button class="btn btn" type="submit">Search</button>
+                    <div class="control is-expanded">
+                    <input class="input is-normal" type="search" placeholder="검색어를 입력해주세요!" aria-label="Search" name="q"
+                        value="{{q}}"></div>
+                    <div class ="control">
+                    <button class="button is-link is-normal" type="submit">검색</button></div>
                 </form>
             </a>
         </div>
