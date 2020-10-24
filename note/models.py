@@ -12,7 +12,7 @@ class Note(models.Model):
     content = models.TextField()
     scount = models.IntegerField(default=0)
     rcount = models.IntegerField(default=0)
-    post = models.ForeignKey(Post, default="존재하지 않는 글", on_delete=models.SET_DEFAULT)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
     renotes_s = models.IntegerField(default=0)
     renotes_r = models.IntegerField(default=0)
 
