@@ -431,6 +431,16 @@
 		text-transform: uppercase;
 		cursor: pointer;
 	}
+
+	/*리뷰 작성폼 textarea*/
+	.review_content{
+		resize:none;
+		width: 100%;
+		height: 50px;
+	}
+	.review_btn{
+		float: right;
+	}
 </style>
 {% endblock %}
 
@@ -624,7 +634,7 @@
 				<form class="review-form" action="{% url 'shop:review' product.id product.slug product.category %}" method="POST">
 					{% csrf_token %}
 					{{review_form}}
-					<input type="submit" value="작성!">
+					<input type="submit" value="작성!" class="review_btn">
 					<!-- <div class="form-group">
 						<label>별점</label>
 						<div class="reviews-counter">
@@ -643,14 +653,22 @@
 						</div>
 					</div> -->
 				</form>
+				<hr>
 				{% endif %}
-
+				
 				<div>
 					{% for review in product.review_set.all %}
-						<p><strong>{{review.writer}}</strong> | {{review.date|date:"Y/m/d H:i"}}</p>
-
+						<p>
+							<strong>{{review.writer}}</strong> | {{review.date|date:"Y/m/d H:i"}}
+							{% if review.writer == request.user %}
+							<span style="font-size: 15px; float: right;">
+								<a href="{% url 'shop:delete_review' product.id product.slug product.category review.id %}">삭제</a>
+							</span>
+							{% endif %}
+						</p>
+						
 						{% if review.image %}
-							{{review.image}}
+							<img src="{{review.image.url}}" alt="사진" class="review_img" width=100>
 						{% endif %}
 
 						<p>{{review.content}}</p>

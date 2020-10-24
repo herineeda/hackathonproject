@@ -3,6 +3,7 @@ from django.utils import timezone
 from cart.forms import AddProductForm
 from .models import *
 from .forms import ReviewForm
+from django.core.exceptions import PermissionDenied
 
 def product_in_category(request, category_slug=None):
     current_category = None
@@ -53,3 +54,21 @@ def review(request, id, category, product_slug=None):
         product.count = r_count
         product.save()
         return redirect('shop:product_detail', id, product_slug)
+
+# 리뷰 삭제하기
+def delete_review(request, id, category, review_id, product_slug=None):
+    my_review = get_object_or_404(Review, pk=review_id)
+
+    if request.user == my_review.writer:
+        my_review.delete()
+
+        # 리뷰가 삭제될 때마다 Product의 리뷰 개수가 감소.
+        product = get_object_or_404(Product, id=id, slug=product_slug)
+        r_count = int(product.count)
+        r_count -= 1
+        product.count = r_count
+        product.save()
+        return redirect('shop:product_detail', id, product_slug)
+
+    else:
+        raise PermissionDenied
