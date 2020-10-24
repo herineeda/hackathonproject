@@ -29,6 +29,7 @@
                         </a>
                         {% else %}
                         <a class="navbar-item {{ mypage_active }" href="{% url 'mypage' %}"> 마이페이지 </a>
+                        <a class="navbar-item" href="{% url 'box' %}"> 쪽지함 </a>
                         <a class="navbar-item" href="javascript:{document.getElementById('logout').submit()}"> 로그아웃 </a>
                         <form id="logout" method="POST" action="{% url 'logout' %}">
                             {% csrf_token %} <input type="hidden" />

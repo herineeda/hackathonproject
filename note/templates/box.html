@@ -18,143 +18,254 @@
     </script>
 {% endblock %}
 
+{% block style %}
+<style>
+    /*메뉴와 쪽지 관련 요소를 감싸는 div*/
+    .notebox{
+        height: 600px;
+        margin-top: 30px;
+    }
+
+    /*쪽지 관련 요소(보낸이, 내용 등등)을 감싸는 div*/
+    .notes_content{
+        box-shadow: 0px 0px 3px 0px #888;
+        width: 80%;
+        height: 90%;
+        padding: 20px;
+        margin: auto;
+        position: relative;
+    }
+
+    .note_list tr td{
+        padding-bottom: 10px;;
+    }
+    /*쪽지 읽음 여부를 표현하는 이미지*/
+    .not_read_note{
+        width: 30px;
+        height: 20px;
+        background: #ffe0dd;
+        position: relative;
+    }
+    .not_read_note::after{
+        content: '';
+        width: 0;
+        height: 0;
+        border-left: 15px solid transparent;
+        border-right: 15px solid transparent;
+        border-top: 15px solid #d8090a;
+        position: absolute;
+        top: 1%;
+    }
+    .read_note{
+        width: 30px;
+        height: 18px;
+        background: #ffe0dd;
+        position: relative;
+    }
+    .read_note::after{
+        content: '';
+        width: 20px;
+        height: 20px;
+        background: #d8090a;
+        transform: rotate(45deg);
+        position: absolute;
+        bottom: 35%;
+        left: 18%;
+    }
+
+    /*메뉴 관련 요소를 감싸는 div*/
+    .box_menu {
+        width: 80%;
+        height: 8%;
+        margin: auto;
+    }
+
+    /*메뉴 버튼 꾸미기*/
+    .tablinks {
+        float:left;
+        width: 150px;
+        height: 100%;
+        padding: 0;
+        border: none;
+        outline: none;
+        font-size: 16px;
+        background-color: transparent;
+    }
+    .tablinks.active{
+        box-shadow: 0px 0px 3px 0px #888;
+        border: none;
+        outline: none;
+    }
+    button:focus{
+        border: none;
+        outline: none;
+    }
+
+    /*쪽지 자세히 보기 페이지로 넘어가는 a 태그 스타일*/
+    .note_link{
+        color: black;
+        text-decoration: none;
+    }
+    .note_link:hover{
+        color: black;
+        text-decoration: none;
+    }
+
+    /*페이지네이션 버튼...*/
+    .page_num{
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
     <div class="notebox">
         <div class="box_menu">
-            <!--버튼과 배경-->
-            <div class="button_background_1"></div>
             <button class="tablinks active" onclick="openTab(event, 'tab1')">받은 쪽지</button>
-            <div class="button_background_2"></div>
             <button class="tablinks" onclick="openTab(event, 'tab2')">보낸 쪽지</button>
         </div>
         
-        <div class="notes_content col-10">
-            <!--쪽지 배경-->
-            <div class="notebox_back1"></div>
-            <div class="notebox_back2"></div>
-
+        <div class="notes_content">
             <div id="tab1" class="tabcontent" style="display: block;">
-                {% for receive in receive_list %}
-                    <p><strong>보낸 사람. &#32; {{receive}}</strong></p>
-                    {% for note in receive_notes %}
-                        <!--받은 쪽지-->
-                        {%if note.sender == receive %}
-                        <div class="row">
-                            {% if note.is_read == "읽지 않음" %}
-                                <div class="col-1">
-                                    <div class="not_read_note"></div>
-                                </div>
-                            {% else %}
-                                <div class="col-1">
-                                    <div class="read_note"></div>
-                                </div>
-                            {% endif %}
-                            
-                            <div class="col-8">
-                                <a href="{% url 'note_detail' note.id %}" class="note_link">{{note.summary}}...</a>
-                            </div>
-                            <div class="col-1">
-                                {% if note.renotes_r != 0 %}
-                                +{{note.renotes_r}}
-                                {% endif %}
-                            </div>
-                            <div class="col-2">{{note.date|date:"Y.m.d"}}</div>
-                        </div>
-                        {% endif %}
-                    {% endfor %}
-                {% endfor %}
-
-                <div class="page_num">
-                    {% if receive_notes.has_previous %}
-                        <a href="?page=1">First</a>
-                        <a href="?page={{receive_notes.previous_page_number}}">Previous</a>
-                    {% endif %}
-                    
-                    {% if receive_notes %}
-                        <span>{{receive_notes.number}}</span>
-                        <span>/</span>
-                        <span>{{receive_notes.paginator.num_pages}}</span>
-                    {% endif %}
+                <table width=100% height=100% class="note_list">
+                    {% for receive in receive_list %}
+                        <thead>
+                            <tr>
+                                <td colspan="4" style="padding-bottom: 20px;">보낸 사람. &#32; {{receive}}</td>
+                            </tr>
+                        </thead>
+                        {% for note in receive_notes %}
+                            <!--받은 쪽지-->
+                            {%if note.sender == receive %}
+                                <tbody>
+                                    <tr>
+                                    {% if note.is_read == "읽지 않음" %}
+                                        <td style="width:10%; padding-left: 1%;"><div class="not_read_note"></div></td>
+                                    {% else %}
+                                        <td style="width:10%; padding-left: 1%;"><div class="read_note"></div></td>
+                                    {% endif %}
             
-                    {% if receive_notes.has_next %}
-                        <a href="?page={{receive_notes.next_page_number}}">Next</a>
-                        <a href="?page={{receive_notes.paginator.num_pages}}">Last</a>
-                    {% endif %}
-                </div>
+                                    <td><a href="{% url 'note_detail' note.id %}" class="note_link">{{note.summary}}...</a></td>
+                                    
+                                    {% if note.renotes_r != 0 %}
+                                        <td style="width:10%;">+{{note.renotes_r}}</td>
+                                    {% else %}
+                                        <td style="width:10%;"> </td>
+                                    {% endif %}
+            
+                                    <td style="width:10%;">{{note.date|date:"Y.m.d"}}</td>
+                                    </tr>
+                                </tbody>
+                            {% endif %}   
+                        {% endfor %}
+                    {% endfor %}
+                </table>
+            </div>
+
+            <div class="page_num">
+                {% if receive_notes.has_previous %}
+                    <a href="?page=1">First</a>
+                    <a href="?page={{receive_notes.previous_page_number}}">Previous</a>
+                {% endif %}
+                
+                {% if receive_notes %}
+                    <span>{{receive_notes.number}}</span>
+                    <span>/</span>
+                    <span>{{receive_notes.paginator.num_pages}}</span>
+                {% endif %}
+        
+                {% if receive_notes.has_next %}
+                    <a href="?page={{receive_notes.next_page_number}}">Next</a>
+                    <a href="?page={{receive_notes.paginator.num_pages}}">Last</a>
+                {% endif %}
             </div>
 
             <div id="tab2" class="tabcontent" style="display: none;">
-                {% for send in send_list %}
-                    <p><strong>받는 사람. 	&#32; {{send}}</strong></p>
-                    {% for note in send_notes %}
-                        <!--보낸 쪽지-->
-                        {% if note.receiver == send %}
-                            <div class="row">
-                                {% if note.is_read == "읽지 않음" %}
-                                    <div class="col-1">
-                                        <div class="not_read_note"></div>
-                                    </div>
-                                {% else %}
-                                    <div class="col-1">
-                                        <div class="read_note"></div>
-                                    </div>
-                                {% endif %}
-
-                                <div class="col-8">
-                                    <a href="{% url 'note_detail' note.id %}" class="note_link">{{note.summary}}...</a>
-                                </div>
-                                <div class="col-1">
-                                    {% if note.renotes_s != 0 %}
-                                        +{{note.renotes_s}}
+                <table width=100% height=100% class="note_list">
+                    {% for send in send_list %}
+                        <thead>
+                            <tr>
+                                <td colspan="4" style="padding-bottom: 20px;">받는 사람.&#32; {{send}}</td>
+                            </tr>
+                        </thead>
+                        {% for note in send_notes %}
+                            <!--보낸 쪽지-->
+                            {% if note.receiver == send %}
+                                <tbody>
+                                    <tr>
+                                    {% if note.is_read == "읽지 않음" %}
+                                        <td style="width:10%; padding-left: 1%;"><div class="not_read_note"></div></td>
+                                    {% else %}
+                                        <td style="width:10%; padding-left: 1%;"><div class="read_note"></div></td>
                                     {% endif %}
-                                    </div>
-                                <div class="col-2">{{note.date|date:"Y.m.d"}}</div>
-                            </div>
-                        {% endif %}
+                
+                                    <td><a href="{% url 'note_detail' note.id %}" class="note_link">{{note.summary}}...</a></td>
+                                    
+                                    {% if note.renotes_s != 0 %}
+                                        <td style="width:10%;">+{{note.renotes_s}}</td>
+                                    {% else %}
+                                        <td style="width:10%;"> </td>
+                                    {% endif %}
+                
+                                    <td style="width:10%;">{{note.date|date:"Y.m.d"}}</td>
+                                    </tr>
+                                </tbody>
+                            {% endif %}   
+                        {% endfor %}
                     {% endfor %}
-                {% endfor %}
+                </table>
+            </div>
 
-                <div class="page_num">
-                    {% if send_notes.has_previous %}
-                        <a href="?page=1">First</a>
-                        <a href="?page={{send_notes.previous_page_number}}">Previous</a>
-                    {% endif %}
-                    
-                    {% if send_notes %}
-                        <span>{{send_notes.number}}</span>
-                        <span>/</span>
-                        <span>{{send_notes.paginator.num_pages}}</span>
-                    {% endif %}
-            
-                    {% if send_notes.has_next %}
-                        <a href="?page={{send_notes.next_page_number}}">Next</a>
-                        <a href="?page={{send_notes.paginator.num_pages}}">Last</a>
-                    {% endif %}
-                </div>
+            <div class="page_num">
+                {% if send_notes.has_previous %}
+                    <a href="?page=1">First</a>
+                    <a href="?page={{send_notes.previous_page_number}}">Previous</a>
+                {% endif %}
+                
+                {% if send_notes %}
+                    <span>{{send_notes.number}}</span>
+                    <span>/</span>
+                    <span>{{send_notes.paginator.num_pages}}</span>
+                {% endif %}
+        
+                {% if send_notes.has_next %}
+                    <a href="?page={{send_notes.next_page_number}}">Next</a>
+                    <a href="?page={{send_notes.paginator.num_pages}}">Last</a>
+                {% endif %}
             </div>
         </div>
     </div>
 
 <!-- footer -->
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <p>Copyright &copy; 2020 Likelion Hackathon</p>
-                </div>
-                <div class="col-md-4">
-                    <ul class="social-icons">
-                        <li><a rel="nofollow" href="https://fb.com/templatemo"><i class="fa fa-facebook"></i></a></li>
-                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                        <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                        <li><a href="#"><i class="fa fa-rss"></i></a></li>
-                        <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <p>Team name: I, DDingDong</p>
-                </div>
-            </div>
+<div class="mt-5 pt-5 pb-5 footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-5 col-xs-12 about-us">
+          <h4>About Us</h4>
+          <p class="pr-5 text-white-50">이제는 내가 먼저! 나눌수록 배가 되는 띵동하자! </p>
+          <p>팀원들: 허태정, 이혜린, 김영은</p>
         </div>
-    </footer>
+        <div class="col-lg-3 col-xs-12 links">
+          <h4 class="mt-lg-0 mt-sm-3">링크</h4>
+            <ul class="m-0 p-0">
+              <li> <a href="{% url 'introduce' %}">소개글</a></li>
+              <li><a href="{% url 'shop:product_all' %}">상품 보러가기</a></li>
+            </ul>
+        </div>
+        <div class="col-lg-4 col-xs-12 location">
+          <h4 class="mt-lg-0 mt-sm-4">Contact Us</h4>
+          <p></p>
+          <p class="mb-0"><i class="fa fa-phone mr-3"></i>010 1234 5678</p>
+          <p><i class="fa fa-envelope-o mr-3"></i>info@iddingong.com</p>
+        </div>
+      </div>
+      <div class="row mt-5">
+        <div class="col copyright">
+          <p class=""><small class="text-white-50">© 2020 Likelion Hackathon</small></p>
+        </div>
+      </div>
+    </div>
+</div>
 {% endblock %} 
