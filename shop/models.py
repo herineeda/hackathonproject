@@ -1,6 +1,6 @@
 from django.db import models
 from django.urls import reverse
-
+from django.contrib.auth.models import User
 
 class Category(models.Model):
     name = models.CharField(max_length=200, db_index=True)
@@ -35,6 +35,9 @@ class Product(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
+    # 리뷰의 개수
+    count = models.IntegerField(default=0)
+
 
     class Meta: 
         ordering = ['-created', '-updated']
@@ -46,5 +49,15 @@ class Product(models.Model):
     def get_absolute_url(self):
         return reverse('shop:product_detail', args=[self.id,self.slug])
 
-    
+# 상품 리뷰
+class Review(models.Model):
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    writer = models.ForeignKey(User, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='images/', null=True, blank=True)
+    rate = models.IntegerField(default=1)
+    date = models.DateTimeField()
+    content = models.TextField()
 
+    def __str__(self):
+        return self.content[:20]
