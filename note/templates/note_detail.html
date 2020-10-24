@@ -1,10 +1,87 @@
 {% extends 'base.html' %}
 
+{% block style %}
+<style>
+    hr{
+        border-color: #16c7ff;
+    }
+
+    /*<div>로 한 쪽 끝이 접힌 종이 모양 만들기*/
+    .note_detail{
+        width: 80%;
+        height: 700px;
+        margin-top: 30px;
+        padding: 60px 30px 0px 30px;
+        background: #f2fcff;
+        position: relative;
+        overflow: auto;
+        margin: 30px auto;
+    }
+    .note_detail::before{
+        content: "";
+        left: 0;
+        top: 0;
+        border-top: 50px solid #fff;
+        border-right: 50px solid transparent;
+        position: absolute;
+    }
+    .note_detail::after{
+        content: "";
+        left: 0;
+        top: 0;
+        border-bottom: 49px solid #78deff;
+        border-left: 49px solid transparent;
+        position: absolute;
+    }
+
+    /*스크롤이 되지만 스크롤 바가 보이지 않음*/
+    .note_detail::-webkit-scrollbar { width: 0 !important }
+
+    /*삭제 및 쪽지함 버튼 꾸미기*/
+    .btn{
+        float: right;
+    }
+    .notebox{
+        color: #4180CB;
+    }
+    .notebox:hover{
+        color: #003e51;
+    }
+    .d{
+        color: #f40000;
+    }
+    .d:hover{
+        color: #920000;
+    }
+    a:hover{
+        text-decoration: none;
+    }
+
+    /*답장 작성 폼 스타일*/
+    .re_note_form{
+        width: 90%;
+        border: solid #16c7ff;
+        outline: none;
+    }
+    .renote_btn{
+        background: transparent;
+        border: none;
+        outline: none;
+        margin-left: 5px;
+        color: #4180CB;
+    }
+    .renote_btn:hover{
+        color:  #003e51; 
+    }
+</style>
+
+{% endblock %}
+
 {% block content %}
 <div class="note_detail">
     <div>
-        <button class="btn"><a href="{% url 'note_delete' note_detail.id %}">삭제</a></button>
-        <button class="btn"><a href="{% url 'box' %}">쪽지함</a></button>
+        <button class="btn"><a href="{% url 'note_delete' note_detail.id %}" class="d">삭제</a></button>
+        <button class="btn"><a href="{% url 'box' %}" class="notebox">쪽지함</a></button>
         
         {% if note_detail.sender == request.user %}
             <p><strong>받는 사람: {{note_detail.receiver}}</strong></p>
@@ -12,10 +89,18 @@
             <p><strong>보낸 사람: {{note_detail.sender}}</strong></p>
         {% endif %}
 
-        <p>{{note_detail.date|date:"Y.m.d"}}</p>
+        <p>{{note_detail.date|date:"Y.m.d H:i"}}</p>
         <p>{{note_detail.content}}</p>
     </div>
     <hr>
+
+     <!--해당 쪽지에 대한 답장 목록
+        ReNote가 Note를 외래키로 참조하기 때문에 아래와 같이 작성이 가능-->
+    {% for renote in note_detail.renote_set.all %}
+        <p><strong>{{renote.author}}</strong>_{{renote.time|date:"Y.m.d H:i"}}</p>
+        <p>{{renote.content}} </p>
+        <hr>
+    {% endfor %}
 
     <!--답장 작성하는 폼-->
     <form method="POST" action="{% url 'renote' note_detail.id %}">
@@ -23,37 +108,36 @@
         {{renote_form}}
         <input type="submit" value="보내기" class="renote_btn">
     </form>
-    <br>
-
-     <!--해당 쪽지에 대한 답장 목록
-        ReNote가 Note를 외래키로 참조하기 때문에 아래와 같이 작성이 가능-->
-    {% for renote in note_detail.renote_set.all %}
-        <p><strong>{{renote.author}}</strong>_{{renote.time|date:"Y.m.d"}}</p>
-        <p>{{renote.content}} </p>
-        <hr>
-    {% endfor %}
 </div>
 
 <!-- footer -->
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <p>Copyright &copy; 2020 Likelion Hackathon</p>
-                </div>
-                <div class="col-md-4">
-                    <ul class="social-icons">
-                        <li><a rel="nofollow" href="https://fb.com/templatemo"><i class="fa fa-facebook"></i></a></li>
-                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                        <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                        <li><a href="#"><i class="fa fa-rss"></i></a></li>
-                        <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <p>Team name: I, DDingDong</p>
-                </div>
-            </div>
+<div class="mt-5 pt-5 pb-5 footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-5 col-xs-12 about-us">
+          <h4>About Us</h4>
+          <p class="pr-5 text-white-50">이제는 내가 먼저! 나눌수록 배가 되는 띵동하자! </p>
+          <p>팀원들: 허태정, 이혜린, 김영은</p>
         </div>
-    </footer>
+        <div class="col-lg-3 col-xs-12 links">
+          <h4 class="mt-lg-0 mt-sm-3">링크</h4>
+            <ul class="m-0 p-0">
+              <li> <a href="{% url 'introduce' %}">소개글</a></li>
+              <li><a href="{% url 'shop:product_all' %}">상품 보러가기</a></li>
+            </ul>
+        </div>
+        <div class="col-lg-4 col-xs-12 location">
+          <h4 class="mt-lg-0 mt-sm-4">Contact Us</h4>
+          <p></p>
+          <p class="mb-0"><i class="fa fa-phone mr-3"></i>010 1234 5678</p>
+          <p><i class="fa fa-envelope-o mr-3"></i>info@iddingong.com</p>
+        </div>
+      </div>
+      <div class="row mt-5">
+        <div class="col copyright">
+          <p class=""><small class="text-white-50">© 2020 Likelion Hackathon</small></p>
+        </div>
+      </div>
+    </div>
+</div>
 {% endblock %} 
