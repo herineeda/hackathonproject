@@ -11,8 +11,8 @@ import shop.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('accounts/', include('allauth.urls')),
     path('', include('shop.urls')),
+    path('account/', include('accounts.urls')),
     path('cart/', include('cart.urls')),
     path('main/', include('main.urls')),
     path('order/', include('order.urls')),
