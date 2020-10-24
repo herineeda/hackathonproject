@@ -40,7 +40,7 @@ class PostForm(forms.ModelForm):
         })
         self.fields['url'].widget.attrs.update({
             'class':'post_url',
-            'placeholder': '제품을 판매하는 사이트 주소를 입력해주세요.',
+            'placeholder': '제품 판매사이트 주소를 입력해주세요.',
         })
 
 class CommentForm(forms.ModelForm):

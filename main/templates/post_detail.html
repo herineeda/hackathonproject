@@ -6,6 +6,7 @@
         <p class="right">
             <a href="{% url 'group_purchase' %}">목록으로 돌아가기</a>
 
+
             {% if request.user != post_detail.author and not post_detail.success %}
             <a href="{% url 'create_note' post_detail.id post_detail.author %}">쪽지 보내기</a>
             {% endif %}
