@@ -1,20 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block script %}
+{% block style %}
 {% endblock %}
 
 {% block content %}
 <section class="hero">
-    <div class="hero-head is-centered has-text-centered">
-        <div class="container">
-            <div class="columns is-centered is-vcentered">
-
-
-            </div>
-        </div>
-    </div>
-
     <div class="hero-body">
         <div class="container has-text-centered is-centered">
             <div class="columns is-multiline is-centered">
@@ -31,7 +22,11 @@
                     {% else %}
                     <p class="subtitle">게시글이 없습니다.</p>
                     {% endif %}
-                    {% include "partial/paginator.html" with paginator=posts%}
+                    <div class="columns is-multiline is-centered">
+                        <div class="column is-8">
+                            {% include "partial/paginator.html" with paginator=posts%}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
