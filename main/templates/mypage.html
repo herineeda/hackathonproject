@@ -44,7 +44,7 @@
             color: #26282b;
         }
         .categorys{
-            color:#765552;
+            color:black;
             font-size: 16px; 
             float:right;
         }
@@ -142,11 +142,12 @@
                             <div class="card-body">
                                 <span  class="categorys">&#60;{{mypost.category}}&#62;</span>
                                 {% if mypost.success %}
-                                    <p class="card-text word_c">공구 종료</p>
+                                    <span class="tag is-danger is-medium">공구 종료</span><br>
                                 {% else %}
-                                    <p class="card-text word_o">공구 진행 중</p>
+                                    <span class="tag is-info is-medium">공구 진행 중</span><br>
                                 {% endif %}
                                 <a href="{% url 'post_detail' mypost.id %}" class="post_link">
+                                <br>
                                     <h5 class="card-title">{{mypost.name}}</h5>
                                     <p class="card-text">
                                         {{mypost.title}}<br>
@@ -155,10 +156,11 @@
                                 </a>
                                 <p class="card-text"><small class="text-muted">{{mypost.date|date:"Y.m.d G:i"}}</small></p>
                                 {% if mypost.success == False %}
-                                    <a href="{% url 'closed' mypost.id %}" class="b" style="color: #8e444f;">공구종료</a>
+                                    
+                                    <a href="{% url 'closed' mypost.id %}" class="b" style="color: #D90B1C;">공구종료</a>
                                 {% endif %}
-                                <a href="{% url 'edit' mypost.id %}" class="b" style="color:#fab719;">수정</a>
-                                <a href="{% url 'delete' mypost.id %}" class="b" style="color: #e74550;">삭제</a>
+                                <a href="{% url 'edit' mypost.id %}" class="b" style="color:#03166A;">수정</a>
+                                <a href="{% url 'delete' mypost.id %}" class="b" style="color: #B30917;">삭제</a>
                             </div>
                         </div>
                     </div>
@@ -202,6 +204,7 @@
                                 <div class="card-body">
                                     <span class="categorys">&#60;{{cp.category}}&#62;</span>
                                     {% if cp.success %}
+                                    
                                         <p class="card-text word_c">공구 종료</p>
                                     {% else %}
                                         <p class="card-text word_o">공구 진행 중</p>
