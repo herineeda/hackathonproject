@@ -5,6 +5,12 @@
 {% endblock %}
 
 {% block content %}
+<div class="grouppurchase">
+    <a href="{% url 'group_purchase' %}" class='left_btn'>전체 글</a>
+    {% if user.is_authenticated %}
+        <a href="{% url 'create' %}" class="right_btn">글쓰기</a>
+    {% endif %}
+
 <section class="hero">
     <div class="hero-body">
         <div class="container has-text-centered is-centered">
