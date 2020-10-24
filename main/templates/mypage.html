@@ -1,17 +1,112 @@
 {% extends 'base.html' %}
-{% load static %}
+
+{% block style %}
+    <style>
+        .mypage_box{
+            height: 600px;
+            margin-top:30px;
+        }
+
+        .mypage_box > hr{
+            margin: 0;
+            width: 80%;
+            margin: auto;
+        }
+
+        /*작성한 글, 댓글 단 글들을 감싸는 <div>*/
+        .mypage_content{
+            width: 80%;
+            height: 90%;
+            padding: 20px;
+            margin: auto;
+            overflow: auto;
+            position: relative;
+        }
+
+        /*스크롤이 되지만 스크롤 바가 보이지 않음*/
+        .mypage_content::-webkit-scrollbar { width: 0 !important }
+
+        /*작성한 글, 댓글 단 글 관련 스타일*/
+        .mycontent{
+            box-shadow: 0px 0px 3px 0px #888;
+            margin: 5px;
+        }
+        .card-body{
+            padding: 15px;
+        }
+        a:hover{
+            text-decoration: none;
+        }
+        .post_link{
+            color: #3d4044;
+        }
+        .post_link:hover{
+            color: #26282b;
+        }
+        .categorys{
+            color:#765552;
+            font-size: 16px; 
+            float:right;
+        }
+
+        /*수정 삭제 버튼*/
+        .b{
+            float: right;
+            margin: 7px;
+            color: black;
+        }
+
+        /*공구성공 여부를 표시하는 색*/
+        .word_o{ 
+            color: #01B901;
+        }
+        .word_c{
+            color: #EB274B;
+        }
+
+        /*상단 메뉴*/
+        .menu {
+            width: 80%;
+            height: 8%;
+            margin:auto;
+            position: relative;
+        }
+        .mypage_tablinks {
+            float: left;
+            width: 150px;
+            height: 100%;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            background-color: transparent;
+        }
+        .mypage_tablinks.active {
+            border: none;
+            outline: none;
+        }
+        button:focus{
+            border: none;
+            outline: none;
+        }
+        .page_num{
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+        }
+    </style>
+{% endblock %}
 
 {% block script %}
 <script>
     function openTab(evt, tabName) {
-        var i, tabcontent, tablinks;
+        var i, tabcontent, mypage_tablinks;
         tabcontent = document.getElementsByClassName("tabcontent"); // 컨텐츠 불러오기
         for (i = 0; i < tabcontent.length; i++) {
             tabcontent[i].style.display = "none"; // 컨텐츠 모두 숨기기
         }
-        tablinks = document.getElementsByClassName("tablinks"); // 탭 불러오기
-        for (i = 0; i < tablinks.length; i++) {
-            tablinks[i].className = tablinks[i].className.replace(" active", ""); // 탭 초기화
+        mypage_tablinks = document.getElementsByClassName("mypage_tablinks"); // 탭 불러오기
+        for (i = 0; i < mypage_tablinks.length; i++) {
+            mypage_tablinks[i].className = mypage_tablinks[i].className.replace(" active", ""); // 탭 초기화
         }
         document.getElementById(tabName).style.display = "block"; // 해당되는 컨텐츠만 보여주기
         evt.currentTarget.className += " active"; // 클릭한 탭 활성화
@@ -20,139 +115,161 @@
 {% endblock %}
 
 {% block content %}
-<div class="mypage_box">
-    <div class="menu">
-        <div class="btn_back1"></div>
-        <div class="btn_back2"></div>
-        <div class="btn_back3"></div>
+{% load static %}
+    <div class="mypage_box">
+        <div class="menu">
+            <button class="mypage_tablinks active" onclick="openTab(event, 'tab1')">내가 쓴 글</button>
+            <button class="mypage_tablinks" onclick="openTab(event, 'tab2')">댓글 작성한 글</button>
+        </div>
+        <hr>
 
-        <button class="mypage_tablinks active" onclick="openTab(event, 'tab1')">내가 쓴 글</button>
-        <button class="mypage_tablinks" onclick="openTab(event, 'tab2')">댓글 작성한 글</button>
-        <button class="mypage_tablinks" onclick="openTab(event, 'tab3')">구매 내역</button>
-    </div>
-    <hr>
-
-    <div class="mypage_content">
-        <div class="back_1"></div>
-        <div class="back_2"></div>
-        <div class="back_3"></div>
-
-        <div id="tab1" class="tabcontent" style="display: block;">
-            <div class="row mypage_row">
+        <div class="mypage_content">
+            <div id="tab1" class="tabcontent" style="display: block;">
+                <div class="row">
                 {% for mypost in myposts %}
-                <div class="col-sm-6" style="max-width: 540px;">
+                <div class="mycontent" style="max-width: 390px;">
                     <div class="row no-gutters">
                         <div class="col-md-4">
-                            {% if mypost.image %}
+                        {% if mypost.image %}
                             <img src="{{mypost.image.url}}" class="card-img" alt="사진">
-                            {% else %}
-                            <img src="{% static 'img/ddingdongalarm.png' %}" class="card-img" alt="">
-
-                            {% endif %}
+                        {% else %}
+                        {% load static %}
+                        <img src="{% static 'img/ddingdongalarm.png' %}" class="card-img" alt="기본 이미지">
+                        {% endif %}
                         </div>
+                        
                         <div class="col-md-8">
                             <div class="card-body">
+                                <span  class="categorys">&#60;{{mypost.category}}&#62;</span>
                                 {% if mypost.success %}
-                                <p class="card-text word_c">공구 종료</p>
+                                    <p class="card-text word_c">공구 종료</p>
                                 {% else %}
-                                <p class="card-text word_o">공구 진행 중</p>
+                                    <p class="card-text word_o">공구 진행 중</p>
                                 {% endif %}
                                 <a href="{% url 'post_detail' mypost.id %}" class="post_link">
-                                    <h5 class="card-title">{{mypost.name}} &#60;{{mypost.category}}&#62;</h5>
+                                    <h5 class="card-title">{{mypost.name}}</h5>
                                     <p class="card-text">
                                         {{mypost.title}}<br>
                                         {{mypost.summary}}...
                                     </p>
                                 </a>
-                                <p class="card-text"><small class="text-muted">{{mypost.date}}</small></p>
-                                <a href="{% url 'edit' mypost.id %}" class="btn-revise">수정</a>
-                                <a href="{% url 'delete' mypost.id %}" class="btn-delete">삭제</a>
+                                <p class="card-text"><small class="text-muted">{{mypost.date|date:"Y.m.d G:i"}}</small></p>
                                 {% if mypost.success == False %}
-                                <a href="{% url 'closed' mypost.id %}" class="btn-finish">공구종료</a>
+                                    <a href="{% url 'closed' mypost.id %}" class="b" style="color: #8e444f;">공구종료</a>
                                 {% endif %}
+                                <a href="{% url 'edit' mypost.id %}" class="b" style="color:#fab719;">수정</a>
+                                <a href="{% url 'delete' mypost.id %}" class="b" style="color: #e74550;">삭제</a>
                             </div>
                         </div>
                     </div>
                 </div>
                 {% endfor%}
+                </div>
+
+                <div class="page_num">
+                    {% if myposts.has_previous %}
+                        <a href="?page=1">First</a>
+                        <a href="?page={{myposts.previous_page_number}}">Previous</a>
+                    {% endif %}
+                    
+                    {% if myposts %}
+                        <span>{{myposts.number}}</span>
+                        <span>/</span>
+                        <span>{{myposts.paginator.num_pages}}</span>
+                    {% endif %}
+            
+                    {% if myposts.has_next %}
+                        <a href="?page={{myposts.next_page_number}}">Next</a>
+                        <a href="?page={{myposts.paginator.num_pages}}">Last</a>
+                    {% endif %}
+                </div>
             </div>
 
-            <div class="page_num">
-                {% if myposts.has_previous %}
-                <a href="?page=1">First</a>
-                <a href="?page={{myposts.previous_page_number}}">Previous</a>
-                {% endif %}
-
-                {% if myposts %}
-                <span>{{myposts.number}}</span>
-                <span>/</span>
-                <span>{{myposts.paginator.num_pages}}</span>
-                {% endif %}
-
-                {% if myposts.has_next %}
-                <a href="?page={{myposts.next_page_number}}">Next</a>
-                <a href="?page={{myposts.paginator.num_pages}}">Last</a>
-                {% endif %}
-            </div>
-        </div>
-
-        <div id="tab2" class="tabcontent" style="display: none;">
-            <div class="row">
-                {% for cp in comment_posts %}
-                <div class="col-sm-6" style="max-width: 540px;">
-                    <div class="row no-gutters">
-                        <div class="col-md-4">
+            <div id="tab2" class="tabcontent" style="display: none;">
+                <div class="row">
+                    {% for cp in comment_posts %}
+                    <div class="mycontent" style="max-width: 390px;">
+                        <div class="row no-gutters">
+                            <div class="col-md-4">
                             {% if cp.image %}
-                            <img src="{{cp.image.url}}" class="card-img" alt="사진">
+                                <img src="{{cp.image.url}}" class="card-img" alt="사진">
                             {% else %}
-                            <img src="" class="card-img" alt="사진">
+                            {% load static %}
+                                <img src="{% static 'img/ddingdongalarm.png' %}" class="card-img" alt="기본 이미지">
                             {% endif %}
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                {% if cp.success %}
-                                <p class="card-text word_c">공구 종료</p>
-                                {% else %}
-                                <p class="card-text word_o">공구 진행 중</p>
-                                {% endif %}
-                                <a href="{% url 'post_detail' cp.id %}" class="post_link">
-                                    <h5 class="card-title">{{cp.name}} &#60;{{cp.category}}&#62;</h5>
-                                    <p class="card-text">
-                                        {{cp.title}}<br>
-                                        {{cp.summary}}...
-                                    </p>
-                                </a>
-                                <p class="card-text"><small class="text-muted">{{cp.date}}</small></p>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <span class="categorys">&#60;{{cp.category}}&#62;</span>
+                                    {% if cp.success %}
+                                        <p class="card-text word_c">공구 종료</p>
+                                    {% else %}
+                                        <p class="card-text word_o">공구 진행 중</p>
+                                    {% endif %}
+                                    <a href="{% url 'post_detail' cp.id %}" class="post_link">
+                                        <h5 class="card-title">{{cp.name}}</h5>
+                                        <p class="card-text">
+                                            {{cp.title}}<br>
+                                            {{cp.summary}}...
+                                        </p>
+                                    </a>
+                                    <p class="card-text"><small class="text-muted">{{cp.date|date:"Y.m.d G:i"}}</small></p>
+                                 </div>
                             </div>
                         </div>
                     </div>
+                    {% endfor%}
                 </div>
-                {% endfor%}
-            </div>
 
-            <div class="page_num">
-                {% if comment_posts.has_previous %}
-                <a href="?page=1">First</a>
-                <a href="?page={{comment_posts.previous_page_number}}">Previous</a>
-                {% endif %}
-
-                {% if comment_posts %}
-                <span>{{comment_posts.number}}</span>
-                <span>/</span>
-                <span>{{comment_posts.paginator.num_pages}}</span>
-                {% endif %}
-
-                {% if myposts.has_next %}
-                <a href="?page={{comment_posts.next_page_number}}">Next</a>
-                <a href="?page={{comment_posts.paginator.num_pages}}">Last</a>
-                {% endif %}
+                <div class="page_num">
+                    {% if comment_posts.has_previous %}
+                        <a href="?page=1">First</a>
+                        <a href="?page={{comment_posts.previous_page_number}}">Previous</a>
+                    {% endif %}
+                    
+                    {% if comment_posts %}
+                        <span>{{comment_posts.number}}</span>
+                        <span>/</span>
+                        <span>{{comment_posts.paginator.num_pages}}</span>
+                    {% endif %}
+            
+                    {% if comment_posts.has_next %}
+                        <a href="?page={{comment_posts.next_page_number}}">Next</a>
+                        <a href="?page={{comment_posts.paginator.num_pages}}">Last</a>
+                    {% endif %}
+                </div>
             </div>
         </div>
-
-        <div id="tab3" class="tabcontent" style="display: none;">
-            *
-        </div>
-
     </div>
+
+<!-- footer -->
+<div class="mt-5 pt-5 pb-5 footer">
+<div class="container">
+  <div class="row">
+    <div class="col-lg-5 col-xs-12 about-us">
+      <h4>About Us</h4>
+      <p class="pr-5 text-white-50">이제는 내가 먼저! 나눌수록 배가 되는 띵동하자! </p>
+      <p>팀원들: 허태정, 이혜린, 김영은</p>
+    </div>
+    <div class="col-lg-3 col-xs-12 links">
+      <h4 class="mt-lg-0 mt-sm-3">링크</h4>
+        <ul class="m-0 p-0">
+          <li> <a href="{% url 'introduce' %}">소개글</a></li>
+          <li><a href="{% url 'shop:product_all' %}">상품 보러가기</a></li>
+        </ul>
+    </div>
+    <div class="col-lg-4 col-xs-12 location">
+      <h4 class="mt-lg-0 mt-sm-4">Contact Us</h4>
+      <p></p>
+      <p class="mb-0"><i class="fa fa-phone mr-3"></i>010 1234 5678</p>
+      <p><i class="fa fa-envelope-o mr-3"></i>info@iddingong.com</p>
+    </div>
+  </div>
+  <div class="row mt-5">
+    <div class="col copyright">
+      <p class=""><small class="text-white-50">© 2020 Likelion Hackathon</small></p>
+    </div>
+  </div>
+</div>
 </div>
 {% endblock %}
