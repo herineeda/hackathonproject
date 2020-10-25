@@ -5,9 +5,10 @@
 {% endblock %}
 {% block style %}
 <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
       #map {
         height: 100%;
-       
       }
 
       /* Optional: Makes the sample page fill the window. */
@@ -16,23 +17,113 @@
         height: 100%;
         margin: 0;
         padding: 0;
-        text-align:center;
-        font-family: "yg-jalnan";
       }
+
+      #floating-panel {
+        position: absolute;
+        top: 10px;
+        left: 25%;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+        text-align: center;
+        font-family: "Roboto", "sans-serif";
+        line-height: 30px;
+        padding-left: 10px;
+      }
+
+      #floating-panel {
+        margin-left: -52px;
+      }
+      h3{
+          font-family: "yg-jalnan";
+          text-align:center;
+      }
+        button#drop{
+        border-radius: 4px;
+		background: #212529;
+		color: #fff;
+		padding: 7px 10px 7px 10px;
+		display: inline-block;
+		margin-top: 20px;
+		border: solid 2px #212529;
+		transition: all 0.5s ease-in-out 0s;
+        font-family: "yg-jalnan";
+        
+        }
 </style>
 
  {% endblock %}
 
    {% block content %}
+   <head>
    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-
 
     <script
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDzMJe_8E4FBjrTWpSaKXPybbeBwcbYuXM&callback=initMap&libraries=&v=weekly"
       defer
     ></script>
+
     <script>
+
+      const neighborhoods = [
+        { lat: 37.589366, lng: 127.016743 },
+        { lat: 37.6119544, lng: 126.99770 },
+        { lat: 37.5915464, lng: 127.02127 },
+        { lat: 37.6063202, lng: 127.04180 },
+        { lat: 37.6148855, lng: 127.01335 },
+        { lat: 37.6138123, lng: 127.014003 },
+      ];
+      let markers = [];
+      let map;
+
+      function initMap() {
+        map = new google.maps.Map(document.getElementById("map"), {
+          zoom: 12,
+          center: { lat: 37.589366, lng: 127.016743 },
+        });
+      }
+
+      function drop() {
+        clearMarkers();
+
+        for (let i = 0; i < neighborhoods.length; i++) {
+          addMarkerWithTimeout(neighborhoods[i], i * 200);
+        }
+      }
+
+      function addMarkerWithTimeout(position, timeout) {
+        window.setTimeout(() => {
+          markers.push(
+            new google.maps.Marker({
+              position: position,
+              map,
+              animation: google.maps.Animation.DROP,
+            })
+          );
+        }, timeout);
+      }
+
+      function clearMarkers() {
+        for (let i = 0; i < markers.length; i++) {
+          markers[i].setMap(null);
+        }
+        markers = [];
+      }
+    </script>  
+  </head>
+  <body>
+  <br>
+    <h3><i class="fas fa-map-pin"></i> 띵동 스팟에 있는 띵동 박스를 찾아보자!</h3>
        
+      <button id="drop" onclick="drop()">띵동스팟찾기!</button>
+  
+    <div id="map"></div>
+  </body>
+ {% endblock %}
+
+        {% comment %} /*
        var map;
         function initMap() {
             const cityHall = {
@@ -47,13 +138,13 @@
                 };
             map = new google.maps.Map(document.getElementById('map'), defaultOptions);
 
-            const myIcon = new google.maps.MarkerImage("{% static 'img/boxalarm (2).png' %}");
+            const myIcon = new google.maps.MarkerImage("{% static 'img/boxalarm.png' %}");
             const marker = new google.maps.Marker({
                 position: cityHall, 
                 map: map,
                 icon: myIcon
             });
-        }
+        }*/
 
       /*
       function initMap() {
@@ -71,13 +162,4 @@
           icon: image,
         });
       }
-      */
-    </script>
-  </head>
-  <body>
-  <br>
-    <h3><i class="fas fa-map-pin"></i> 띵동 스팟에 있는 띵동 박스를 찾아보자!</h3>
-    <!--The div element for the map -->
-    <div id="map"></div>
-  </body>
- {% endblock %}
+      */ {% endcomment %}
