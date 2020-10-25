@@ -7,21 +7,32 @@ from .cart import Cart
 from .forms import AddProductForm
 
 
-@require_POST 
-#담는기능 
-def add(request, product_id): 
+@require_POST
+# 담는기능
+def add(request, product_id):
     cart = Cart(request)
     product = get_object_or_404(Product, id=product_id)
 
     form = AddProductForm(request.POST)
 
-    if form.is_valid(): 
-
+    if form.is_valid():
         cd = form.cleaned_data
-
-        cart.add(product=product, quantity=cd['quantity'], is_update=cd['is_update'])
-
+        cart.add(product=product, quantity=cd['quantity'])
     return redirect('cart:detail')
+
+
+@require_POST
+def update(request, product_id):
+    cart = Cart(request)
+    product = get_object_or_404(Product, id=product_id)
+
+    form = AddProductForm(request.POST)
+
+    if form.is_valid():
+        cd = form.cleaned_data
+        cart.add(product=product, quantity=cd['quantity'], is_update=True)
+    return redirect('cart:detail')
+
 
 def remove(request, product_id):
     cart = Cart(request)
@@ -37,7 +48,7 @@ def detail(request):
     for product in cart:
 
         product['quantity_form'] = AddProductForm(
-            initial={'quantity':product['quantity'],
-             'is_update':True})
-    
-    return render(request, 'cart/detail.html', {'cart':cart})
+            initial={'quantity': product['quantity'],
+                     'is_update': True})
+
+    return render(request, 'cart/detail.html', {'cart': cart})
