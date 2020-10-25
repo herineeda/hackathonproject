@@ -116,7 +116,12 @@ position: relative; display: inline-block; width: 100%; height: 30%; padding: 1e
             <tr>
               <td>
               <a href="{{ product.get_absolute_url }}">
-              <img src="{% if product.image %}{{ product.image.url }}{% else %} {{ product.name }} {% endif %}" width=50>
+              {% if product.image %}
+                <img src="{{ product.image.url }}" width=50>
+              {% else %}
+                {% load static %}
+                <img src="{% static 'img/defaultimg.png' %}" width=50>
+              {% endif %}
               </a>
               </td>
               <td>{{ product.name }}</td>
