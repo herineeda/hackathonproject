@@ -3,7 +3,8 @@ from django.conf import settings
 from django.conf.urls import url
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import include, path
+from django.urls import include, path, reverse_lazy
+from django.views.generic import RedirectView
 import cart.views
 import main.views
 import order.views
@@ -12,6 +13,10 @@ import shop.views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('shop.urls')),
+
+    # Home redirect
+    path('', RedirectView.as_view(url=reverse_lazy('introduce')), name="home"),
+    
     path('account/', include('accounts.urls')),
     path('cart/', include('cart.urls')),
     path('main/', include('main.urls')),

@@ -1,8 +1,9 @@
 <!doctype html>
 <html lang="ko">
+
 <head>
-  <title>회원가입</title>
-  <meta charset = "utf-8">
+    <title>회원가입</title>
+    <meta charset="utf-8">
 
     <style>
         @font-face {
@@ -10,11 +11,12 @@
             src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff") format("woff");
             font-weight: normal;
             font-style: normal;
-            }
+        }
 
         * {
-        font-family: "yg-jalnan";
+            font-family: "yg-jalnan";
         }
+
         .signup_paper {
             position: absolute;
             height: 650px;
@@ -25,21 +27,27 @@
             box-shadow: 0px 0px 5px 0px #888;
             text-align: center;
         }
-        .accountform{ /*아이디와 비밀번호 입력창*/
+
+        .accountform {
+            /*아이디와 비밀번호 입력창*/
             border: none;
-            border-bottom: solid; /*밑줄만 만들기*/
-            outline:none;
+            border-bottom: solid;
+            /*밑줄만 만들기*/
+            outline: none;
             padding: 5px;
             margin: 7px;
             width: 250px;
             line-height: 30px;
             font-size: 17px;
         }
-        .accountform:focus{ /*input 클릭 시*/
+
+        .accountform:focus {
+            /*input 클릭 시*/
             outline: none;
             border-bottom: solid;
         }
-        .signup_btn{
+
+        .signup_btn {
             width: 170px;
             margin: 10px 0px 20px 0px;
             width: 260px;
@@ -47,37 +55,42 @@
             background: transparent;
             border-radius: 5px;
         }
-        .nav_btn{
+
+        .nav_btn {
             font-size: 15px
         }
-        .nav_btn > a{
+
+        .nav_btn>a {
             text-decoration: none;
         }
-  </style>
+    </style>
 </head>
 
 <body>
-  <div class="signup_paper">
-    <h2>회원가입</h2>
-    <hr>
-    <div>
-        {% load static %}
-        <br><br>
-        <img src="{% static 'img/logo.png'%}" alt="logo" width=250>
+    <div class="signup_paper">
+        <h2>회원가입</h2>
+        <hr>
+        <div>
+            {% load static %}
+            <br><br>
+            <img src="{% static 'img/logo.png'%}" alt="logo" width=250>
+        </div>
+
+        <form method="POST" action="{% url 'signup' %}">
+            {% csrf_token %}
+            <input name="username" class="accountform" type="text" placeholder="Username"><br>
+            <input name="password1" class="accountform" type="password" placeholder="Password"><br>
+            <input name="password2" class="accountform" type="password" placeholder="Password(again)"><br>
+
+            <br>
+            <input type="submit" class="signup_btn" value="가입하기!">
+        </form>
+
+        <p class="nav_btn">이미 계정을 가지고 있나요?
+            <a href="{% url 'login' %}">로그인</a> 하기<br>
+            <a href="{% url 'home' %}">홈으로</a>
+        </p>
     </div>
-
-    <form method="POST" action="{% url 'signup' %}">
-      {% csrf_token %}
-      <input name="username" class="accountform" type="text" placeholder="Username"><br>
-      <input name="password1" class="accountform" type="password" placeholder="Password"><br>
-      <input name="password2" class="accountform" type="password" placeholder="Password(again)"><br>
-
-      <br>
-      <input type="submit" class="signup_btn" value="가입하기!">
-    </form>
-
-    <p class="nav_btn">이미 계정을 가지고 있나요? <a href="{% url 'login' %}">로그인<a> 하기<br>
-        <a href="{% url 'shop:product_all' %}">홈으로</a></p>
-  </div>
 </body>
+
 </html>
