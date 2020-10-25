@@ -18,3 +18,5 @@ class ProductAdmin(admin.ModelAdmin):
     list_per_page = 20
 
 admin.site.register(Product, ProductAdmin)
+
+admin.site.register(Review)
