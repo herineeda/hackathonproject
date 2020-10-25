@@ -1,106 +1,121 @@
 {% extends 'base.html' %}
 
 {% block style %}
-    <style>
-        .mypage_box{
-            height: 600px;
-            margin-top:30px;
-        }
+<style>
+    .mypage_box {
+        height: 600px;
+        margin-top: 30px;
+    }
 
-        .mypage_box > hr{
-            margin: 0;
-            width: 80%;
-            margin: auto;
-        }
+    .mypage_box>hr {
+        margin: 0;
+        width: 80%;
+        margin: auto;
+    }
 
-        /*작성한 글, 댓글 단 글들을 감싸는 <div>*/
-        .mypage_content{
-            width: 80%;
-            height: 90%;
-            padding: 20px;
-            margin: auto;
-            overflow: auto;
-            position: relative;
-        }
+    /*작성한 글, 댓글 단 글들을 감싸는 <div>*/
+    .mypage_content {
+        width: 80%;
+        height: 90%;
+        padding: 20px;
+        margin: auto;
+        overflow: auto;
+        position: relative;
+    }
 
-        /*스크롤이 되지만 스크롤 바가 보이지 않음*/
-        .mypage_content::-webkit-scrollbar { width: 0 !important }
+    /*스크롤이 되지만 스크롤 바가 보이지 않음*/
+    .mypage_content::-webkit-scrollbar {
+        width: 0 !important
+    }
 
-        /*작성한 글, 댓글 단 글 관련 스타일*/
-        .mycontent{
-            box-shadow: 0px 0px 3px 0px #888;
-            margin: 5px;
-        }
-        .card-body{
-            padding: 15px;
-        }
-        a:hover{
-            text-decoration: none;
-        }
-        .post_link{
-            color: #3d4044;
-        }
-        .post_link:hover{
-            color: #26282b;
-        }
-        .categorys{
-            color:black;
-            font-size: 16px; 
-            float:right;
-        }
+    /*작성한 글, 댓글 단 글 관련 스타일*/
+    .mycontent {
+        box-shadow: 0px 0px 3px 0px #888;
+        margin: 5px;
+    }
 
-        /*수정 삭제 버튼*/
-        .b{
-            float: right;
-            margin: 7px;
-            color: black;
-        }
+    .card-body {
+        padding: 15px;
+    }
 
-        /*공구성공 여부를 표시하는 색*/
-        .word_o{ 
-            color: #01B901;
-        }
-        .word_c{
-            color: #EB274B;
-        }
+    a:hover {
+        text-decoration: none;
+    }
 
-        /*상단 메뉴*/
-        .menu {
-            width: 80%;
-            height: 8%;
-            margin:auto;
-            position: relative;
-        }
-        .mypage_tablinks {
-            float: left;
-            width: 150px;
-            height: 100%;
-            border: none;
-            outline: none;
-            font-size: 16px;
-            background-color: transparent;
-        }
-        .mypage_tablinks.active {
-            border: none;
-            outline: none;
-        }
-        button:focus{
-            border: none;
-            outline: none;
-        }
-        .page_num{
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-        }
-        .btn-finish{
-		color: black;
+    .post_link {
+        color: #3d4044;
+    }
 
-        }
-        .btn-finish:hover{
-            color:#B30917;
-        }
-    </style>
+    .post_link:hover {
+        color: #26282b;
+    }
+
+    .categorys {
+        color: black;
+        font-size: 16px;
+        float: right;
+    }
+
+    /*수정 삭제 버튼*/
+    .b {
+        float: right;
+        margin: 7px;
+        color: black;
+    }
+
+    /*공구성공 여부를 표시하는 색*/
+    .word_o {
+        color: #01B901;
+    }
+
+    .word_c {
+        color: #EB274B;
+    }
+
+    /*상단 메뉴*/
+    .menu {
+        width: 80%;
+        height: 8%;
+        margin: auto;
+        position: relative;
+    }
+
+    .mypage_tablinks {
+        float: left;
+        width: 150px;
+        height: 100%;
+        border: none;
+        outline: none;
+        font-size: 16px;
+        background-color: transparent;
+    }
+
+    .mypage_tablinks.active {
+        border: solid;
+        border-color: rgba(136, 136, 136, 0.5);
+        outline: none;
+    }
+
+    button:focus {
+        border: none;
+        outline: none;
+    }
+
+    .page_num {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+    }
+
+    .btn-finish {
+        color: black;
+
+    }
+
+    .btn-finish:hover {
+        color: #B30917;
+    }
+</style>
 {% endblock %}
 
 {% block script %}
@@ -123,131 +138,133 @@
 
 {% block content %}
 {% load static %}
-    <div class="mypage_box">
-        <div class="menu">
-            <button class="mypage_tablinks active" onclick="openTab(event, 'tab1')">내가 쓴 글</button>
-            <button class="mypage_tablinks" onclick="openTab(event, 'tab2')">댓글 작성한 글</button>
-        </div>
-        <hr>
+<div class="mypage_box">
+    <div class="menu">
+        <button class="mypage_tablinks active" onclick="openTab(event, 'tab1')">내가 쓴 글</button>
+        <button class="mypage_tablinks" onclick="openTab(event, 'tab2')">댓글 작성한 글</button>
+    </div>
+    <hr>
 
-        <div class="mypage_content">
-            <div id="tab1" class="tabcontent" style="display: block;">
-                <div class="row">
+    <div class="mypage_content">
+        <div id="tab1" class="tabcontent" style="display: block;">
+            <div class="row">
                 {% for mypost in myposts %}
                 <div class="mycontent" style="max-width: 390px;">
                     <div class="row no-gutters">
                         <div class="col-md-4">
-                        {% if mypost.image %}
+                            {% if mypost.image %}
                             <img src="{{mypost.image.url}}" class="card-img" alt="사진">
-                        {% else %}
-                        {% load static %}
-                        <img src="{% static 'img/ddingdongalarm.png' %}" class="card-img" alt="기본 이미지">
-                        {% endif %}
+                            {% else %}
+                            {% load static %}
+                            <img src="{% static 'img/ddingdongalarm.png' %}" class="card-img" alt="기본 이미지">
+                            {% endif %}
                         </div>
-                        
+
                         <div class="col-md-8">
                             <div class="card-body">
-                                <span  class="categorys">&#60;{{mypost.category}}&#62;</span>
+                                <span class="categorys">&#60;{{mypost.category}}&#62;</span>
                                 {% if mypost.success %}
-                                    <span class="tag is-danger is-medium">공구 종료</span><br>
+                                <span class="tag is-danger is-medium">공구 종료</span><br>
                                 {% else %}
-                                    <span class="tag is-info is-medium">공구 진행 중</span><br>
+                                <span class="tag is-info is-medium">공구 진행 중</span><br>
                                 {% endif %}
                                 <a href="{% url 'post_detail' mypost.id %}" class="post_link">
-                                <br>
+                                    <br>
                                     <h5 class="card-title">{{mypost.name}}</h5>
                                     <p class="card-text">
                                         {{mypost.title}}<br>
                                         {{mypost.summary}}...
                                     </p>
                                 </a>
-                                <p class="card-text"><small class="text-muted">{{mypost.date|date:"Y.m.d G:i"}}</small></p>
+                                <p class="card-text"><small class="text-muted">{{mypost.date|date:"Y.m.d G:i"}}</small>
+                                </p>
                                 <a href="{% url 'edit' mypost.id %}" class="b" style="color:#03166A;">수정</a>
                                 <a href="{% url 'delete' mypost.id %}" class="b" style="color: #B30917;">삭제</a>
                                 {% if mypost.success == False %}
-                                <a href="{% url 'closed' mypost.id %}" class="btn-finish"><i class="fas fa-check-square"></i> 공구종료하기!</a>
+                                <a href="{% url 'closed' mypost.id %}" class="btn-finish"><i
+                                        class="fas fa-check-square"></i> 공구종료하기!</a>
                                 {% endif %}
                             </div>
                         </div>
                     </div>
                 </div>
                 {% endfor%}
-                </div>
-
-                <div class="page_num">
-                    {% if myposts.has_previous %}
-                        <a href="?page=1">First</a>
-                        <a href="?page={{myposts.previous_page_number}}">Previous</a>
-                    {% endif %}
-                    
-                    {% if myposts %}
-                        <span>{{myposts.number}}</span>
-                        <span>/</span>
-                        <span>{{myposts.paginator.num_pages}}</span>
-                    {% endif %}
-            
-                    {% if myposts.has_next %}
-                        <a href="?page={{myposts.next_page_number}}">Next</a>
-                        <a href="?page={{myposts.paginator.num_pages}}">Last</a>
-                    {% endif %}
-                </div>
             </div>
 
-            <div id="tab2" class="tabcontent" style="display: none;">
-                <div class="row">
-                    {% for cp in comment_posts %}
-                    <div class="mycontent" style="max-width: 390px;">
-                        <div class="row no-gutters">
-                            <div class="col-md-4">
+            <div class="page_num">
+                {% if myposts.has_previous %}
+                <a href="?page=1">First</a>
+                <a href="?page={{myposts.previous_page_number}}">Previous</a>
+                {% endif %}
+
+                {% if myposts %}
+                <span>{{myposts.number}}</span>
+                <span>/</span>
+                <span>{{myposts.paginator.num_pages}}</span>
+                {% endif %}
+
+                {% if myposts.has_next %}
+                <a href="?page={{myposts.next_page_number}}">Next</a>
+                <a href="?page={{myposts.paginator.num_pages}}">Last</a>
+                {% endif %}
+            </div>
+        </div>
+
+        <div id="tab2" class="tabcontent" style="display: none;">
+            <div class="row">
+                {% for cp in comment_posts %}
+                <div class="mycontent" style="max-width: 390px;">
+                    <div class="row no-gutters">
+                        <div class="col-md-4">
                             {% if cp.image %}
-                                <img src="{{cp.image.url}}" class="card-img" alt="사진">
+                            <img src="{{cp.image.url}}" class="card-img" alt="사진">
                             {% else %}
                             {% load static %}
-                                <img src="{% static 'img/ddingdongalarm.png' %}" class="card-img" alt="기본 이미지">
+                            <img src="{% static 'img/ddingdongalarm.png' %}" class="card-img" alt="기본 이미지">
                             {% endif %}
-                            </div>
-                            <div class="col-md-8">
-                                <div class="card-body">
-                                    <span class="categorys">&#60;{{cp.category}}&#62;</span>
-                                    {% if cp.success %}
-                                        <span class="tag is-danger is-medium">공구 종료</span><br><br>
-                                        
-                                    {% else %}
-                                        <span class="tag is-info is-medium">공구 진행중</span><br><br>
-                                    {% endif %}
-                                    <a href="{% url 'post_detail' cp.id %}" class="post_link">
-                                        <h5 class="card-title">{{cp.name}}</h5>
-                                        <p class="card-text">
-                                            {{cp.title}}<br>
-                                            {{cp.summary}}...
-                                        </p>
-                                    </a>
-                                    <p class="card-text"><small class="text-muted">{{cp.date|date:"Y.m.d G:i"}}</small></p>
-                                 </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <span class="categorys">&#60;{{cp.category}}&#62;</span>
+                                {% if cp.success %}
+                                <span class="tag is-danger is-medium">공구 종료</span><br><br>
+
+                                {% else %}
+                                <span class="tag is-info is-medium">공구 진행중</span><br><br>
+                                {% endif %}
+                                <a href="{% url 'post_detail' cp.id %}" class="post_link">
+                                    <h5 class="card-title">{{cp.name}}</h5>
+                                    <p class="card-text">
+                                        {{cp.title}}<br>
+                                        {{cp.summary}}...
+                                    </p>
+                                </a>
+                                <p class="card-text"><small class="text-muted">{{cp.date|date:"Y.m.d G:i"}}</small></p>
                             </div>
                         </div>
                     </div>
-                    {% endfor%}
                 </div>
+                {% endfor%}
+            </div>
 
-                <div class="page_num">
-                    {% if comment_posts.has_previous %}
-                        <a href="?page=1">First</a>
-                        <a href="?page={{comment_posts.previous_page_number}}">Previous</a>
-                    {% endif %}
-                    
-                    {% if comment_posts %}
-                        <span>{{comment_posts.number}}</span>
-                        <span>/</span>
-                        <span>{{comment_posts.paginator.num_pages}}</span>
-                    {% endif %}
-            
-                    {% if comment_posts.has_next %}
-                        <a href="?page={{comment_posts.next_page_number}}">Next</a>
-                        <a href="?page={{comment_posts.paginator.num_pages}}">Last</a>
-                    {% endif %}
-                </div>
+            <div class="page_num">
+                {% if comment_posts.has_previous %}
+                <a href="?page=1">First</a>
+                <a href="?page={{comment_posts.previous_page_number}}">Previous</a>
+                {% endif %}
+
+                {% if comment_posts %}
+                <span>{{comment_posts.number}}</span>
+                <span>/</span>
+                <span>{{comment_posts.paginator.num_pages}}</span>
+                {% endif %}
+
+                {% if comment_posts.has_next %}
+                <a href="?page={{comment_posts.next_page_number}}">Next</a>
+                <a href="?page={{comment_posts.paginator.num_pages}}">Last</a>
+                {% endif %}
             </div>
         </div>
     </div>
+</div>
 {% endblock %}
