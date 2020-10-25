@@ -133,8 +133,8 @@ position: relative; display: inline-block; width: 100%; height: 30%; padding: 1e
               <td>                                
               <a href="{% url 'cart:product_remove' product.id %}"><i class="fas fa-trash"></i>
               </td><td></td><td></td><td></td>
-              <td class="num">\{{ item.price }}
               {% load humanize %}
+              <td class="num">\{{ item.price|floatformat|intcomma }}
               <td class="num">\{{ item.total_price|floatformat|intcomma }}</td>
             </tr>
 
