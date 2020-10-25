@@ -90,8 +90,15 @@
         }
         .page_num{
             position: absolute;
-            bottom: 10px;
+            bottom: 0;
             left: 50%;
+        }
+        .btn-finish{
+		color: black;
+
+        }
+        .btn-finish:hover{
+            color:#B30917;
         }
     </style>
 {% endblock %}
@@ -155,12 +162,11 @@
                                     </p>
                                 </a>
                                 <p class="card-text"><small class="text-muted">{{mypost.date|date:"Y.m.d G:i"}}</small></p>
-                                {% if mypost.success == False %}
-                                    <span class="tag is-danger is-medium" a href="{% url 'closed' mypost.id %}">공구 종료</span><br></a>
-                                    
-                                {% endif %}
                                 <a href="{% url 'edit' mypost.id %}" class="b" style="color:#03166A;">수정</a>
                                 <a href="{% url 'delete' mypost.id %}" class="b" style="color: #B30917;">삭제</a>
+                                {% if mypost.success == False %}
+                                <a href="{% url 'closed' mypost.id %}" class="btn-finish"><i class="fas fa-check-square"></i> 공구종료하기!</a>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
