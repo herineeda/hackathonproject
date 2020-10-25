@@ -1,33 +1,33 @@
 {% extends 'base.html' %}
 
 {% block script %}
-    <script>
-        function openTab(evt, tabName) {
-            var i, tabcontent, tablinks;
-            tabcontent = document.getElementsByClassName("tabcontent"); // 컨텐츠 불러오기
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none"; // 컨텐츠 모두 숨기기
-            }
-            tablinks = document.getElementsByClassName("tablinks"); // 탭 불러오기
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].className = tablinks[i].className.replace(" active", ""); // 탭 초기화
-            }
-            document.getElementById(tabName).style.display = "block"; // 해당되는 컨텐츠만 보여주기
-            evt.currentTarget.className += " active"; // 클릭한 탭 활성화
+<script>
+    function openTab(evt, tabName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent"); // 컨텐츠 불러오기
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none"; // 컨텐츠 모두 숨기기
         }
-    </script>
+        tablinks = document.getElementsByClassName("tablinks"); // 탭 불러오기
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", ""); // 탭 초기화
+        }
+        document.getElementById(tabName).style.display = "block"; // 해당되는 컨텐츠만 보여주기
+        evt.currentTarget.className += " active"; // 클릭한 탭 활성화
+    }
+</script>
 {% endblock %}
 
 {% block style %}
 <style>
     /*메뉴와 쪽지 관련 요소를 감싸는 div*/
-    .notebox{
+    .notebox {
         height: 600px;
         margin-top: 30px;
     }
 
     /*쪽지 관련 요소(보낸이, 내용 등등)을 감싸는 div*/
-    .notes_content{
+    .notes_content {
         box-shadow: 0px 0px 3px 0px #888;
         width: 80%;
         height: 90%;
@@ -36,17 +36,20 @@
         position: relative;
     }
 
-    .note_list tr td{
-        padding-bottom: 10px;;
+    .note_list tr td {
+        padding-bottom: 10px;
+        ;
     }
+
     /*쪽지 읽음 여부를 표현하는 이미지*/
-    .not_read_note{
+    .not_read_note {
         width: 30px;
         height: 20px;
         background: #ffe0dd;
         position: relative;
     }
-    .not_read_note::after{
+
+    .not_read_note::after {
         content: '';
         width: 0;
         height: 0;
@@ -56,13 +59,15 @@
         position: absolute;
         top: 1%;
     }
-    .read_note{
+
+    .read_note {
         width: 30px;
         height: 18px;
         background: #ffe0dd;
         position: relative;
     }
-    .read_note::after{
+
+    .read_note::after {
         content: '';
         width: 20px;
         height: 20px;
@@ -82,7 +87,7 @@
 
     /*메뉴 버튼 꾸미기*/
     .tablinks {
-        float:left;
+        float: left;
         width: 150px;
         height: 100%;
         padding: 0;
@@ -91,28 +96,31 @@
         font-size: 16px;
         background-color: transparent;
     }
-    .tablinks.active{
-        box-shadow: 0px 0px 3px 0px #888;
-        border: none;
+
+    .tablinks.active {
+        border: solid;
+        border-color: rgba(136, 136, 136, 0.5);
         outline: none;
     }
-    button:focus{
+
+    button:focus {
         border: none;
         outline: none;
     }
 
     /*쪽지 자세히 보기 페이지로 넘어가는 a 태그 스타일*/
-    .note_link{
+    .note_link {
         color: black;
         text-decoration: none;
     }
-    .note_link:hover{
+
+    .note_link:hover {
         color: black;
         text-decoration: none;
     }
 
     /*페이지네이션 버튼...*/
-    .page_num{
+    .page_num {
         position: absolute;
         bottom: 10px;
         left: 50%;
@@ -121,121 +129,129 @@
 {% endblock %}
 
 {% block content %}
-    <div class="notebox">
-        <div class="box_menu">
-            <button class="tablinks active" onclick="openTab(event, 'tab1')">받은 쪽지</button>
-            <button class="tablinks" onclick="openTab(event, 'tab2')">보낸 쪽지</button>
-        </div>
-        
-        <div class="notes_content">
-            <div id="tab1" class="tabcontent" style="display: block;">
-                <table width=100% height=100% class="note_list">
-                    {% for receive in receive_list %}
-                        <thead>
-                            <tr>
-                                <td colspan="4" style="padding-bottom: 20px;">보낸 사람. &#32; {{receive}}</td>
-                            </tr>
-                        </thead>
-                        {% for note in receive_notes %}
-                            <!--받은 쪽지-->
-                            {%if note.sender == receive %}
-                                <tbody>
-                                    <tr>
-                                    {% if note.is_read == "읽지 않음" %}
-                                        <td style="width:10%; padding-left: 1%;"><div class="not_read_note"></div></td>
-                                    {% else %}
-                                        <td style="width:10%; padding-left: 1%;"><div class="read_note"></div></td>
-                                    {% endif %}
-            
-                                    <td><a href="{% url 'note_detail' note.id %}" class="note_link">{{note.summary}}...</a></td>
-                                    
-                                    {% if note.renotes_r != 0 %}
-                                        <td style="width:10%;">+{{note.renotes_r}}</td>
-                                    {% else %}
-                                        <td style="width:10%;"> </td>
-                                    {% endif %}
-            
-                                    <td style="width:10%;">{{note.date|date:"Y.m.d"}}</td>
-                                    </tr>
-                                </tbody>
-                            {% endif %}   
-                        {% endfor %}
-                    {% endfor %}
-                </table>
-            </div>
-
-            <div class="page_num">
-                {% if receive_notes.has_previous %}
-                    <a href="?page=1">First</a>
-                    <a href="?page={{receive_notes.previous_page_number}}">Previous</a>
-                {% endif %}
-                
-                {% if receive_notes %}
-                    <span>{{receive_notes.number}}</span>
-                    <span>/</span>
-                    <span>{{receive_notes.paginator.num_pages}}</span>
-                {% endif %}
-        
-                {% if receive_notes.has_next %}
-                    <a href="?page={{receive_notes.next_page_number}}">Next</a>
-                    <a href="?page={{receive_notes.paginator.num_pages}}">Last</a>
-                {% endif %}
-            </div>
-
-            <div id="tab2" class="tabcontent" style="display: none;">
-                <table width=100% height=100% class="note_list">
-                    {% for send in send_list %}
-                        <thead>
-                            <tr>
-                                <td colspan="4" style="padding-bottom: 20px;">받는 사람.&#32; {{send}}</td>
-                            </tr>
-                        </thead>
-                        {% for note in send_notes %}
-                            <!--보낸 쪽지-->
-                            {% if note.receiver == send %}
-                                <tbody>
-                                    <tr>
-                                    {% if note.is_read == "읽지 않음" %}
-                                        <td style="width:10%; padding-left: 1%;"><div class="not_read_note"></div></td>
-                                    {% else %}
-                                        <td style="width:10%; padding-left: 1%;"><div class="read_note"></div></td>
-                                    {% endif %}
-                
-                                    <td><a href="{% url 'note_detail' note.id %}" class="note_link">{{note.summary}}...</a></td>
-                                    
-                                    {% if note.renotes_s != 0 %}
-                                        <td style="width:10%;">+{{note.renotes_s}}</td>
-                                    {% else %}
-                                        <td style="width:10%;"> </td>
-                                    {% endif %}
-                
-                                    <td style="width:10%;">{{note.date|date:"Y.m.d"}}</td>
-                                    </tr>
-                                </tbody>
-                            {% endif %}   
-                        {% endfor %}
-                    {% endfor %}
-                </table>
-            </div>
-
-            <div class="page_num">
-                {% if send_notes.has_previous %}
-                    <a href="?page=1">First</a>
-                    <a href="?page={{send_notes.previous_page_number}}">Previous</a>
-                {% endif %}
-                
-                {% if send_notes %}
-                    <span>{{send_notes.number}}</span>
-                    <span>/</span>
-                    <span>{{send_notes.paginator.num_pages}}</span>
-                {% endif %}
-        
-                {% if send_notes.has_next %}
-                    <a href="?page={{send_notes.next_page_number}}">Next</a>
-                    <a href="?page={{send_notes.paginator.num_pages}}">Last</a>
-                {% endif %}
-            </div>
-        </div>
+<div class="notebox">
+    <div class="box_menu">
+        <button class="tablinks active" onclick="openTab(event, 'tab1')">받은 쪽지</button>
+        <button class="tablinks" onclick="openTab(event, 'tab2')">보낸 쪽지</button>
     </div>
 
-{% endblock %} 
+    <div class="notes_content">
+        <div id="tab1" class="tabcontent" style="display: block;">
+            <table width=100% height=100% class="note_list">
+                {% for receive in receive_list %}
+                <thead>
+                    <tr>
+                        <td colspan="4" style="padding-bottom: 20px;">보낸 사람. &#32; {{receive}}</td>
+                    </tr>
+                </thead>
+                {% for note in receive_notes %}
+                <!--받은 쪽지-->
+                {%if note.sender == receive %}
+                <tbody>
+                    <tr>
+                        {% if note.is_read == "읽지 않음" %}
+                        <td style="width:10%; padding-left: 1%;">
+                            <div class="not_read_note"></div>
+                        </td>
+                        {% else %}
+                        <td style="width:10%; padding-left: 1%;">
+                            <div class="read_note"></div>
+                        </td>
+                        {% endif %}
+
+                        <td><a href="{% url 'note_detail' note.id %}" class="note_link">{{note.summary}}...</a></td>
+
+                        {% if note.renotes_r != 0 %}
+                        <td style="width:10%;">+{{note.renotes_r}}</td>
+                        {% else %}
+                        <td style="width:10%;"> </td>
+                        {% endif %}
+
+                        <td style="width:10%;">{{note.date|date:"Y.m.d"}}</td>
+                    </tr>
+                </tbody>
+                {% endif %}
+                {% endfor %}
+                {% endfor %}
+            </table>
+        </div>
+
+        <div class="page_num">
+            {% if receive_notes.has_previous %}
+            <a href="?page=1">First</a>
+            <a href="?page={{receive_notes.previous_page_number}}">Previous</a>
+            {% endif %}
+
+            {% if receive_notes %}
+            <span>{{receive_notes.number}}</span>
+            <span>/</span>
+            <span>{{receive_notes.paginator.num_pages}}</span>
+            {% endif %}
+
+            {% if receive_notes.has_next %}
+            <a href="?page={{receive_notes.next_page_number}}">Next</a>
+            <a href="?page={{receive_notes.paginator.num_pages}}">Last</a>
+            {% endif %}
+        </div>
+
+        <div id="tab2" class="tabcontent" style="display: none;">
+            <table width=100% height=100% class="note_list">
+                {% for send in send_list %}
+                <thead>
+                    <tr>
+                        <td colspan="4" style="padding-bottom: 20px;">받는 사람.&#32; {{send}}</td>
+                    </tr>
+                </thead>
+                {% for note in send_notes %}
+                <!--보낸 쪽지-->
+                {% if note.receiver == send %}
+                <tbody>
+                    <tr>
+                        {% if note.is_read == "읽지 않음" %}
+                        <td style="width:10%; padding-left: 1%;">
+                            <div class="not_read_note"></div>
+                        </td>
+                        {% else %}
+                        <td style="width:10%; padding-left: 1%;">
+                            <div class="read_note"></div>
+                        </td>
+                        {% endif %}
+
+                        <td><a href="{% url 'note_detail' note.id %}" class="note_link">{{note.summary}}...</a></td>
+
+                        {% if note.renotes_s != 0 %}
+                        <td style="width:10%;">+{{note.renotes_s}}</td>
+                        {% else %}
+                        <td style="width:10%;"> </td>
+                        {% endif %}
+
+                        <td style="width:10%;">{{note.date|date:"Y.m.d"}}</td>
+                    </tr>
+                </tbody>
+                {% endif %}
+                {% endfor %}
+                {% endfor %}
+            </table>
+        </div>
+
+        <div class="page_num">
+            {% if send_notes.has_previous %}
+            <a href="?page=1">First</a>
+            <a href="?page={{send_notes.previous_page_number}}">Previous</a>
+            {% endif %}
+
+            {% if send_notes %}
+            <span>{{send_notes.number}}</span>
+            <span>/</span>
+            <span>{{send_notes.paginator.num_pages}}</span>
+            {% endif %}
+
+            {% if send_notes.has_next %}
+            <a href="?page={{send_notes.next_page_number}}">Next</a>
+            <a href="?page={{send_notes.paginator.num_pages}}">Last</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
