@@ -94,7 +94,11 @@ Main Page
             <div class="col-md-4">
                 <div class="food-item">
                     <h2>{{product.name}}</h2>
+                    {% if product.image %}      
                     <img src="{{product.image.url}}" alt="Product Image"><br>
+                    {% else %}
+                    <img src="{% static 'img/defaultimg.png' %}" width = "327">
+                    {% endif %}
                     <div class="text-content">
                         <h4>띵동<i class="fas fa-bell"></i> 주문하세요! </h4>
                         {% load humanize %}
