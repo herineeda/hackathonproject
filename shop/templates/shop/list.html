@@ -58,21 +58,21 @@ Main Page
 
     <div class="navbar-menu">
         <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
-            <a class="navbar-item" {% if not current_category %}active{% endif %}>All</a>
+            <a class="navbar-item" href="/product/">{% if not current_category %}{% endif %}All</a>
             {% for c in categories %}
-            <a class="navbar-item" href="{{c.get_absolute_url}}"
-                {% if current_category.slug == c.slug %}active{% endif %}>{{c.name}}</a>{% endfor %}
+            <a class="navbar-item" href="{{c.get_absolute_url}}">
+                {% if current_category.slug == c.slug %}active{% endif %}> {{c.name}}</a>{% endfor %}
         </div>
 
         <div class="navbar-end">
             <a class="navbar-item">
-                <form class="form-inline my-2 my-lg-0" action="{% url 'search' %}" method="post">
-                    {% csrf_token %}
+                <form class="form-inline my-2 my-lg-0" action="{% url 'shop:search_product' %}">
                     <div class="control is-expanded">
-                        <input class="input is-normal" type="search" placeholder="검색어를 입력해주세요!" aria-label="Search"
-                            name="q" value="{{q}}"></div>
+                        <input class="input is-normal" type="search" placeholder="검색어를 입력해주세요!" aria-label="Search" name="q">
+                    </div>
                     <div class="control">
-                        <button class="button is-link is-normal" type="submit">검색</button></div>
+                        <button class="button is-link is-normal" type="submit">검색</button>
+                    </div>
                 </form>
             </a>
         </div>
@@ -90,26 +90,29 @@ Main Page
             </div>
         </div>
         <div class="row">
-            {% for product in products %}
-            <div class="col-md-4">
-                <div class="food-item">
-                    <h2>{{product.name}}</h2>
-                    {% if product.image %}      
-                    <img src="{{product.image.url}}" alt="Product Image"><br>
-                    {% else %}
-                    <img src="{% static 'img/defaultimg.png' %}" width = "327">
-                    {% endif %}
-                    <div class="text-content">
-                        <h4>띵동<i class="fas fa-bell"></i> 주문하세요! </h4>
-                        {% load humanize %}
-                        <div class="price"><i class="fas fa-tag"></i> {{product.price|floatformat|intcomma}}원</div>
-                        <p>{{product.description}}</p>
-                        <a href="{{product.get_absolute_url}}" class="text-button" alt="{{product.name}}"> 상세보기 </a>
+            {% if products %}
+                {% for product in products %}
+                <div class="col-md-4">
+                    <div class="food-item">
+                        <h2>{{product.name}}</h2>
+                        {% if product.image %}      
+                        <img src="{{product.image.url}}" alt="Product Image"><br>
+                        {% else %}
+                        <img src="{% static 'img/defaultimg.png' %}" width = "327">
+                        {% endif %}
+                        <div class="text-content">
+                            <h4>띵동<i class="fas fa-bell"></i> 주문하세요! </h4>
+                            {% load humanize %}
+                            <div class="price"><i class="fas fa-tag"></i> {{product.price|floatformat|intcomma}}원</div>
+                            <p>{{product.description}}</p>
+                            <a href="{{product.get_absolute_url}}" class="text-button" alt="{{product.name}}"> 상세보기 </a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            {% endfor %}
-
+                {% endfor %}
+            {% else %}
+                    <p class="subtitle" style="margin:auto;">상품이 없습니다.</p>
+            {% endif %}
         </div>
     </div>
 </section>

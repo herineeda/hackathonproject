@@ -18,7 +18,7 @@ def introduce(request):
 # 공구 게시판: 게시글 목록 띄우기
 def group_purchase(request):
     post_list = Post.objects.all()
-    paginator = Paginator(post_list, 8)
+    paginator = Paginator(post_list, 9)
     page = request.GET.get('page')
     posts = paginator.get_page(page)
 
