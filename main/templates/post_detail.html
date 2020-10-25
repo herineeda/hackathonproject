@@ -359,17 +359,16 @@
 
           <div>
             {% for comment in post_detail.comment_set.all %}
-            {% if comment.writer == user or post_detail.author == user %}
             <p>
               {{comment.writer}} | {{comment.date|date:"Y/m/d H:i"}}
               {% if user == comment.writer %}
               &nbsp; | &nbsp; <a href="{% url 'comment_delete' post_detail.id comment.id %}" class="delete_btn">삭제</a>
               {% endif %}
-              {% endif %}
-              {% endfor %}
+            </p>
+            <p>{{comment.content}}</p>
+            {% endfor %}
           </div>
         </div>
-
       </div>
     </div>
   </div>
