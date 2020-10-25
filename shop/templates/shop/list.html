@@ -26,7 +26,7 @@ Main Page
         margin-top: 20px;
         border: solid 2px #212529;
         transition: all 0.5s ease-in-out 0s;
-        text-decoration:none;
+        text-decoration: none;
     }
 
     .round-black-btn:hover,
@@ -69,10 +69,10 @@ Main Page
                 <form class="form-inline my-2 my-lg-0" action="{% url 'search' %}" method="post">
                     {% csrf_token %}
                     <div class="control is-expanded">
-                    <input class="input is-normal" type="search" placeholder="검색어를 입력해주세요!" aria-label="Search" name="q"
-                        value="{{q}}"></div>
-                    <div class ="control">
-                    <button class="button is-link is-normal" type="submit">검색</button></div>
+                        <input class="input is-normal" type="search" placeholder="검색어를 입력해주세요!" aria-label="Search"
+                            name="q" value="{{q}}"></div>
+                    <div class="control">
+                        <button class="button is-link is-normal" type="submit">검색</button></div>
                 </form>
             </a>
         </div>
@@ -81,7 +81,6 @@ Main Page
 
 
 <!--product list -->
-
 <section class="featured-food" a name="ping"></a>
     <div class="container">
         <div class="row">
