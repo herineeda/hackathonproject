@@ -72,3 +72,11 @@ def delete_review(request, id, category, review_id, product_slug=None):
 
     else:
         raise PermissionDenied
+
+# 상품 검색하기
+def search_product(request):
+    categories = Category.objects.all()
+
+    keyword = request.GET.get('q')
+    result = Product.objects.filter(name__contains=keyword)
+    return render(request, 'shop/list.html', {'categories': categories, 'products':result})
