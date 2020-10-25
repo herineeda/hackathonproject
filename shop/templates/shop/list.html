@@ -60,8 +60,8 @@ Main Page
         <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
             <a class="navbar-item" href="/product/">{% if not current_category %}{% endif %}All</a>
             {% for c in categories %}
-            <a class="navbar-item" href="{{c.get_absolute_url}}">
-                {% if current_category.slug == c.slug %}active{% endif %}> {{c.name}}</a>{% endfor %}
+            <a href="{{c.get_absolute_url}}" class="navbar-item {% if current_category.slug == c.slug %}active{% endif %}">{{c.name}}</a>
+            {% endfor %}
         </div>
 
         <div class="navbar-end">
