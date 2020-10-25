@@ -59,11 +59,9 @@
             {% else %}
             <p class="subtitle">게시글이 없습니다.</p>
             {% endif %}
-            <div class="columns is-multiline is-centered">
-              <div class="column is-8">
-                {% include "partial/paginator.html" with paginator=posts%}
-              </div>
-            </div>
+          </div>
+          <div class="column is-10">
+              {% include "partial/paginator.html" with paginator=posts%}
           </div>
         </div>
       </div>
