@@ -8,7 +8,8 @@ class Post(models.Model):
     food = '음식'
     household_item = '생활용품'
     etc = '기타'
-    category_choices = ((drink, '음료'),(food, '음식'), (household_item, '생활용품'), (etc, '기타'))
+    category_choices = ((drink, '음료'), (food, '음식'),
+                        (household_item, '생활용품'), (etc, '기타'))
 
     title = models.CharField(max_length=200, null=False)
     date = models.DateTimeField('date published')
@@ -18,18 +19,23 @@ class Post(models.Model):
     # 공구할 제품  정보
     name = models.CharField(max_length=200)
     image = models.ImageField(upload_to='images/', null=True, blank=True)
-    category = models.CharField(max_length=50, choices=category_choices, default='기타')
+    category = models.CharField(
+        max_length=50, choices=category_choices, default='기타')
     # deadline = models.DateTimeField('date published', default='2020-10-01 10:10')
 
-    success = models.BooleanField(default=False) # 공구가 성공했는지...
+    success = models.BooleanField(default=False)  # 공구가 성공했는지...
     url = models.URLField("출처", null=True)
-    count = models.IntegerField(default=0) # 조회수
+    count = models.IntegerField(default=0)  # 조회수
 
     def __str__(self):
         return self.title
 
-        def summary(self):
-            return self.content[:100]
+    def summary(self):
+        return self.content[:100]
+
+    class Meta:
+        ordering = ('-date', )
+
 
 # 게시글에 댓글
 class Comment(models.Model):
@@ -37,7 +43,7 @@ class Comment(models.Model):
     writer = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     content = models.CharField('', max_length=300)
     date = models.DateTimeField()
-    secret = models.BooleanField('', default=False) # 비밀 댓글 여부
+    secret = models.BooleanField('', default=False)  # 비밀 댓글 여부
 
     def __str__(self):
-        return self.content 
+        return self.content

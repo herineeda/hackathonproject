@@ -18,7 +18,17 @@ def introduce(request):
 # 공구 게시판: 게시글 목록 띄우기
 def group_purchase(request):
     post_list = Post.objects.all()
-    paginator = Paginator(post_list, 9)
+
+    # 필터링
+    status = request.GET.get("status")
+    if status == "종료":
+        post_list = post_list.filter(success=True)
+    elif status == "진행중":
+        post_list = post_list.filter(success=False)
+    else:
+        status = "전체"
+
+    paginator = Paginator(post_list, 12)
     page = request.GET.get('page')
     posts = paginator.get_page(page)
 
@@ -37,7 +47,8 @@ def group_purchase(request):
     context = {
         "group_purchage_active": "is-active",
         'posts': posts,
-        "paginator_range": paginator_range
+        "paginator_range": paginator_range,
+        "status": status,
     }
 
     return render(request, 'grouppurchase.html', context)
@@ -179,5 +190,6 @@ def comment_delete(request, post_id, comment_id):
 def acme_challenge(request):
     return HttpResponse(settings.ACME_CHALLENGE_CONTENT)
 
+
 def boxmap(request):
-    return render(request,'boxmap.html')
+    return render(request, 'boxmap.html')

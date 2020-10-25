@@ -14,7 +14,8 @@
   }
 
   a:link {
-    text-decoration: none
+    text-decoration: none;
+    color: none;
   }
 </style>
 {% endblock %}
@@ -26,16 +27,23 @@
     <div class="hero-head">
       <div class="container has-text-centered is-centered">
         <div class="columns is-multiline is-centered">
-          <div class="column is-10">
+          <div class="column is-12">
             <h3 class="display-5 mb-2 text-center"><i class="fas fa-clipboard-list"></i> 공구게시판</h3>
           </div>
-          <div class="column is-10">
+          <div class="column is-12">
             <div class="columns is-multiline is-justify-content-space-between">
-              <div class="column is-6-desktop is-12-tablet has-text-left-desktop">
-                <a class="btnbtn button" href="{% url 'group_purchase' %}">전체글보기</a>
-                {% if user.is_authenticated %}
-                <a class="btnbtn button" href="{% url 'create' %}">직접 구해보자!</a>
-                {% endif %}
+              {% if user.is_authenticated %}
+              <div class="column is-3-desktop is-12-tablet has-text-left-desktop">
+                <a class="button is-black has-text-white" href="{% url 'create' %}">직접 구해보자!</a>
+              </div>
+              {% endif %}
+              <div class="column is-3-desktop is-12-tablet has-text-left-desktop">
+                <a class="button is-black has-text-white" href="{% url 'group_purchase' %}?status=전체"
+                  {% ifequal status '전체' %}disabled{% endifequal %}>전체</a>
+                <a class="button is-info has-text-white" href="{% url 'group_purchase' %}?status=진행중"
+                  {% ifequal status '진행중' %}disabled{% endifequal %}>진행중</a>
+                <a class="button is-danger has-text-white" href="{% url 'group_purchase' %}?status=종료"
+                  {% ifequal status '종료' %}disabled{% endifequal %}>종료</a>
               </div>
               <div class="column is-6-desktop is-12-tablet">
                 {% include "partial/group_purchase_searchbar.html" %}
@@ -49,7 +57,7 @@
       <div class="container has-text-centered is-centered">
         <div class="columns is-multiline is-centered">
 
-          <div class="column is-10">
+          <div class="column is-12">
             {% if posts %}
             <div class="columns is-multiline">
               {% for post in posts %}
@@ -60,11 +68,12 @@
             <p class="subtitle">게시글이 없습니다.</p>
             {% endif %}
           </div>
-          <div class="column is-10">
-              {% include "partial/paginator.html" with paginator=posts%}
+          <div class="column is-12">
+            {% include "partial/paginator.html" with paginator=posts%}
           </div>
         </div>
       </div>
     </div>
   </section>
-  {% endblock %}
+</div>
+{% endblock %}
