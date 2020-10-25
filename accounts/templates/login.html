@@ -112,12 +112,14 @@
 </head>
 
 <body>
+
   <div class="login_paper">
     <h2>로그인</h2>
     <hr>
     <div>
         {% load static %}
-      <img src="{% static 'img/logo_account.png'%}" alt="logo" width=300>
+        <br><br>
+      <img src="{% static 'img/logo.png'%}" alt="logo" width=250>
     </div>
 
     <form method="POST" action="{% url 'login' %}">

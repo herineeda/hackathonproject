@@ -439,8 +439,12 @@
 		height: 50px;
 	}
 	.review_btn{
+		background:white;
+		border: solid 2px #212529;
+		border-radius: 4px;
 		float: right;
 	}
+
 </style>
 {% endblock %}
 
@@ -574,21 +578,6 @@
 			<div class="product-dtl">
 				<div class="product-info">
 					<div class="product-name">{{product.name}}</div>
-					<!-- <div class="reviews-counter">
-						<div class="rate">
-							<input type="radio" id="star5" name="rate" value="5" checked />
-							<label for="star5" title="text">5 stars</label>
-							<input type="radio" id="star4" name="rate" value="4" checked />
-							<label for="star4" title="text">4 stars</label>
-							<input type="radio" id="star3" name="rate" value="3" checked />
-							<label for="star3" title="text">3 stars</label>
-							<input type="radio" id="star2" name="rate" value="2" />
-							<label for="star2" title="text">2 stars</label>
-							<input type="radio" id="star1" name="rate" value="1" />
-							<label for="star1" title="text">1 star</label>
-						</div>
-						<span></span>
-					</div> -->
 					<div class="product-price-discount"><span><i class="fas fa-tag"></i>{{product.price}}</span></div>
 				</div>
 				<p>{{product.description|linebreaks}}</p>
@@ -635,23 +624,6 @@
 					{% csrf_token %}
 					{{review_form}}
 					<input type="submit" value="작성!" class="review_btn">
-					<!-- <div class="form-group">
-						<label>별점</label>
-						<div class="reviews-counter">
-							<div class="rate">
-								<input type="radio" id="star5" name="rate" value="5" />
-								<label for="star5" title="text">5 stars</label>
-								<input type="radio" id="star4" name="rate" value="4" />
-								<label for="star4" title="text">4 stars</label>
-								<input type="radio" id="star3" name="rate" value="3" />
-								<label for="star3" title="text">3 stars</label>
-								<input type="radio" id="star2" name="rate" value="2" />
-								<label for="star2" title="text">2 stars</label>
-								<input type="radio" id="star1" name="rate" value="1" />
-								<label for="star1" title="text">1 star</label>
-							</div>
-						</div>
-					</div> -->
 				</form>
 				<hr>
 				{% endif %}

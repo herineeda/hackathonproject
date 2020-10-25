@@ -26,10 +26,10 @@
 .right > a{
     text-decoration: none;
     margin-left: 30px;
-    color: #f27f3d;
+    color: #03166A;
 }
 .right > a:hover{
-    color: #ffc002;
+    color: #f27f3d;
 }
 
 hr{
@@ -70,7 +70,6 @@ hr{
 }
 /*bootsnipp*/
 
-/*****************globals*************/
 body {
   font-family: 'open sans';
   overflow-x: hidden; }
@@ -233,7 +232,6 @@ img {
     -webkit-transform: scale(1);
             transform: scale(1); } }
 
-/*# sourceMappingURL=style.css.map */
 </style>
 {% endblock %}
 {% block content %}
@@ -318,69 +316,4 @@ img {
 		</div>
 	</div>
 
-
-<!--original-->
-{% comment %} <div class="post_detail_box">
-    <div>
-        <p class="right">
-            <a href="{% url 'group_purchase' %}">목록으로 돌아가기</a>
-
-
-            {% if request.user != post_detail.author and not post_detail.success %}
-            <a href="{% url 'create_note' post_detail.id post_detail.author %}">쪽지 보내기</a>
-            {% endif %}
-        </p>
-
-        <h4 class="title">{{post_detail.title}}</h4>
-        <p class="right">글쓴이: {{post_detail.author}} &nbsp; | &nbsp; {{post_detail.date|date:"Y/m/d H:i"}}</p>
-
-        {% if post_detail.image %}
-        <img src="{{ post_detail.image.url }}" alt="사진" width="500">
-        {% endif %}
-
-        <p><strong>{{post_detail.category}} &nbsp; &#62; &nbsp; {{post_detail.name}}</strong></p>
-
-        <p>{{post_detail.content}}</p>
-
-        {% if post_detail.url%}
-        <p>구매 장소: <a href="{{post_detail.url}}" target="_blank">{{post_detail.url}}</a></p>
-        {% endif %}
-    </div>
-    <hr>
-
-    <div>
-        <form action="{% url 'comment' post_detail.id %}" method="POST">
-            {% csrf_token %}
-            {{comment_form}}
-            <input type="submit" value="Send" class="comment_send_btn">
-        </form>
-    </div>
-    <br>
-
-    <div>
-        {% for comment in post_detail.comment_set.all %}
-        {% if comment.writer == user or post_detail.author == user %}
-        <p>
-            {{comment.writer}} | {{comment.date|date:"Y/m/d H:i"}}
-            {% if user == comment.writer %}
-            &nbsp; | &nbsp; <a href="{% url 'comment_delete' post_detail.id comment.id %}" class="delete_btn">삭제</a>
-            {% endif %}
-        </p>
-
-        <p>{{comment.content}}</p>
-        {% else %}
-        {% if not comment.secret %}
-        <p>
-            {{comment.writer}} | {{comment.date|date:"Y/m/d H:i"}}
-            {% if user == comment.writer %}
-            &nbsp; | &nbsp;<a href="{% url 'comment_delete' post_detail.id comment.id %}" class="delete_btn">삭제</a>
-            {% endif %}
-        </p>
-        <p>{{comment.content}}</p>
-        {% endif %}
-        {% endif %}
-        {% endfor %}
-    </div>
-</div>
-<br><br> {% endcomment %}
 {% endblock %}

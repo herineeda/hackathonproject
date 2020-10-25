@@ -17,6 +17,23 @@ Thank you
   .primary-button {
     text-align: center;
   }
+
+  .btncontinue{
+    		border-radius: 4px;
+		background: #212529;
+		color: #fff;
+		padding: 7px 45px;
+		display: inline-block;
+		margin-top: 20px;
+		border: solid 2px #212529;
+		transition: all 0.5s ease-in-out 0s;
+  }
+  	.btncontinue:hover,
+	.btncontinue:focus {
+		background: transparent;
+		color: #212529;
+		text-decoration: none;
+	}
 </style>
 
 {% endblock %}
@@ -31,7 +48,7 @@ Thank you
 
 </div>
 <div class="primary-button">
-  <a href="{% url 'shop:product_all' %}" class="scroll-link" data-id="book-table">쇼핑 계속하기</a>
+  <a href="{% url 'shop:product_all' %}" class="btncontinue" data-id="book-table">쇼핑 계속하기</a>
 </div>
 <br><br>
 {% endblock %}
