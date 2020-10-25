@@ -8,6 +8,8 @@ ROOT_DIR = os.path.dirname(BASE_DIR)
 SECRET_KEY = os.getenv(
     "SECRET_KEY", 'px+(lm1l%0k+x%qqlqc07@@ox$j@4)%m-@ya)^9wvm0h+=_*-t')
 
+SITE_ID = 1
+
 # Application definition
 INSTALLED_APPS = [
     # Django default apps
@@ -15,8 +17,13 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+    'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    "allauth",
+    "allauth.account",
+    'allauth.socialaccount',
     
     # Custom apps
     'accounts.apps.AccountsConfig',

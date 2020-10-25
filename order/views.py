@@ -37,6 +37,7 @@ class OrderCreateAjaxView(View):
     def post(self, request, *args, **kwargs):
         cart = Cart(request)
         form = OrderCreateForm(request.POST)
+        print(request.POST)
         if form.is_valid():
             order = form.save()
             # 쿠폰은 제거

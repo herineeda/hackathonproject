@@ -1,9 +1,12 @@
 $(function () {
     var IMP = window.IMP;
     IMP.init('imp81338869');
-    $('.order-form').on('submit', function (e) {
-        e.preventDefault();
 
+
+    var makeOrderBtn = document.querySelector(".order-form")
+    makeOrderBtn.addEventListener("submit", (e) => {
+        e.preventDefault();
+        alert("Hello")
         // order_id 생성
         const order_id = AjaxCreateOrder(e);
         if (order_id == false) {
@@ -11,14 +14,13 @@ $(function () {
             return;
         }
 
-
         // 상품정보
         const amount = parseFloat(document.querySelector("#product_total_cost").textContent);
 
         const merchatn_id = AjaxStoreTransaction(e, order_id, amount);
         if (merchatn_id !== '') {
             // 상품정보
-            const product_name = document.querySelector("#product_name").textContent;
+            const product_name = `${username}-order-${merchant_id}`
 
             // 폼으로 입력받은 결제 정보
             const buyer_name = `${document.querySelector("#id_last_name").value} ${document.querySelector("#id_first_name").value}`;
@@ -50,6 +52,8 @@ $(function () {
         return false;
     });
 });
+
+// $('#make-order').on('click', function (e) { });
 
 //  폼 데이터를 기준으로 주문 생성
 function AjaxCreateOrder(e) {

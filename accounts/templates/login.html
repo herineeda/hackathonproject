@@ -68,7 +68,7 @@
       <img src="{% static 'img/logo.png'%}" alt="logo" width=250>
     </div>
 
-    <form method="POST" action="{% url 'login' %}">
+    <form method="POST" action="{% url 'account_login' %}">
       {% csrf_token %}
       <input name="username" class="accountform" type="text" placeholder="아이디"><br>
       <input name="password" class="accountform" type="password" placeholder="비밀번호"><br>

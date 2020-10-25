@@ -2,41 +2,45 @@
 {% load static %}
 {% block style %}
 <style>
-/*주문서*/
-.order{
+  /*주문서*/
+  .order {
     margin-top: 15px;
     height: 400px;
     margin-top: 15px;
     height: 400px;
     position: relative;
     left: 10%;
-    text-align:center;
-}
-.paper {
+    text-align: center;
+  }
+
+  .paper {
     position: absolute;
     height: 100%;
     width: 80%;
     background: white;
     top: 0;
     box-shadow: 0px 0px 5px 0px #888;
-    text-align:center;
+    text-align: center;
   }
-.paper::before {
+
+  .paper::before {
     content: '';
     position: absolute;
     left: 45px;
     height: 100%;
     width: 2px;
-    background: rgba(255,0,0,0.4);
-    text-align:center;
+    background: rgba(255, 0, 0, 0.4);
+    text-align: center;
   }
-.lines {
+
+  .lines {
     margin-top: 40px;
     height: calc(100% - 40px);
     width: 100%;
     background-image: repeating-linear-gradient(white 0px, white 24px, steelblue 25px);
   }
-.text {
+
+  .text {
     position: absolute;
     top: 20px;
     left: 55px;
@@ -45,23 +49,28 @@
     line-height: 25px;
     overflow: auto;
     outline: none;
-    text-align:center;
-    
+    text-align: center;
+
   }
-.text table th{
+
+  .text table th {
     text-align: center;
     border-bottom: solid 1px grey;
-}
-.text table tr{
+  }
+
+  .text table tr {
     text-align: center;
-}
-.text table .total{
+  }
+
+  .text table .total {
     border-top: solid 3px grey;
-}
-.text table .total td{
+  }
+
+  .text table .total td {
     padding: 10px 0px;
-}
-.holes {
+  }
+
+  .holes {
     position: absolute;
     left: 10px;
     height: 25px;
@@ -69,53 +78,57 @@
     background: lightgoldenrodyellow;
     border-radius: 50%;
     box-shadow: inset 0px 0px 2px 0px #888;
-}
-.hole-top {
-    top: 10%;
-}
-.hole-middle {
-    top: 50%;
-}
-.hole-bottom {
-    bottom: 10%;
-}
+  }
 
-/*주문자 정보*/
-.order_info{
+  .hole-top {
+    top: 10%;
+  }
+
+  .hole-middle {
+    top: 50%;
+  }
+
+  .hole-bottom {
+    bottom: 10%;
+  }
+
+  /*주문자 정보*/
+  .order_info {
     margin-top: 15px;
     height: 400px;
     position: relative;
-    text-align:center;
-    
-}
+    text-align: center;
 
-table{
-  text-align:center;
-  margin:auto;
-  font-size:25px;
-  line-height:200%;
-}
+  }
 
-.order_info_form{
+  table {
+    text-align: center;
+    margin: auto;
+    font-size: 25px;
+    line-height: 200%;
+  }
+
+  .order_info_form {
     padding: 10px;
-}
-.order_info_form input{
+  }
+
+  .order_info_form input {
     border: 0;
     border-bottom: solid 2px grey;
     outline: none;
     background: transparent;
-}
+  }
 
-input.btn-order{
-		background: #212529;
-		color: #fff;
-		padding: 7px 45px;
-		display: inline-block;
-		margin-top: 20px;
-		border: solid 2px #212529;
-		transition: all 0.5s ease-in-out 0s;
-      
-}
+  input.btn-order {
+    background: #212529;
+    color: #fff;
+    padding: 7px 45px;
+    display: inline-block;
+    margin-top: 20px;
+    border: solid 2px #212529;
+    transition: all 0.5s ease-in-out 0s;
+
+  }
 </style>
 {% endblock %}
 {% block script %}
@@ -125,6 +138,7 @@ input.btn-order{
   order_checkout_url = '{% url "orders:order_checkout" %}';
   order_validation_url = '{% url "orders:order_validation" %}';
   order_complete_url = '{% url "orders:order_complete" %}';
+  username = {{ request.user.username }}
 </script>
 <script src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js" type="text/javascript"></script>
 <script src="{% static '/js/checkout.js' %}" type="text/javascript"></script>
@@ -152,7 +166,7 @@ input.btn-order{
           {% endfor %}
           <tr class="total">
             <td colspan=2>Total</td>
-            <td>{{cart.get_total_price|floatformat|intcomma}}원</td>
+            <td id="product_total_cost">{{cart.get_total_price|floatformat|intcomma}}원</td>
           </tr>
         </table>
       </div>
@@ -167,9 +181,23 @@ input.btn-order{
   <h3><i class="fas fa-user-circle"></i> 구매자 정보 입력</h3>
   <hr>
   <div class="order_info_form">
-    <form action="" method="post">
+    <form class="order-form" method="post">
       {% csrf_token %}
-      {{form.as_p}}
+      {{ form.as_p }}
+      {% if form.errors %}
+      {% for field in form %}
+      {% for error in field.errors %}
+      <div class="alert alert-danger">
+        <strong>{{ error|escape }}</strong>
+      </div>
+      {% endfor %}
+      {% endfor %}
+      {% for error in form.non_field_errors %}
+      <div class="alert alert-danger">
+        <strong>{{ error|escape }}</strong>
+      </div>
+      {% endfor %}
+      {% endif %}
       <input type="hidden" name="pre_order_id" value="0">
       <input type="hidden" name="amount" value="{{cart.get_total_price}}">
       <input type="submit" value="주문하기" class="btn-order">
