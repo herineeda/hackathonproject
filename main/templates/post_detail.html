@@ -47,11 +47,8 @@ hr{
 		color: #fff;
 		padding: 7px 10px 7px 10px;
 		display: inline-block;
-		margin-top:
 		border: solid 2px #212529;
-		transition: all 0.5s ease-in-out 0s;
-
-
+		transition: all 0.5s ease-in-out 0s;  
 }
 
 /*댓글 관련 스타일*/
@@ -260,7 +257,8 @@ img {
 					<div class="details col-md-6">
 						<h3 class="product-title">제목: {{post_detail.title}}</h3>
 						<div class="rating">
-                            <span class="review-no">{{post_detail.category}} &nbsp; &#62; &nbsp; {{post_detail.name}}</span>
+              <span class="review-no">{{post_detail.category}} &nbsp; &#62; &nbsp; {{post_detail.name}}</span>
+              <span style="float: right;">조회수: {{post_detail.count}}</span>
 							<p><span class="review-no">글쓴이: {{post_detail.author}} &nbsp; | &nbsp; {{post_detail.date|date:"Y/m/d H:i"}}</span></p>
 						</div>
 						
