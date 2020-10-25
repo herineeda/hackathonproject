@@ -98,7 +98,8 @@ Main Page
                     <img src="{{product.image.url}}" alt="Product Image"><br>
                     <div class="text-content">
                         <h4>띵동<i class="fas fa-bell"></i> 주문하세요! </h4>
-                        <div class="price"><i class="fas fa-tag"></i> {{product.price}}원</div>
+                        {% load humanize %}
+                        <div class="price"><i class="fas fa-tag"></i> {{product.price|floatformat|intcomma}}원</div>
                         <p>{{product.description}}</p>
                         <a href="{{product.get_absolute_url}}" class="text-button" alt="{{product.name}}"> 상세보기 </a>
                     </div>
