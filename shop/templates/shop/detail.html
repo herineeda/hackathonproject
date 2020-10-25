@@ -578,7 +578,8 @@
 			<div class="product-dtl">
 				<div class="product-info">
 					<div class="product-name">{{product.name}}</div>
-					<div class="product-price-discount"><span><i class="fas fa-tag"></i>{{product.price}}</span></div>
+					{% load humanize %}
+					<div class="product-price-discount"><span><i class="fas fa-tag"></i>{{product.price|floatformat|intcomma}}원</span></div>
 				</div>
 				<p>{{product.description|linebreaks}}</p>
 				<div class="row">
