@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+띵동 맵
+{% endblock %}
+{% block style %}
+<style>
+      #map {
+        height: 100%;
+       
+      }
+
+      /* Optional: Makes the sample page fill the window. */
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        text-align:center;
+        font-family: "yg-jalnan";
+      }
+</style>
+
+ {% endblock %}
+
+   {% block content %}
+   <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDzMJe_8E4FBjrTWpSaKXPybbeBwcbYuXM&callback=initMap&libraries=&v=weekly"
+      defer
+    ></script>
+    <script>
+       
+       var map;
+        function initMap() {
+            const cityHall = {
+                lat: 37.566554, lng: 126.978546
+                };
+
+            const defaultOptions = {
+                zoom: 12,
+                center: cityHall,
+                disableDefaultUI:true,
+                zoomControl: true
+                };
+            map = new google.maps.Map(document.getElementById('map'), defaultOptions);
+
+            const myIcon = new google.maps.MarkerImage("{% static 'img/boxalarm (2).png' %}");
+            const marker = new google.maps.Marker({
+                position: cityHall, 
+                map: map,
+                icon: myIcon
+            });
+        }
+
+      /*
+      function initMap() {
+        const map = new google.maps.Map(document.getElementById("map"), {
+          zoom: 5,
+          center: { lat: 37.5642135, lng: 127.0016985 },
+        });
+
+        const image = 
+          "{% static 'img/boxalarm (2).png' %}";
+
+        const beachMarker = new google.maps.Marker({
+          position: { lat: 37.5642135, lng: 127.0016985 },
+          map,
+          icon: image,
+        });
+      }
+      */
+    </script>
+  </head>
+  <body>
+  <br>
+    <h3><i class="fas fa-map-pin"></i> 띵동 스팟에 있는 띵동 박스를 찾아보자!</h3>
+    <!--The div element for the map -->
+    <div id="map"></div>
+  </body>
+ {% endblock %}

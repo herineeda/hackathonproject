@@ -16,5 +16,6 @@ urlpatterns = [
     path('post/<int:post_id>/comment<int:comment_id>/delete', views.comment_delete, name="comment_delete"), # 댓글 삭제하기
     path('mypage', views.mypage, name="mypage"), # 마이페이지
     path('mypage/post_closed/<int:post_id>', views.closed, name="closed"), # 공구 성공 표시
+    path('boxmap/', views.boxmap, name="boxmap"),
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

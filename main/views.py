@@ -178,3 +178,6 @@ def comment_delete(request, post_id, comment_id):
 # SSL 인증서 적용
 def acme_challenge(request):
     return HttpResponse(settings.ACME_CHALLENGE_CONTENT)
+
+def boxmap(request):
+    return render(request,'boxmap.html')
