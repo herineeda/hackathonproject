@@ -53,12 +53,6 @@ hr{
 
 
 }
-/*.comment_send_btn{
-    background: transparent;
-    border: none;
-    outline: none;
-    color: #03166A;
-}*/
 
 /*댓글 관련 스타일*/
 .delete_btn{
@@ -68,6 +62,7 @@ hr{
     text-decoration: none;
     color: red;
 }
+
 /*bootsnipp*/
 
 body {
@@ -241,8 +236,10 @@ img {
 		<div class="card">
             <p class="right">
             <a href="{% url 'group_purchase' %}"><i class="fas fa-arrow-left mr-2"></i>목록으로 돌아가기</a>
+            {% if user.is_authenticated %}
             {% if request.user != post_detail.author and not post_detail.success %}
             <a href="{% url 'create_note' post_detail.id post_detail.author %}">쪽지 보내기</a>
+            {% endif %}
             {% endif %}
             </p>
 			<div class="container-fliud">
@@ -276,11 +273,13 @@ img {
 
                         <div>
         <br>
+        {% if user.is_authenticated %}
         <form action="{% url 'comment' post_detail.id %}" method="POST">
             {% csrf_token %}
             {{comment_form}}
             <input type="submit" value="등록" class="comment_send_btn">
         </form>
+        {% endif %}
     </div>
     <br>
 
