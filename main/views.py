@@ -66,7 +66,7 @@ def post_detail(request, post_id):
 # 게시글 작성
 def create(request):
     if request.method == 'POST':
-        form = PostForm(request.POST)
+        form = PostForm(request.POST, request.FILES,)
         if form.is_valid():
             post = form.save(commit=False)
             post.date = timezone.datetime.now()
@@ -83,7 +83,6 @@ def create(request):
 # 게시글 수정
 def edit(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
-
     if request.method == "POST":
         form = PostForm(request.POST, request.FILES, instance=post)
         if form.is_valid():
