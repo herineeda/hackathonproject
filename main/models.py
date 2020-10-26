@@ -31,7 +31,7 @@ class Post(models.Model):
         return self.title
 
     def summary(self):
-        return self.content[:100]
+        return self.content[:30]
 
     class Meta:
         ordering = ('-date', )
