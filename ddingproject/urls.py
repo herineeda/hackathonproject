@@ -17,7 +17,7 @@ urlpatterns = [
     # Home redirect
     path('', RedirectView.as_view(url=reverse_lazy('introduce')), name="home"),
     
-    path('account/', include('allauth.urls')),
+    # path('account/', include('allauth.urls')),
     path('account/', include('accounts.urls')),
     path('cart/', include('cart.urls')),
     path('main/', include('main.urls')),
