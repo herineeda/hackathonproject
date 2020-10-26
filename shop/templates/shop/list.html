@@ -39,6 +39,9 @@ Shop
     navbar-item {
         text-decoration: none;
     }
+    .food-item{
+        margin: 10px;
+    }
 </style>
 {% endblock %}
 
@@ -106,8 +109,7 @@ Shop
                             <div class="price"><i class="fas fa-tag"></i> {{product.price|floatformat|intcomma}}원</div>
                             <p>{{ product.summary }} ... </p>
                             <a href="{{product.get_absolute_url}}" class="text-button" alt="{{product.name}}"> 상세보기 </a>
-                        </div>
-                        
+                        </div> 
                     </div>
                 </div>
                 {% endfor %}
