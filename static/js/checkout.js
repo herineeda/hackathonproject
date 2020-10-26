@@ -6,7 +6,6 @@ $(function () {
     var makeOrderBtn = document.querySelector(".order-form")
     makeOrderBtn.addEventListener("submit", (e) => {
         e.preventDefault();
-        alert("Hello")
         // order_id 생성
         const order_id = AjaxCreateOrder(e);
         if (order_id == false) {
@@ -15,10 +14,10 @@ $(function () {
         }
 
         // 상품정보
-        const amount = parseFloat(document.querySelector("#product_total_cost").textContent);
+        const amount = parseFloat(document.querySelector("#product_total_cost").value);
 
-        const merchatn_id = AjaxStoreTransaction(e, order_id, amount);
-        if (merchatn_id !== '') {
+        const merchant_id = AjaxStoreTransaction(e, order_id, amount);
+        if (merchant_id !== '') {
             // 상품정보
             const product_name = `${username}-order-${merchant_id}`
 
@@ -27,7 +26,7 @@ $(function () {
             const buyer_email = document.querySelector("#id_email").value;
 
             IMP.request_pay({
-                merchant_uid: merchatn_id,
+                merchant_uid: merchant_id,
                 name: product_name,
                 buyer_name: buyer_name,
                 buyer_email: buyer_email,
@@ -45,6 +44,7 @@ $(function () {
                 } else {
                     var msg = '결제에 실패하였습니다.';
                     msg += '에러내용 : ' + rsp.error_msg;
+                    alert(msg);
                 }
                 console.log(msg);
             });
@@ -103,7 +103,6 @@ function AjaxStoreTransaction(e, order_id, amount) {
         }
     });
     request.fail(function (jqXHR, textStatus) {
-        console.log(jqXHR);
         if (jqXHR.status == 404) {
             alert("페이지가 존재하지 않습니다.");
         } else if (jqXHR.status == 403) {

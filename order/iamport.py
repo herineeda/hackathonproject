@@ -1,6 +1,6 @@
 import requests
 
-from ddingproject import settings
+from django.conf import settings
 
 
 def get_token():

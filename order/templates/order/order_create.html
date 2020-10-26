@@ -194,7 +194,7 @@
       {% endfor %}
       {% endif %}
       <input type="hidden" name="pre_order_id" value="0">
-      <input type="hidden" name="amount" value="{{cart.get_total_price}}">
+      <input id="product_total_cost" type="hidden" name="amount" value="{{cart.get_total_price}}">
       <input type="submit" value="주문하기" class="btn-order">
     </form>
   </div>

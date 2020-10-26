@@ -37,7 +37,7 @@ class OrderCreateAjaxView(View):
     def post(self, request, *args, **kwargs):
         cart = Cart(request)
         form = OrderCreateForm(request.POST)
-        print(request.POST)
+
         if form.is_valid():
             order = form.save()
             # 쿠폰은 제거
@@ -69,14 +69,14 @@ class OrderCheckoutAjaxView(View):
         order = Order.objects.get(id=order_id)
         amount = request.POST.get('amount')
 
-        try:
-            merchant_order_id = OrderTransaction.objects.create_new(
-                order=order,
-                amount=amount
-            )
-        except:
-            merchant_order_id = None
-
+        # try:
+        merchant_order_id = OrderTransaction.objects.create_new(
+            order=order,
+            amount=amount
+        )
+        # except:
+        # merchant_order_id = None
+        print(merchant_order_id)
         if merchant_order_id is not None:
             data = {
                 "works": True,
@@ -107,7 +107,6 @@ class OrderImpAjaxView(View):
             )
         except:
             trans = None
-
         if trans is not None:
             trans.transaction_id = imp_id
             trans.success = True
