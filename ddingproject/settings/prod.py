@@ -31,3 +31,24 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
+
+# AWS Setting
+AWS_REGION = os.getenv('AWS_REGION')
+AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
+AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+
+AWS_QUERYSTRING_AUTH = False
+AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+
+# Storage settings
+DEFAULT_FILE_STORAGE = 'ddingproject.backends.PrivateMediaStorage'
+STATICFILES_STORAGE = 'ddingproject.backends.StaticStorage'
+
+# Static Setting
+STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/static/"
+STATIC_ROOT = f"https://{AWS_S3_CUSTOM_DOMAIN}/static/"
+
+# Media Setting
+MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/media/"
+MEDIA_ROOT = f"https://{AWS_S3_CUSTOM_DOMAIN}/media/"
