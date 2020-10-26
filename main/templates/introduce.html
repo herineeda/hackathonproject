@@ -20,11 +20,24 @@ Introduce
     display: block;
     margin: 0px auto;
   }
+
+  a{
+    color:#03166A;
+    text-align:center;
+  }
+  a:hover{
+    color:#f27f3d;
+  }
+
+body{
+  text-align:center;
+}
 </style>
 {% endblock %}
 
 {% block content %}
 <br>
 <h3 class="display-5 mb-2 text-center"><i class="fas fa-parachute-box"></i> 아이띵동이란?</h3>
+ <a href="{% url 'boxmap' %}" class="text-a" style="text-align:center;"><i class="fas fa-check-square"></i> 띵동박스 위치 확인 하러가기!</a>
 <img src="{% static 'img/introduce.png' %}" alt="" width="600px">
 {% endblock %}

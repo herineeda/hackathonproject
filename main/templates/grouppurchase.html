@@ -37,6 +37,7 @@
                 <a class="button is-black has-text-white" href="{% url 'create' %}">직접 구해보자!</a>
               </div>
               {% endif %}
+              
               <div class="column is-3-desktop is-12-tablet has-text-left-desktop">
                 <a class="button is-black has-text-white" href="{% url 'group_purchase' %}?status=전체"
                   {% ifequal status '전체' %}disabled{% endifequal %}>전체</a>
