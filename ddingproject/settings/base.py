@@ -127,3 +127,8 @@ IAMPORT_SECRET = 'LeUYlIE4LrPpHSPfmhlRTtYKAk8taNqW1lUm3yrPZgfG84WvlimfMlZmG7QQUg
 
 # SSL 인증서
 ACME_CHALLENGE_CONTENT = os.getenv('ACME_CHALLENGE_CONTENT', 'None')
+
+# Extra places for collectstatic to find static files.
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
